@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         PeopleSingleton.setInstance(People.getExamplePeople());
         Intent intent = new Intent(this, PeopleActivity.class);
         startActivity(intent);
-
+//asd
 
     }
 
