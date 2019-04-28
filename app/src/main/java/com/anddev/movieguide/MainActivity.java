@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ActorSingleton.setInstance(Actor.getExampleActor());
-        Intent intent = new Intent(this, ActorActivity.class);
+        Intent intent = new Intent(this, ActorActivity_.class);
         startActivity(intent);
 
 
