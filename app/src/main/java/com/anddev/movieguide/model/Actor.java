@@ -148,4 +148,15 @@ public class Actor {
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "place_of_birth='" + place_of_birth + '\'' +
+                ", gender=" + gender +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                ", birthday='" + birthday + '\'' +
+                '}';
+    }
 }
