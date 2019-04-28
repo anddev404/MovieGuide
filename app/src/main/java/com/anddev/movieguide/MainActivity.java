@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.anddev.movieguide.model.People;
-import com.google.gson.Gson;
+import com.anddev.movieguide.model.Actor;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PeopleSingleton.setInstance(People.getExamplePeople());
-        Intent intent = new Intent(this, PeopleActivity.class);
+        ActorSingleton.setInstance(Actor.getExampleActor());
+        Intent intent = new Intent(this, ActorActivity.class);
         startActivity(intent);
 
 

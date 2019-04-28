@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-public class People {
+public class Actor {
 
     private String imdb_id;
     private boolean adult;
@@ -115,7 +115,7 @@ public class People {
         this.birthday = birthday;
     }
 
-    public static People getExamplePeople() {
+    public static Actor getExampleActor() {
         try {
             String jsonString = "{\n" +
                     "  \"birthday\": \"1967-07-26\",\n" +
@@ -142,7 +142,7 @@ public class People {
                     "  \"imdb_id\": \"nm0005458\"\n" +
                     "}";
             Gson gson = new Gson();
-            return gson.fromJson(jsonString, People.class);
+            return gson.fromJson(jsonString, Actor.class);
         } catch (Exception e) {
             return null;
         }
