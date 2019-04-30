@@ -14,6 +14,12 @@ import org.androidannotations.annotations.UiThread;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @EActivity(R.layout.activity_actor)
 public class ActorActivity extends AppCompatActivity {
@@ -34,38 +40,68 @@ public class ActorActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        actor = ActorSingleton.getInstance();
         try {
-            showDataOfActor(actor);
+
+            ConnectionInterface client = RetrofitTools.getConnectionInterface();
+            downloadActorInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
 
         } catch (Exception e) {
 
         }
-        background();
+
     }
 
 
     @Background
-    void background() {
+    void downloadActorInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
+        try {
+
+
+            Call<Actor> call = client.dataOfPerson(id, apiKey, language);
+
+            call.enqueue(new Callback<Actor>() {
+
+                @Override
+                public void onResponse(Call<Actor> call, Response<Actor> response) {
+
+                    if (response.code() == 200) {
+
+                        showDataOfActor(response.body());
+
+                    } else {
+
+                        showError("Nie można pobrać odpowiednich danych");
+
+                   }
+
+                }
+
+                @Override
+                public void onFailure(Call<Actor> call, Throwable t) {
+
+                    showError("Brak połączenia internetowego!");
+
+                }
+            });
+        } catch (Throwable e) {
+            showError("Nieoczekiwan błąd!");
+        }
 
     }
+
 
     @UiThread
-    void updateUI(Integer result) {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
-
     public void showDataOfActor(Actor actor) {
 
         name.setText(actor.getName());
         birthday.setText(actor.getBirthday());
         placeOfBirth.setText(actor.getPlace_of_birth());
+    }
+
+    @UiThread
+    public void showError(String message) {
+
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
     }
 }
