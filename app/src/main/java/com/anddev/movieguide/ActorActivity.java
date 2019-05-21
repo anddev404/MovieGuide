@@ -1,7 +1,9 @@
 package com.anddev.movieguide;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @EActivity(R.layout.activity_actor)
 public class ActorActivity extends AppCompatActivity {
 
+    Activity activity;
+
     @BindView(R.id.nameTextView)
     TextView name;
 
@@ -33,11 +37,14 @@ public class ActorActivity extends AppCompatActivity {
     @BindView(R.id.place_of_birth_textView)
     TextView placeOfBirth;
 
+    @BindView(R.id.imageViewActor)
+    ImageView imageViewActor;
+
     Actor actor;
 
     @AfterViews
     public void onCreate() {
-
+        activity = this;
         ButterKnife.bind(this);
 
         try {
@@ -67,12 +74,15 @@ public class ActorActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         showDataOfActor(response.body());
+                        ImageTools.setImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
+
 
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
+                        ImageTools.setImageFromInternet(activity, "brak adresu", imageViewActor);
 
-                   }
+                    }
 
                 }
 
@@ -101,7 +111,7 @@ public class ActorActivity extends AppCompatActivity {
     @UiThread
     public void showError(String message) {
 
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
 }

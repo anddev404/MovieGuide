@@ -33,6 +33,6 @@
             android:id="@+id/imageViewActor"
             android:layout_width="match_parent"
             android:layout_height="320dp"
-            tools:srcCompat="@tools:sample/avatars[1]" />
+            tools:srcCompat="@drawable/person" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
