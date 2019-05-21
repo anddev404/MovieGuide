@@ -56,3 +56,6 @@ dependencies {
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
 }
 
+dependencies {
+    implementation "com.squareup.picasso:picasso:2.4.0"
+}
