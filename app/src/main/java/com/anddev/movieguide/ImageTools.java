@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso;
 
 public class ImageTools {
 
-    public static void setImageFromInternet(Activity activity, String url, ImageView imageView) {
+    public static void getImageFromInternet(Activity activity, String url, ImageView imageView) {
 
         Picasso.with(activity)
                 .load(url)

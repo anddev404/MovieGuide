@@ -37,6 +37,9 @@ public class ActorActivity extends AppCompatActivity {
     @BindView(R.id.place_of_birth_textView)
     TextView placeOfBirth;
 
+    @BindView(R.id.age)
+    TextView age;
+
     @BindView(R.id.imageViewActor)
     ImageView imageViewActor;
 
@@ -74,13 +77,13 @@ public class ActorActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         showDataOfActor(response.body());
-                        ImageTools.setImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
+                        ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
 
 
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
-                        ImageTools.setImageFromInternet(activity, "brak adresu", imageViewActor);
+                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor);
 
                     }
 
@@ -106,6 +109,8 @@ public class ActorActivity extends AppCompatActivity {
         name.setText(actor.getName());
         birthday.setText(actor.getBirthday());
         placeOfBirth.setText(actor.getPlace_of_birth());
+        age.setText(DateTools.calculateAgeFromBirthday(actor.getBirthday()));
+
     }
 
     @UiThread
