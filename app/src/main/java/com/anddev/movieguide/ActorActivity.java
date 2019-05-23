@@ -48,7 +48,7 @@ public class ActorActivity extends AppCompatActivity {
     ListView knownForListView;
 
     Actor actor;
-    KnownFor knowFor;
+    KnownFor knownFor;
 
     @AfterViews
     public void onCreate() {
@@ -124,8 +124,8 @@ public class ActorActivity extends AppCompatActivity {
 //                        showDataOfActor(response.body());
 //                        ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
 
-            knowFor = KnownFor.getExampleKnownFor();
-            showKnownFor(knowFor);
+            knownFor = KnownFor.getExampleKnownFor();
+            showKnownFor(knownFor);
 
 //                    } else {
 //
@@ -149,7 +149,6 @@ public class ActorActivity extends AppCompatActivity {
 
     }
 
-
     @UiThread
     public void showDataOfActor(Actor actor) {
 
@@ -162,6 +161,10 @@ public class ActorActivity extends AppCompatActivity {
 
     @UiThread
     public void showKnownFor(KnownFor knownFor) {
+
+        KnownForListViewAdapter adapter = new KnownForListViewAdapter(this, knownFor.getCast());
+        knownForListView.setAdapter(adapter);
+
     }
 
     @UiThread
