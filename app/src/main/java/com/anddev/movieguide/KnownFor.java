@@ -36,7 +36,7 @@ public abstract class KnownFor {
         this.cast = cast;
     }
 
-    public static Actor getExampleKnownFor() {
+    public static KnownFor getExampleKnownFor() {
         try {
             String jsonString = "{\n" +
                     "  \"cast\": [\n" +
@@ -388,7 +388,7 @@ public abstract class KnownFor {
                     "  \"id\": 976\n" +
                     "}";
             Gson gson = new Gson();
-            return gson.fromJson(jsonString, Actor.class);
+            return gson.fromJson(jsonString, KnownFor.class);
         } catch (Exception e) {
             return null;
         }

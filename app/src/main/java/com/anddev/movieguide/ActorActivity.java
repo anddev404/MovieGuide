@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,11 @@ public class ActorActivity extends AppCompatActivity {
     @BindView(R.id.imageViewActor)
     ImageView imageViewActor;
 
+    @BindView(R.id.known_for_List_View)
+    ListView knownForListView;
+
     Actor actor;
+    KnownFor knowFor;
 
     @AfterViews
     public void onCreate() {
@@ -54,6 +59,7 @@ public class ActorActivity extends AppCompatActivity {
 
             ConnectionInterface client = RetrofitTools.getConnectionInterface();
             downloadActorInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+            downloadKnownForInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
 
         } catch (Exception e) {
 
@@ -79,7 +85,6 @@ public class ActorActivity extends AppCompatActivity {
                         showDataOfActor(response.body());
                         ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
 
-
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
@@ -102,6 +107,48 @@ public class ActorActivity extends AppCompatActivity {
 
     }
 
+    @Background
+    void downloadKnownForInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
+        try {
+
+//
+//            Call<Actor> call = client.dataOfPerson(id, apiKey, language);
+//
+//            call.enqueue(new Callback<Actor>() {
+//
+//                @Override
+//                public void onResponse(Call<Actor> call, Response<Actor> response) {
+//
+//                    if (response.code() == 200) {
+//
+//                        showDataOfActor(response.body());
+//                        ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
+
+            knowFor = KnownFor.getExampleKnownFor();
+            showKnownFor(knowFor);
+
+//                    } else {
+//
+//                        showError("Nie można pobrać odpowiednich danych");
+//                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor);
+//
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Actor> call, Throwable t) {
+//
+//                    showError("Brak połączenia internetowego!");
+//
+//                }
+//            });
+        } catch (Throwable e) {
+            showError("Nieoczekiwan błąd!");
+        }
+
+    }
+
 
     @UiThread
     public void showDataOfActor(Actor actor) {
@@ -111,6 +158,10 @@ public class ActorActivity extends AppCompatActivity {
         placeOfBirth.setText(actor.getPlace_of_birth());
         age.setText(DateTools.calculateAgeFromBirthday(actor.getBirthday()));
 
+    }
+
+    @UiThread
+    public void showKnownFor(KnownFor knownFor) {
     }
 
     @UiThread
