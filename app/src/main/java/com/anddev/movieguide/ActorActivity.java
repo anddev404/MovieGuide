@@ -82,7 +82,8 @@ public class ActorActivity extends AppCompatActivity {
 
                     if (response.code() == 200) {
 
-                        showDataOfActor(response.body());
+                        actor = response.body();
+                        showDataOfActor(actor);
                         ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
 
                     } else {
@@ -111,38 +112,37 @@ public class ActorActivity extends AppCompatActivity {
     void downloadKnownForInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
         try {
 
-//
-//            Call<Actor> call = client.dataOfPerson(id, apiKey, language);
-//
-//            call.enqueue(new Callback<Actor>() {
-//
-//                @Override
-//                public void onResponse(Call<Actor> call, Response<Actor> response) {
-//
-//                    if (response.code() == 200) {
-//
-//                        showDataOfActor(response.body());
-//                        ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
 
-            knownFor = KnownFor.getExampleKnownFor();
-            showKnownFor(knownFor);
+            Call<KnownFor> call = client.knownFor(id, apiKey, language);
 
-//                    } else {
-//
-//                        showError("Nie można pobrać odpowiednich danych");
-//                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor);
-//
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Actor> call, Throwable t) {
-//
-//                    showError("Brak połączenia internetowego!");
-//
-//                }
-//            });
+            call.enqueue(new Callback<KnownFor>() {
+
+                @Override
+                public void onResponse(Call<KnownFor> call, Response<KnownFor> response) {
+
+                    if (response.code() == 200) {
+
+                        // ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
+
+                        knownFor = response.body();
+                        showKnownFor(knownFor);
+
+                    } else {
+
+                        showError("Nie można pobrać odpowiednich danych");
+                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor);
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<KnownFor> call, Throwable t) {
+
+                    showError("Brak połączenia internetowego podczas pobierania filmów w których grał aktor!");
+
+                }
+            });
         } catch (Throwable e) {
             showError("Nieoczekiwan błąd!");
         }

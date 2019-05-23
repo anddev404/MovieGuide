@@ -5,7 +5,7 @@ import java.util.List;
 public class Cast {
     private String release_date;
     private String overview;
-    private int vote_average;
+    private float vote_average;
     private String title;
     private double popularity;
     private String original_title;
@@ -13,7 +13,7 @@ public class Cast {
     private List<Integer> genre_ids;
     private String backdrop_path;
     private boolean adult;
-    private int vote_count;
+    private float vote_count;
     private boolean video;
     private int id;
     private String poster_path;
@@ -36,11 +36,11 @@ public class Cast {
         this.overview = overview;
     }
 
-    public int getVote_average() {
+    public float getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(int vote_average) {
+    public void setVote_average(float vote_average) {
         this.vote_average = vote_average;
     }
 
@@ -100,11 +100,11 @@ public class Cast {
         this.adult = adult;
     }
 
-    public int getVote_count() {
+    public float getVote_count() {
         return vote_count;
     }
 
-    public void setVote_count(int vote_count) {
+    public void setVote_count(float vote_count) {
         this.vote_count = vote_count;
     }
 

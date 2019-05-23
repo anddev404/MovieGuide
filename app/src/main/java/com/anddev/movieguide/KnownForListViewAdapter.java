@@ -54,7 +54,7 @@ public class KnownForListViewAdapter extends BaseAdapter {
         View rowView;
         rowView = inflater.inflate(R.layout.row_known_for, null);
         holder.imageView = (ImageView) rowView.findViewById(R.id.row_known_for_imageView);
-        holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+        ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + cast.get(position).getPoster_path(), holder.imageView);
 
 
         rowView.setOnClickListener(new View.OnClickListener() {
