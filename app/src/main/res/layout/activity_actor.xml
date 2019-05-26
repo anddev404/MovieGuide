@@ -38,12 +38,14 @@
         <ImageView
             android:id="@+id/imageViewActor"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="220dp"
             tools:srcCompat="@drawable/person" />
 
-        <ListView
-            android:id="@+id/known_for_List_View"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/known_for_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -3,12 +3,16 @@ package com.anddev.movieguide;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.model.Actor;
+import com.anddev.movieguide.model.RecyclerItemClickListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -44,8 +48,8 @@ public class ActorActivity extends AppCompatActivity {
     @BindView(R.id.imageViewActor)
     ImageView imageViewActor;
 
-    @BindView(R.id.known_for_List_View)
-    ListView knownForListView;
+    @BindView(R.id.known_for_recycler_view)
+    RecyclerView knownForRecyclerView;
 
     Actor actor;
     KnownFor knownFor;
@@ -54,6 +58,8 @@ public class ActorActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
+
+        knownForRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
 
         try {
 
@@ -84,12 +90,12 @@ public class ActorActivity extends AppCompatActivity {
 
                         actor = response.body();
                         showDataOfActor(actor);
-                        ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
+                        ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor, ImageTools.DRAWABLE_PERSON);
 
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
-                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor);
+                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor, ImageTools.DRAWABLE_PERSON);
 
                     }
 
@@ -130,7 +136,7 @@ public class ActorActivity extends AppCompatActivity {
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
-                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor);
+                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor, ImageTools.DRAWABLE_PERSON);
 
                     }
 
@@ -160,10 +166,24 @@ public class ActorActivity extends AppCompatActivity {
     }
 
     @UiThread
-    public void showKnownFor(KnownFor knownFor) {
+    public void showKnownFor(final KnownFor knownFor) {
 
-        KnownForListViewAdapter adapter = new KnownForListViewAdapter(this, knownFor.getCast());
-        knownForListView.setAdapter(adapter);
+        KnownForAdapter adapter = new KnownForAdapter(this, knownFor.getCast());
+        knownForRecyclerView.setAdapter(adapter);
+
+        knownForRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(activity, knownForRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(activity, "Kliknięto " + knownFor.getCast().get(position).getOriginal_title(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                    }
+
+                })
+        );
 
     }
 
