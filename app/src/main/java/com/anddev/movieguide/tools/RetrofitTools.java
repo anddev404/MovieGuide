@@ -1,4 +1,4 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.tools;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -6,11 +6,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitTools {
 
-    static final String API_BASE_URL = "https://api.themoviedb.org";
-    static final String API_KEY = "3a3657f217097dc333bd92af0d39bee4";
-    static final String LANGUAGE = "pl-PL";
+    public static final String API_BASE_URL = "https://api.themoviedb.org";
+    public static final String API_KEY = "3a3657f217097dc333bd92af0d39bee4";
+    public static final String LANGUAGE = "pl-PL";
 
-    static ConnectionInterface getConnectionInterface() {
+    public static ConnectionInterface getConnectionInterface() {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

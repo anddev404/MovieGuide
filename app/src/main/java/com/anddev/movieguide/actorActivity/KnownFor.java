@@ -1,6 +1,6 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.actorActivity;
 
-import com.google.gson.Gson;
+import com.anddev.movieguide.model.Cast;
 
 import java.util.ArrayList;
 import java.util.List;

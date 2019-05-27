@@ -1,18 +1,21 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.actorActivity;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Actor;
-import com.anddev.movieguide.model.RecyclerItemClickListener;
+import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.DateTools;
+import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.RecyclerItemClickListener;
+import com.anddev.movieguide.tools.RetrofitTools;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -21,12 +24,9 @@ import org.androidannotations.annotations.UiThread;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @EActivity(R.layout.activity_actor)
 public class ActorActivity extends AppCompatActivity {

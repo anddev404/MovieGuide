@@ -1,5 +1,6 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.tools;
 
+import com.anddev.movieguide.actorActivity.KnownFor;
 import com.anddev.movieguide.model.Actor;
 
 import retrofit2.Call;
@@ -15,5 +16,5 @@ public interface ConnectionInterface {
 
     //https://api.themoviedb.org/3/person/976/movie_credits?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
     @GET("3/person/{id}/movie_credits")
-    Call<KnownFor> knownFor(@Path("id") Integer id,@Query("api_key") String apiKey,@Query("language") String language);
+    Call<KnownFor> knownFor(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
 }

@@ -1,4 +1,4 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.tools;
 
 public class DateTools {
 

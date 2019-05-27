@@ -1,12 +1,10 @@
-package com.anddev.movieguide.model;
+package com.anddev.movieguide.tools;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.anddev.movieguide.Cast;
 
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
     private OnItemClickListener mListener;
