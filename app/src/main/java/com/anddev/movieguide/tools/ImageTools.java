@@ -1,8 +1,9 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.tools;
 
 import android.app.Activity;
 import android.widget.ImageView;
 
+import com.anddev.movieguide.R;
 import com.squareup.picasso.Picasso;
 
 public class ImageTools {

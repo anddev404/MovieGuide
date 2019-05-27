@@ -1,4 +1,4 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.model;
 
 import java.util.List;
 

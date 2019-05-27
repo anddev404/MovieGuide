@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.anddev.movieguide.model.Profiles;
-import com.anddev.movieguide.model.Profiles;
+import com.anddev.movieguide.tools.ImageTools;
 
 import java.util.List;
 
