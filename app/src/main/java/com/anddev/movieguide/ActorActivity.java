@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.model.Actor;
+import com.anddev.movieguide.model.Images;
 import com.anddev.movieguide.model.RecyclerItemClickListener;
 
 import org.androidannotations.annotations.AfterViews;
@@ -51,8 +52,12 @@ public class ActorActivity extends AppCompatActivity {
     @BindView(R.id.known_for_recycler_view)
     RecyclerView knownForRecyclerView;
 
+    @BindView(R.id.images_recycler_view)
+    RecyclerView imagesRecyclerView;
+
     Actor actor;
     KnownFor knownFor;
+    Images images;
 
     @AfterViews
     public void onCreate() {
@@ -60,12 +65,14 @@ public class ActorActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         knownForRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
+        imagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
 
         try {
 
             ConnectionInterface client = RetrofitTools.getConnectionInterface();
             downloadActorInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
             downloadKnownForInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+            downloadImagesOfActorInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
 
         } catch (Exception e) {
 
@@ -155,6 +162,45 @@ public class ActorActivity extends AppCompatActivity {
 
     }
 
+    @Background
+    void downloadImagesOfActorInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
+        try {
+
+
+            Call<Images> call = client.images(id, apiKey, language);
+
+            call.enqueue(new Callback<Images>() {
+
+                @Override
+                public void onResponse(Call<Images> call, Response<Images> response) {
+
+                    if (response.code() == 200) {
+
+                        images = response.body();
+                        showImages(images);
+
+                    } else {
+
+                        showError("Nie można pobrać odpowiednich danych");
+                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor, ImageTools.DRAWABLE_PERSON);
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Images> call, Throwable t) {
+
+                    showError("Brak połączenia internetowego podczas pobierania filmów w których grał aktor!");
+
+                }
+            });
+        } catch (Throwable e) {
+            showError("Nieoczekiwan błąd!");
+        }
+
+    }
+
     @UiThread
     public void showDataOfActor(Actor actor) {
 
@@ -176,6 +222,28 @@ public class ActorActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Toast.makeText(activity, "Kliknięto " + knownFor.getCast().get(position).getOriginal_title(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                    }
+
+                })
+        );
+
+    }
+
+    @UiThread
+    public void showImages(final Images images) {
+
+        ProfilesAdapter adapter = new ProfilesAdapter(this, images.getProfiles());
+        imagesRecyclerView.setAdapter(adapter);
+
+        imagesRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(activity, imagesRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(activity, "Kliknięto " + images.getProfiles().get(position).getVote_average(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
