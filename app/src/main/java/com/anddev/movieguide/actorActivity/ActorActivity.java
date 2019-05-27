@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anddev.movieguide.ProfilesAdapter;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Actor;
 import com.anddev.movieguide.model.Images;
+import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;

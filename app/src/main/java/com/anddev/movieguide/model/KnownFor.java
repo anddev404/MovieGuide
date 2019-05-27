@@ -1,6 +1,4 @@
-package com.anddev.movieguide.actorActivity;
-
-import com.anddev.movieguide.model.Cast;
+package com.anddev.movieguide.model;
 
 import java.util.ArrayList;
 import java.util.List;

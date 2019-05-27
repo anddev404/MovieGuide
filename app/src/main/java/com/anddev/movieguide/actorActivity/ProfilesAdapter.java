@@ -1,4 +1,4 @@
-package com.anddev.movieguide;
+package com.anddev.movieguide.actorActivity;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Profiles;
 import com.anddev.movieguide.tools.ImageTools;
 

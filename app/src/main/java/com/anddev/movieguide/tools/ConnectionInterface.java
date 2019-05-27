@@ -1,6 +1,6 @@
 package com.anddev.movieguide.tools;
 
-import com.anddev.movieguide.actorActivity.KnownFor;
+import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Actor;
 import com.anddev.movieguide.model.Images;
 
