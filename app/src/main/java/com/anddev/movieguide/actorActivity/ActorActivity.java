@@ -59,21 +59,31 @@ public class ActorActivity extends AppCompatActivity {
     Actor actor;
     KnownFor knownFor;
     Images images;
+    Integer actorId;
 
     @AfterViews
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
 
+        try {
+            if (activity.getIntent().getExtras() != null) {
+                actorId = activity.getIntent().getExtras().getInt("Id", 0);
+            } else {
+                actorId = 0;
+            }
+        } catch (Exception e) {
+            actorId = 0;
+        }
         knownForRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
         imagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
 
         try {
 
             ConnectionInterface client = RetrofitTools.getConnectionInterface();
-            downloadActorInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
-            downloadKnownForInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
-            downloadImagesOfActorInBackground(client, 976, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+            downloadActorInBackground(client, actorId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+            downloadKnownForInBackground(client, actorId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+            downloadImagesOfActorInBackground(client, actorId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
 
         } catch (Exception e) {
 
@@ -136,15 +146,12 @@ public class ActorActivity extends AppCompatActivity {
 
                     if (response.code() == 200) {
 
-                        // ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor);
-
                         knownFor = response.body();
                         showKnownFor(knownFor);
 
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
-                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor, ImageTools.DRAWABLE_PERSON);
 
                     }
 
@@ -183,7 +190,6 @@ public class ActorActivity extends AppCompatActivity {
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
-                        ImageTools.getImageFromInternet(activity, "brak adresu", imageViewActor, ImageTools.DRAWABLE_PERSON);
 
                     }
 

@@ -2,7 +2,7 @@ package com.anddev.movieguide.model;
 
 import java.util.List;
 
-public abstract class PopularPeople {
+public class PopularPeople {
 
 
     private List<Results> results;
