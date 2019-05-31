@@ -22,4 +22,6 @@ public class Images {
     public void setProfiles(List<Profiles> profiles) {
         this.profiles = profiles;
     }
+
+
 }
