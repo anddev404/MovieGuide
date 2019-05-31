@@ -3,7 +3,9 @@ package com.anddev.movieguide.actorActivity;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import com.anddev.movieguide.ProfilesAdapter;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Actor;
 import com.anddev.movieguide.model.Images;
+import com.anddev.movieguide.model.Profiles;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
@@ -23,6 +26,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +61,9 @@ public class ActorActivity extends AppCompatActivity {
     @BindView(R.id.images_recycler_view)
     RecyclerView imagesRecyclerView;
 
+    @BindView(R.id.full_screen_images_recycler_view)
+    RecyclerView fullScreenImagesRecyclerView;
+
     Actor actor;
     KnownFor knownFor;
     Images images;
@@ -67,6 +75,13 @@ public class ActorActivity extends AppCompatActivity {
 
         knownForRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
         imagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
+
+        fullScreenImagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
+        fullScreenImagesRecyclerView.setVisibility(View.GONE);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        fullScreenImagesRecyclerView.setLayoutManager(layoutManager);
+        snapHelper.attachToRecyclerView(fullScreenImagesRecyclerView);
 
         try {
 
@@ -240,11 +255,38 @@ public class ActorActivity extends AppCompatActivity {
         ProfilesAdapter adapter = new ProfilesAdapter(this, images.getProfiles());
         imagesRecyclerView.setAdapter(adapter);
 
+        showImagesFullScreen(images.getProfiles());
+
         imagesRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(activity, imagesRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Toast.makeText(activity, "Kliknięto " + images.getProfiles().get(position).getVote_average(), Toast.LENGTH_SHORT).show();
+
+                        fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
+                        fullScreenImagesRecyclerView.scrollToPosition(position);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                    }
+
+                })
+        );
+
+    }
+
+    @UiThread
+    public void showImagesFullScreen(final List<Profiles> profiles) {
+
+        ImageAdapter adapter = new ImageAdapter(this, profiles);
+        fullScreenImagesRecyclerView.setAdapter(adapter);
+
+        fullScreenImagesRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(activity, knownForRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        fullScreenImagesRecyclerView.setVisibility(View.GONE);
                     }
 
                     @Override

@@ -1,6 +1,7 @@
 package com.anddev.movieguide;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,12 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.Profil
 
     private Activity context;
 
-    private List<Profiles> ProfilesList;
+    private List<Profiles> profilesList;
 
-    public ProfilesAdapter(Activity context, List<Profiles> ProfilesList) {
+
+    public ProfilesAdapter(Activity context, List<Profiles> profilesList) {
         this.context = context;
-        this.ProfilesList = ProfilesList;
+        this.profilesList = profilesList;
     }
 
     @Override
@@ -37,17 +39,16 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.Profil
     @Override
     public void onBindViewHolder(ProfilesViewHolder holder, int position) {
 
-        Profiles image = ProfilesList.get(position);
+        Profiles image = profilesList.get(position);
 
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + image.getFile_path(), holder.imageView, ImageTools.DRAWABLE_PERSON);
 
 
     }
 
-
     @Override
     public int getItemCount() {
-        return ProfilesList.size();
+        return profilesList.size();
     }
 
 
