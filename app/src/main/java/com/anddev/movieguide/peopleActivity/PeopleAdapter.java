@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.model.KnownForPopular;
 import com.anddev.movieguide.model.Results;
 import com.anddev.movieguide.tools.ImageTools;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
         Results result = peopleList.get(position);
 
         holder.nameTextView.setText(result.getName());
+        holder.movieTextView.setText(getMovieOfActor(result.getKnownForPopular()));
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + peopleList.get(position).getProfile_path(), holder.peopleImageView, ImageTools.DRAWABLE_PERSON);
 
 
@@ -57,16 +60,43 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
     class PeopleViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTextView;
-        ImageView peopleImageView;
+        TextView movieTextView;
+        RoundedImageView peopleImageView;
 
 
         public PeopleViewHolder(View itemView) {
             super(itemView);
 
             nameTextView = itemView.findViewById(R.id.row_name_people_list_textView);
+            movieTextView = itemView.findViewById(R.id.row_movie_people_list_textView);
             peopleImageView = itemView.findViewById(R.id.row_people_list_imageView);
 
         }
+    }
+
+    public String getMovieOfActor(List<KnownForPopular> listOfMovie) {
+
+        String movie = "";
+        try {
+            if (listOfMovie.get(0).getTitle() != null) {
+                movie = listOfMovie.get(0).getTitle();
+
+            }
+
+
+        } catch (Exception e) {
+            return "";
+
+        }
+        for (int i = 1; i < listOfMovie.size(); i++) {
+            if (listOfMovie.get(i).getTitle() != null) {
+                movie = movie + ", " + listOfMovie.get(i).getTitle();
+
+            }
+        }
+
+        return movie;
+
     }
 }
 

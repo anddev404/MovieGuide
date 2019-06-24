@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Results {
     private boolean adult;
-    private List<KnownForPopular> knownForPopular;
+    private List<KnownForPopular> known_for;
     private String name;
     private String profile_path;
     private int id;
@@ -19,11 +19,11 @@ public class Results {
     }
 
     public List<KnownForPopular> getKnownForPopular() {
-        return knownForPopular;
+        return known_for;
     }
 
-    public void setKnownForPopular(List<KnownForPopular> knownForPopular) {
-        this.knownForPopular = knownForPopular;
+    public void setKnownForPopular(List<KnownForPopular> known_for) {
+        this.known_for = known_for;
     }
 
     public String getName() {
