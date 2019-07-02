@@ -1,7 +1,13 @@
 package com.anddev.movieguide.peopleActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +25,7 @@ import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 
@@ -43,6 +50,10 @@ public class PeopleActivity extends AppCompatActivity {
 
     PopularPeople popularPeople;
 
+    AlertDialog internetDialog;
+
+    ConnectionInterface client;
+
     @AfterViews
     public void onCreate() {
 
@@ -53,12 +64,50 @@ public class PeopleActivity extends AppCompatActivity {
 
         try {
 
-            ConnectionInterface client = RetrofitTools.getConnectionInterface();
-            downloadPeopleInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, 1);
+            client = RetrofitTools.getConnectionInterface();
+
+            IntentFilter regFilter = new IntentFilter();
+            regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(networkChangeReceiver, regFilter);
+
 
         } catch (Exception e) {
 
         }
+
+    }
+
+    public void downloadAndShowPeopleOnScreen() {
+
+        try {
+            if (popularPeople == null) {
+                if (InternetTools.isNetworkAvailable(activity)) {
+
+                    downloadPeopleInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, 1);
+
+                } else {
+                    internetDialog = InternetTools.showNoConnectionDialog(activity);
+                }
+            } else {
+                if (peopleListRecyclerView == null) {
+
+                    showData(popularPeople);
+
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        downloadAndShowPeopleOnScreen();
 
     }
 
@@ -78,7 +127,6 @@ public class PeopleActivity extends AppCompatActivity {
 
                         popularPeople = response.body();
                         showData(popularPeople);
-
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
@@ -91,11 +139,14 @@ public class PeopleActivity extends AppCompatActivity {
                 public void onFailure(Call<PopularPeople> call, Throwable t) {
 
                     showError("Brak połączenia internetowego!");
+                    downloadAndShowPeopleOnScreen();
 
                 }
             });
         } catch (Throwable e) {
             showError("Nieoczekiwan błąd!");
+            downloadAndShowPeopleOnScreen();
+
         }
 
     }
@@ -130,4 +181,26 @@ public class PeopleActivity extends AppCompatActivity {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
+
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getExtras() != null) {
+                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
+
+                    if (internetDialog != null) {
+
+                        internetDialog.dismiss();
+
+                    }
+                    downloadAndShowPeopleOnScreen();
+
+                }
+            }
+
+        }
+    };
+
 }
