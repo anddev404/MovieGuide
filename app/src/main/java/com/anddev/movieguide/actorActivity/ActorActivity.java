@@ -19,6 +19,7 @@ import com.anddev.movieguide.model.Profiles;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.NavigationBarTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 
@@ -39,6 +40,7 @@ import retrofit2.Response;
 public class ActorActivity extends AppCompatActivity {
 
     Activity activity;
+    NavigationBarTools navigationBarTools;
 
     @BindView(R.id.nameTextView)
     TextView name;
@@ -73,6 +75,7 @@ public class ActorActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
+        navigationBarTools = new NavigationBarTools(this);
 
         try {
             if (activity.getIntent().getExtras() != null) {

@@ -26,6 +26,7 @@ import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
+import com.anddev.movieguide.tools.NavigationBarTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 
@@ -44,6 +45,7 @@ import retrofit2.Response;
 public class PeopleActivity extends AppCompatActivity {
 
     Activity activity;
+    NavigationBarTools navigationBarTools;
 
     @BindView(R.id.people_list_recycler_view)
     RecyclerView peopleListRecyclerView;
@@ -59,6 +61,7 @@ public class PeopleActivity extends AppCompatActivity {
 
         activity = this;
         ButterKnife.bind(this);
+        navigationBarTools = new NavigationBarTools(this);
 
         peopleListRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
