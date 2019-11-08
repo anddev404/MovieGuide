@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.RetrofitTools;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -16,11 +17,13 @@ public class MovieActvity extends AppCompatActivity {
 
     @AfterViews
     public void onCreate() {
-
+        ConnectionInterface client = RetrofitTools.getConnectionInterface();
+        downloadMovieInBackground(client, RetrofitTools.EXAMPLE_ID_MOVIE, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
     }
 
     @Background
-    void downloadMovieInBackground() {
+    void downloadMovieInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
+
 
     }
 

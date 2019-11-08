@@ -3,6 +3,7 @@ package com.anddev.movieguide.tools;
 import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Actor;
 import com.anddev.movieguide.model.Images;
+import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.model.PopularPeople;
 
 import retrofit2.Call;
@@ -34,6 +35,6 @@ public interface ConnectionInterface {
 
     //https://api.themoviedb.org/3/movie/338967?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
     @GET("3/movie/{id}")
-    Call<Images> movie(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
-    
+    Call<Movie> movie(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
+
 }
