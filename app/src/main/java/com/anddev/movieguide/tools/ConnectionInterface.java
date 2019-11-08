@@ -28,4 +28,12 @@ public interface ConnectionInterface {
     //https://api.themoviedb.org/3/person/popular?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
     @GET("3/person/popular")
     Call<PopularPeople> popularPeople(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+
+
+    //MOVIE
+
+    //https://api.themoviedb.org/3/movie/338967?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
+    @GET("3/movie/{id}")
+    Call<Images> movie(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
+    
 }
