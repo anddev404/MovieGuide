@@ -2,7 +2,7 @@ package com.anddev.movieguide.model;
 
 import java.util.List;
 
-public abstract class Movie {
+public class Movie {
 
     private int vote_count;
     private double vote_average;

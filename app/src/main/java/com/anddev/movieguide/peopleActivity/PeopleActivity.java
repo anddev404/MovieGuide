@@ -147,7 +147,7 @@ public class PeopleActivity extends AppCompatActivity {
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwan błąd!");
+            showError("Nieoczekiwany błąd!");
             downloadAndShowPeopleOnScreen();
 
         }

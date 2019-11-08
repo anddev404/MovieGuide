@@ -145,7 +145,7 @@ public class ActorActivity extends AppCompatActivity {
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwan błąd!");
+            showError("Nieoczekiwany błąd!");
         }
 
     }
