@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".peopleActivity.PeopleActivity_"></activity>
-        <activity android:name=".movieBranch.MovieActvity">
+        <activity android:name=".movieBranch.MovieActvity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
