@@ -8,6 +8,9 @@ import com.squareup.picasso.Picasso;
 
 public class ImageTools {
 
+    public static final String IMAGE_PATH_500px = "https://image.tmdb.org/t/p/w500";
+    public static final String IMAGE_PATH_ORYGINAL = "https://image.tmdb.org/t/p/original";
+
     public static final int DRAWABLE_FILM = R.drawable.ic_local_movies_black_24dp;
     public static final int DRAWABLE_PERSON = R.drawable.person;
 
