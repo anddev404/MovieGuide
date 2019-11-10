@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.moviesActivity.MoviesActivity;
 import com.anddev.movieguide.peopleActivity.PeopleActivity_;
 
 import butterknife.ButterKnife;
@@ -27,4 +28,10 @@ public class NavigationBarTools {
         activity.startActivity(intent);
     }
 
+    @OnClick(R.id.movies_navigation_drawer_button)
+    public void onClickMovies() {
+
+        Intent intent = new Intent(activity, MoviesActivity.class);
+        activity.startActivity(intent);
+    }
 }
