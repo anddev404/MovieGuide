@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".movieBranch.MovieActvity">
+    tools:context=".movieActivity.MovieActvity">
 
     <ImageView
         android:id="@+id/poster_movie_imageView"

@@ -1,17 +1,14 @@
-package com.anddev.movieguide.movieBranch;
+package com.anddev.movieguide.movieActivity;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
-import com.anddev.movieguide.model.Actor;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.tools.ConnectionInterface;
-import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 
