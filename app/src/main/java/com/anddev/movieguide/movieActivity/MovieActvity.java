@@ -10,6 +10,7 @@ import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.NavigationBarTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 
 import org.androidannotations.annotations.AfterViews;
@@ -28,6 +29,7 @@ public class MovieActvity extends AppCompatActivity {
 
     Activity activity;
     Movie movie;
+    NavigationBarTools navigationBarTools;
 
     @BindView(R.id.poster_movie_imageView)
     ImageView poster;
@@ -51,6 +53,8 @@ public class MovieActvity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
+        navigationBarTools = new NavigationBarTools(this);
+
         ConnectionInterface client = RetrofitTools.getConnectionInterface();
         downloadMovieInBackground(client, RetrofitTools.EXAMPLE_ID_MOVIE, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
     }

@@ -1,46 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".movieActivity.MovieActvity">
 
-    <ImageView
-        android:id="@+id/poster_movie_imageView"
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="214dp"
-        tools:srcCompat="@drawable/ic_local_movies_black_24dp" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title_movie_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/oryginal_title_movie_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="oryginal title" />
+            <ImageView
+                android:id="@+id/poster_movie_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="214dp"
+                tools:srcCompat="@drawable/ic_local_movies_black_24dp" />
 
-    <TextView
-        android:id="@+id/overview_movie_TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="opis" />
+            <TextView
+                android:id="@+id/title_movie_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="title" />
 
-    <TextView
-        android:id="@+id/vote_average_movie_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="7.5" />
+            <TextView
+                android:id="@+id/oryginal_title_movie_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="oryginal title" />
 
-    <TextView
-        android:id="@+id/release_data_movie_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="2019-10-09" />
+            <TextView
+                android:id="@+id/overview_movie_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="opis" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/vote_average_movie_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7.5" />
+
+            <TextView
+                android:id="@+id/release_data_movie_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2019-10-09" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <include layout="@layout/navigation_drawer" />
+</android.support.v4.widget.DrawerLayout>
