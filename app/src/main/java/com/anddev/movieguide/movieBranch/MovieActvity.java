@@ -3,6 +3,8 @@ package com.anddev.movieguide.movieBranch;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
@@ -18,6 +20,8 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,9 +32,28 @@ public class MovieActvity extends AppCompatActivity {
     Activity activity;
     Movie movie;
 
+    @BindView(R.id.poster_movie_imageView)
+    ImageView poster;
+
+    @BindView(R.id.title_movie_textView)
+    TextView title;
+
+    @BindView(R.id.oryginal_title_movie_textView)
+    TextView oryginalTitle;
+
+    @BindView(R.id.overview_movie_TextView)
+    TextView overview;
+
+    @BindView(R.id.vote_average_movie_textView)
+    TextView voteAverage;
+
+    @BindView(R.id.release_data_movie_textView)
+    TextView releaseData;
+
     @AfterViews
     public void onCreate() {
         activity = this;
+        ButterKnife.bind(this);
         ConnectionInterface client = RetrofitTools.getConnectionInterface();
         downloadMovieInBackground(client, RetrofitTools.EXAMPLE_ID_MOVIE, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
     }
@@ -48,6 +71,8 @@ public class MovieActvity extends AppCompatActivity {
 
                     if (response.code() == 200) {
                         movie = response.body();
+                        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + response.body().getPoster_path(), poster, ImageTools.DRAWABLE_PERSON);
+                        showDataOfMovie(movie);
 
                     } else {
 
@@ -74,5 +99,16 @@ public class MovieActvity extends AppCompatActivity {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
-    
+
+    @UiThread
+    public void showDataOfMovie(Movie movie) {
+
+        title.setText(movie.getTitle());
+        oryginalTitle.setText(movie.getOriginal_title());
+        overview.setText(movie.getOverview());
+        voteAverage.setText(Double.toString(movie.getVote_average()));
+        releaseData.setText(movie.getRelease_date());
+
+    }
+
 }
