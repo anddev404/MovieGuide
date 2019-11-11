@@ -28,8 +28,11 @@ import retrofit2.Response;
 public class MovieActvity extends AppCompatActivity {
 
     Activity activity;
-    Movie movie;
     NavigationBarTools navigationBarTools;
+
+    Movie movie;
+    Integer movieId;
+
 
     @BindView(R.id.poster_movie_imageView)
     ImageView poster;
@@ -54,9 +57,17 @@ public class MovieActvity extends AppCompatActivity {
         activity = this;
         ButterKnife.bind(this);
         navigationBarTools = new NavigationBarTools(this);
-
+        try {
+            if (activity.getIntent().getExtras() != null) {
+                movieId = activity.getIntent().getExtras().getInt("Id", 0);
+            } else {
+                movieId = RetrofitTools.EXAMPLE_ID_MOVIE;
+            }
+        } catch (Exception e) {
+            movieId = RetrofitTools.EXAMPLE_ID_MOVIE;
+        }
         ConnectionInterface client = RetrofitTools.getConnectionInterface();
-        downloadMovieInBackground(client, RetrofitTools.EXAMPLE_ID_MOVIE, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+        downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
     }
 
     @Background

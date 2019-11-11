@@ -1,6 +1,7 @@
 package com.anddev.movieguide.actorActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -16,6 +17,7 @@ import com.anddev.movieguide.model.Actor;
 import com.anddev.movieguide.model.Images;
 import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Profiles;
+import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
@@ -246,7 +248,9 @@ public class ActorActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(activity, knownForRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(activity, "Kliknięto " + knownFor.getCast().get(position).getOriginal_title(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(activity, MovieActvity_.class);
+                        intent.putExtra("Id", knownFor.getCast().get(position).getId());
+                        startActivity(intent);
                     }
 
                     @Override
