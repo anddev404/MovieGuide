@@ -18,7 +18,7 @@ public class MoviesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movies);
         activity = this;
 
-        Intent intent = new Intent(activity, MovieActvity_.class);
-        activity.startActivity(intent);
+//        Intent intent = new Intent(activity, MovieActvity_.class);
+//        activity.startActivity(intent);
     }
 }
