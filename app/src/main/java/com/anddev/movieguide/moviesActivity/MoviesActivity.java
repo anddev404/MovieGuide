@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.NavigationBarTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 
 import org.androidannotations.annotations.AfterViews;
@@ -22,14 +23,14 @@ import retrofit2.Response;
 public class MoviesActivity extends AppCompatActivity {
 
     Activity activity;
-
+    NavigationBarTools navigationDrawer;
     ConnectionInterface client;
     Movies movies;
 
     @AfterViews
     public void onCreate() {
         activity = this;
-
+        navigationDrawer = new NavigationBarTools(activity);
         try {
 
             client = RetrofitTools.getConnectionInterface();
