@@ -10,7 +10,7 @@ import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.ImageTools;
-import com.anddev.movieguide.tools.NavigationBarTools;
+import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 
 import org.androidannotations.annotations.AfterViews;
@@ -28,7 +28,7 @@ import retrofit2.Response;
 public class MovieActvity extends AppCompatActivity {
 
     Activity activity;
-    NavigationBarTools navigationBarTools;
+    NavigationDrawerTools navigationDrawer;
 
     Movie movie;
     Integer movieId;
@@ -56,7 +56,7 @@ public class MovieActvity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
-        navigationBarTools = new NavigationBarTools(this);
+        navigationDrawer = new NavigationDrawerTools(this);
         try {
             if (activity.getIntent().getExtras() != null) {
                 movieId = activity.getIntent().getExtras().getInt("Id", 0);

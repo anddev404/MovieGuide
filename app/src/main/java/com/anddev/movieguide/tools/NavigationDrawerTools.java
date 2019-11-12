@@ -11,11 +11,11 @@ import com.anddev.movieguide.peopleActivity.PeopleActivity_;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NavigationBarTools {
+public class NavigationDrawerTools {
 
     Activity activity;
 
-    public NavigationBarTools(Activity activity) {
+    public NavigationDrawerTools(Activity activity) {
 
         this.activity = activity;
         ButterKnife.bind(this, activity);
