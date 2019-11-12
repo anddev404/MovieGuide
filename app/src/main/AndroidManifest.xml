@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".peopleActivity.PeopleActivity_"></activity>
         <activity android:name=".movieActivity.MovieActvity_"></activity>
-        <activity android:name=".moviesActivity.MoviesActivity">
+        <activity android:name=".moviesActivity.MoviesActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
