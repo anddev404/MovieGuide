@@ -24,6 +24,8 @@ public class MoviesActivity extends AppCompatActivity {
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
+
+    MoviesFragment fragment;
     ConnectionInterface client;
     Movies movies;
 
@@ -31,6 +33,8 @@ public class MoviesActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         navigationDrawer = new NavigationDrawerTools(activity);
+        fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+
         try {
 
             client = RetrofitTools.getConnectionInterface();
@@ -57,6 +61,7 @@ public class MoviesActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         movies = response.body();
+                        fragment.setData(movies);
 
                     } else {
 
