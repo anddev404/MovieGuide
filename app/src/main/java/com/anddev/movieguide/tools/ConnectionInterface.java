@@ -47,4 +47,16 @@ public interface ConnectionInterface {
     //https://api.themoviedb.org/3/movie/top_rated?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
     @GET("3/movie/top_rated")
     Call<Movies> topRatedMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+
+
+    //SEARCH
+
+    //https://api.themoviedb.org/3/search/movie?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&query=terminator&page=1&include_adult=false
+    @GET("3/search/movie")
+    Call<Movies> searchMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
+
+    //https://api.themoviedb.org/3/search/person?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&query=naomi%20scott&page=1&include_adult=false
+    @GET("3/search/person")
+    Call<PopularPeople> searchPerson(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
+    
 }
