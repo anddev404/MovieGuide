@@ -18,4 +18,9 @@
         android:layout_height="wrap_content"
         android:text="Movies" />
 
+    <Button
+        android:id="@+id/search_engine_navigation_drawer_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search..." />
 </LinearLayout>
