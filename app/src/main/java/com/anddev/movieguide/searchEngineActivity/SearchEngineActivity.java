@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
+import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
@@ -25,6 +26,8 @@ import retrofit2.Response;
 public class SearchEngineActivity extends AppCompatActivity {
 
     Activity activity;
+    MoviesFragment fragment;
+
     NavigationDrawerTools navigationDrawer;
 
     ConnectionInterface client;
@@ -35,6 +38,7 @@ public class SearchEngineActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         navigationDrawer = new NavigationDrawerTools(activity);
+        fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
 
         client = RetrofitTools.getConnectionInterface();
         downloadMoviesInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, RetrofitTools.EXAMPLE_SEARCH_MOVIE, 1);
@@ -57,6 +61,7 @@ public class SearchEngineActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         movies = response.body();
+                        fragment.setData(movies);
 
                     } else {
 
