@@ -54,7 +54,7 @@ public class PeopleActivity extends AppCompatActivity {
 
         activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(this);
+        navigationDrawer = new NavigationDrawerTools(this, R.id.movies_navigation_draver);
 
         peopleListRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
