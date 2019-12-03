@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.moviesActivity.MoviesActivity_;
