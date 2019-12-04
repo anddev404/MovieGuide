@@ -53,6 +53,7 @@ public class PeopleActivity extends AppCompatActivity {
 
         activity = this;
         ButterKnife.bind(this);
+
         navigationDrawer = new NavigationDrawerTools(this);
         peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_people);
 

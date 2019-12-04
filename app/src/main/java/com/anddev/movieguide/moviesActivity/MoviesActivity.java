@@ -9,10 +9,15 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
+import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
@@ -33,6 +38,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
+    ActionBarTools actionBarTools;
 
     MoviesFragment fragment;
     ConnectionInterface client;
@@ -43,7 +49,8 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     @AfterViews
     public void onCreate() {
         activity = this;
-        navigationDrawer = new NavigationDrawerTools(activity);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.movies_navigation_draver);
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movies");
         fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
         client = RetrofitTools.getConnectionInterface();
 
@@ -164,4 +171,48 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search: film, actor...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Toast.makeText(activity, "Submit " + s, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Toast.makeText(activity, "Change " + s, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+
+                navigationDrawer.openOrCloseNavigationDrawer();
+
+                break;
+
+        }
+
+        return true;
+
+    }
+
 }
