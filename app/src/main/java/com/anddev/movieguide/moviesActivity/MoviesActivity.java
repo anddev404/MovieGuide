@@ -107,7 +107,7 @@ public class MoviesActivity extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-
+        searchView.setQueryHint("Search: film, actor...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
