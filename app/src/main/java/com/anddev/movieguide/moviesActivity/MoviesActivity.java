@@ -1,12 +1,21 @@
 package com.anddev.movieguide.moviesActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.DownloadManager;
+import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 
@@ -20,13 +29,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_movies)
-public class MoviesActivity extends AppCompatActivity {
+public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener {
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
 
     MoviesFragment fragment;
     ConnectionInterface client;
+    DownloadManager downloadManager;
+    AlertDialog internetDialog;
     Movies movies;
 
     @AfterViews
@@ -34,15 +45,15 @@ public class MoviesActivity extends AppCompatActivity {
         activity = this;
         navigationDrawer = new NavigationDrawerTools(activity);
         fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+        client = RetrofitTools.getConnectionInterface();
 
-        try {
+        IntentFilter regFilter = new IntentFilter();
+        regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, regFilter);
 
-            client = RetrofitTools.getConnectionInterface();
-            downloadMoviesInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, 1);
-
-        } catch (Exception e) {
-
-        }
+        downloadManager = new DownloadManager(InternetTools.isNetworkAvailable(activity), false);
+        downloadManager.setOnDownloadManagerListener(this);
+        downloadManager.processStates();
 
     }
 
@@ -61,11 +72,12 @@ public class MoviesActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         movies = response.body();
-                        fragment.setData(movies);
+                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
 
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
+                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
 
@@ -75,11 +87,13 @@ public class MoviesActivity extends AppCompatActivity {
                 public void onFailure(Call<Movies> call, Throwable t) {
 
                     showError("Brak połączenia internetowego!");
+                    downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                 }
             });
         } catch (Throwable e) {
             showError("Nieoczekiwany błąd!");
+            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
         }
 
@@ -91,4 +105,63 @@ public class MoviesActivity extends AppCompatActivity {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
+
+
+    @Override
+    public void downloadData() {
+        try {
+
+            downloadMoviesInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, 1);
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void showData() {
+        fragment.setData(movies);
+
+    }
+
+    @Override
+    public void showNoInternetNotification() {
+        if (internetDialog != null) {
+
+            internetDialog.show();
+
+        } else {
+            internetDialog = InternetTools.showNoConnectionDialog(activity);
+
+        }
+
+    }
+
+    @Override
+    public void hideNoInternetNotification() {
+        if (internetDialog != null) {
+
+            internetDialog.dismiss();
+
+        }
+    }
+
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getExtras() != null) {
+                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
+
+                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+
+                } else {
+                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+
+                }
+            }
+
+        }
+    };
 }
