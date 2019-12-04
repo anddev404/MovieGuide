@@ -36,7 +36,7 @@ public class MoviesActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movies_navigation_draver);
-        actionBarTools = new ActionBarTools(this).addMenuButton();
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movies");
         fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
 
         try {

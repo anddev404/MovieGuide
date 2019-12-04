@@ -24,5 +24,12 @@ public class ActionBarTools {
 
     }
 
+    public ActionBarTools setTitle(String string) {
+
+        activity.getSupportActionBar().setTitle(string);
+
+        return actionBarTools;
+
+    }
 
 }
