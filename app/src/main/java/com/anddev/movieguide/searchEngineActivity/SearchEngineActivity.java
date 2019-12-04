@@ -3,12 +3,15 @@ package com.anddev.movieguide.searchEngineActivity;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
+import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
@@ -18,6 +21,9 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +32,8 @@ import retrofit2.Response;
 public class SearchEngineActivity extends AppCompatActivity {
 
     Activity activity;
-    MoviesFragment fragment;
+    MoviesFragment moviesFragment;
+    PeopleFragment peopleFragment;
 
     NavigationDrawerTools navigationDrawer;
 
@@ -34,15 +41,21 @@ public class SearchEngineActivity extends AppCompatActivity {
     Movies movies;
     PopularPeople people;
 
+    @BindView(R.id.search_query)
+    EditText searchQueryEditText;
+    @BindView(R.id.searchButton)
+    Button searchButton;
+
+
     @AfterViews
     public void onCreate() {
         activity = this;
+        ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity);
-        fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+        moviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_movies);
+        peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_people);
 
         client = RetrofitTools.getConnectionInterface();
-        downloadMoviesInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, RetrofitTools.EXAMPLE_SEARCH_MOVIE, 1);
-        downloadPeopleInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, RetrofitTools.EXAMPLE_SEARCH_PERSON, 1);
 
     }
 
@@ -61,7 +74,7 @@ public class SearchEngineActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         movies = response.body();
-                        fragment.setData(movies);
+                        moviesFragment.setData(movies);
 
                     } else {
 
@@ -100,6 +113,7 @@ public class SearchEngineActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         people = response.body();
+                        peopleFragment.setData(people);
 
                     } else {
 
@@ -129,4 +143,25 @@ public class SearchEngineActivity extends AppCompatActivity {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
+
+    //butterknife.ButterKnife.bind(this); //nie zapomnąć
+
+    @OnClick(R.id.searchButton)
+    public void onClickSearchButton() {
+
+        String query = "";
+
+        try {
+
+            query = searchQueryEditText.getText().toString();
+
+        } catch (Exception e) {
+
+        }
+
+        downloadMoviesInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, query, 1);
+        downloadPeopleInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, query, 1);
+
+    }
+
 }

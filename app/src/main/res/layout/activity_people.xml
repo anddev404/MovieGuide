@@ -17,16 +17,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/people_list_recycler_view"
+            <fragment
+                android:id="@+id/fragment_people"
+                android:name="com.anddev.movieguide.peopleActivity.PeopleFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical" />
+                android:layout_height="match_parent"></fragment>
 
         </LinearLayout>
     </FrameLayout>
 
-    <include
-        layout="@layout/navigation_drawer" />
+    <include layout="@layout/navigation_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

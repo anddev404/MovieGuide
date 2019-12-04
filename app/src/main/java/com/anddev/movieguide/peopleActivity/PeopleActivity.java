@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
 import com.anddev.movieguide.model.PopularPeople;
+import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
@@ -38,10 +39,8 @@ import retrofit2.Response;
 public class PeopleActivity extends AppCompatActivity {
 
     Activity activity;
+    PeopleFragment peopleFragment;
     NavigationDrawerTools navigationDrawer;
-
-    @BindView(R.id.people_list_recycler_view)
-    RecyclerView peopleListRecyclerView;
 
     PopularPeople popularPeople;
 
@@ -55,8 +54,7 @@ public class PeopleActivity extends AppCompatActivity {
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(this);
-
-        peopleListRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_people);
 
         try {
 
@@ -85,11 +83,11 @@ public class PeopleActivity extends AppCompatActivity {
                     internetDialog = InternetTools.showNoConnectionDialog(activity);
                 }
             } else {
-                if (peopleListRecyclerView == null) {
+               // if (peopleListRecyclerView == null) {
 
-                    showData(popularPeople);
+                    peopleFragment.setData(popularPeople);
 
-                }
+                //}
             }
 
         } catch (Exception e) {
@@ -122,7 +120,7 @@ public class PeopleActivity extends AppCompatActivity {
                     if (response.code() == 200) {
 
                         popularPeople = response.body();
-                        showData(popularPeople);
+                        peopleFragment.setData(popularPeople);
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
@@ -147,29 +145,6 @@ public class PeopleActivity extends AppCompatActivity {
 
     }
 
-    @UiThread
-    public void showData(final PopularPeople popularPeople) {
-
-        PeopleAdapter adapter = new PeopleAdapter(this, popularPeople.getResults());
-        peopleListRecyclerView.setAdapter(adapter);
-
-        peopleListRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(activity, peopleListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(activity, ActorActivity_.class);
-                        intent.putExtra("Id", popularPeople.getResults().get(position).getId());
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                    }
-
-                })
-        );
-
-    }
 
     @UiThread
     public void showError(String message) {
