@@ -6,7 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SnapHelper;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +22,8 @@ import com.anddev.movieguide.model.Images;
 import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Profiles;
 import com.anddev.movieguide.movieActivity.MovieActvity_;
+import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
+import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
@@ -43,6 +49,7 @@ public class ActorActivity extends AppCompatActivity {
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
+    ActionBarTools actionBarTools;
 
     @BindView(R.id.nameTextView)
     TextView name;
@@ -77,7 +84,8 @@ public class ActorActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(this);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.actor_navigation_draver);
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Actor");
 
         try {
             if (activity.getIntent().getExtras() != null) {
@@ -315,6 +323,51 @@ public class ActorActivity extends AppCompatActivity {
     public void showError(String message) {
 
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                SearchEngineActivity.searchAndOpenResults(query, activity);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+
+                navigationDrawer.openOrCloseNavigationDrawer();
+
+                break;
+
+        }
+
+        return true;
 
     }
 }

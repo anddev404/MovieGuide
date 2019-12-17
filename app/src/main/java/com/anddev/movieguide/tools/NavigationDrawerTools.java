@@ -18,12 +18,6 @@ public class NavigationDrawerTools {
     Activity activity;
     DrawerLayout mDrawerLayout;
 
-    public NavigationDrawerTools(Activity activity) {
-
-        this.activity = activity;
-        ButterKnife.bind(this, activity);
-    }
-
     public NavigationDrawerTools(Activity activity, int navigationDrawerLayoutId) {
 
         this.activity = activity;

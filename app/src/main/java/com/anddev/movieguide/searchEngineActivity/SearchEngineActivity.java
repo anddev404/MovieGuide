@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +17,7 @@ import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.peopleActivity.PeopleFragment;
+import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
@@ -38,6 +43,7 @@ public class SearchEngineActivity extends AppCompatActivity {
     PeopleFragment peopleFragment;
 
     NavigationDrawerTools navigationDrawer;
+    ActionBarTools actionBarTools;
 
     ConnectionInterface client;
     Movies movies;
@@ -49,7 +55,8 @@ public class SearchEngineActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(activity);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver);
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results");
         moviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_movies);
         tvShowsFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_tv_shows);
         peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_people);
@@ -197,5 +204,50 @@ public class SearchEngineActivity extends AppCompatActivity {
         Intent intent = new Intent(activity, SearchEngineActivity_.class);
         intent.putExtra("Query", query);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                SearchEngineActivity.searchAndOpenResults(query, activity);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+
+                navigationDrawer.openOrCloseNavigationDrawer();
+
+                break;
+
+        }
+
+        return true;
+
     }
 }

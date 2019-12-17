@@ -2,12 +2,18 @@ package com.anddev.movieguide.movieActivity;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movie;
+import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
+import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
@@ -29,6 +35,7 @@ public class MovieActvity extends AppCompatActivity {
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
+    ActionBarTools actionBarTools;
 
     Movie movie;
     Integer movieId;
@@ -56,7 +63,9 @@ public class MovieActvity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(this);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver);
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movie");
+
         try {
             if (activity.getIntent().getExtras() != null) {
                 movieId = activity.getIntent().getExtras().getInt("Id", 0);
@@ -123,4 +132,48 @@ public class MovieActvity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                SearchEngineActivity.searchAndOpenResults(query, activity);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+
+                navigationDrawer.openOrCloseNavigationDrawer();
+
+                break;
+
+        }
+
+        return true;
+
+    }
 }
