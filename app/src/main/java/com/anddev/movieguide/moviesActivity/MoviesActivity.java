@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
+import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
+import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity_;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DownloadManager;
@@ -180,17 +182,19 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
         MenuItem searchItem = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Search: film, actor...");
+        searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                Toast.makeText(activity, "Submit " + s, Toast.LENGTH_SHORT).show();
+            public boolean onQueryTextSubmit(String query) {
+
+                SearchEngineActivity.searchAndOpenResults(query, activity);
+
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                Toast.makeText(activity, "Change " + s, Toast.LENGTH_SHORT).show();
+            public boolean onQueryTextChange(String query) {
+
                 return false;
             }
         });

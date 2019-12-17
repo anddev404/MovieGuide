@@ -55,6 +55,10 @@ public interface ConnectionInterface {
     @GET("3/search/movie")
     Call<Movies> searchMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
 
+    //https://api.themoviedb.org/3/search/tv?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&query=big%20bang&page=1
+    @GET("3/search/tv")
+    Call<Movies> searchTvShows(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
+
     //https://api.themoviedb.org/3/search/person?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&query=naomi%20scott&page=1&include_adult=false
     @GET("3/search/person")
     Call<PopularPeople> searchPerson(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
