@@ -6,6 +6,8 @@ import com.anddev.movieguide.model.Images;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
+import com.anddev.movieguide.model.TvShow;
+import com.anddev.movieguide.model.TvShows;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -48,6 +50,11 @@ public interface ConnectionInterface {
     @GET("3/movie/top_rated")
     Call<Movies> topRatedMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
 
+    //TV SHOWS
+
+    //https://api.themoviedb.org/3/tv/1418?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
+    @GET("3/tv/{id}")
+    Call<TvShow> tvShow(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
 
     //SEARCH
 
@@ -57,10 +64,10 @@ public interface ConnectionInterface {
 
     //https://api.themoviedb.org/3/search/tv?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&query=big%20bang&page=1
     @GET("3/search/tv")
-    Call<Movies> searchTvShows(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
+    Call<TvShows> searchTvShows(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
 
     //https://api.themoviedb.org/3/search/person?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&query=naomi%20scott&page=1&include_adult=false
     @GET("3/search/person")
     Call<PopularPeople> searchPerson(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") Integer page);
-    
+
 }

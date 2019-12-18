@@ -3,33 +3,30 @@ package com.anddev.movieguide.searchEngineActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
+import com.anddev.movieguide.model.TvShows;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
+import com.anddev.movieguide.tvShows.TvShowsFragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,7 +36,7 @@ public class SearchEngineActivity extends AppCompatActivity {
 
     Activity activity;
     MoviesFragment moviesFragment;
-    MoviesFragment tvShowsFragment;
+    TvShowsFragment tvShowsFragment;
     PeopleFragment peopleFragment;
 
     NavigationDrawerTools navigationDrawer;
@@ -47,7 +44,7 @@ public class SearchEngineActivity extends AppCompatActivity {
 
     ConnectionInterface client;
     Movies movies;
-    Movies tvShows;
+    TvShows tvShows;
     PopularPeople people;
 
 
@@ -58,7 +55,7 @@ public class SearchEngineActivity extends AppCompatActivity {
         navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver);
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results");
         moviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_movies);
-        tvShowsFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_tv_shows);
+        tvShowsFragment = (TvShowsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_tv_shows);
         peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_search_people);
 
         client = RetrofitTools.getConnectionInterface();
@@ -120,12 +117,12 @@ public class SearchEngineActivity extends AppCompatActivity {
         try {
 
 
-            Call<Movies> call = client.searchTvShows(apiKey, language, query, page);
+            Call<TvShows> call = client.searchTvShows(apiKey, language, query, page);
 
-            call.enqueue(new Callback<Movies>() {
+            call.enqueue(new Callback<TvShows>() {
 
                 @Override
-                public void onResponse(Call<Movies> call, Response<Movies> response) {
+                public void onResponse(Call<TvShows> call, Response<TvShows> response) {
 
                     if (response.code() == 200) {
 
@@ -141,7 +138,7 @@ public class SearchEngineActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Movies> call, Throwable t) {
+                public void onFailure(Call<TvShows> call, Throwable t) {
 
                     showError("Brak połączenia internetowego!");
 
