@@ -16,6 +16,7 @@ import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.moviesActivity.MoviesAdapter;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tvShow.TvShowActivity;
+import com.anddev.movieguide.tvShow.TvShowActivity_;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +53,7 @@ public class TvShowsFragment extends Fragment {
                 new RecyclerItemClickListener(getActivity(), tvShowsListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getActivity(), TvShowActivity.class);
+                        Intent intent = new Intent(getActivity(), TvShowActivity_.class);
                         intent.putExtra("Id", tvShows.getResults().get(position).getId());
                         startActivity(intent);
                     }

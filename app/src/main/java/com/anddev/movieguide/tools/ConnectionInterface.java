@@ -54,7 +54,7 @@ public interface ConnectionInterface {
 
     //https://api.themoviedb.org/3/tv/1418?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
     @GET("3/tv/{id}")
-    Call<TvShow> tvShow(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+    Call<TvShow> tvShow(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
 
     //SEARCH
 
