@@ -8,7 +8,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -41,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_search_engine)
-public class SearchEngineActivity extends AppCompatActivity implements FragmentDownloadManager.OnFragmentDownloadManagerListener {
+public class SearchEngineActivity extends AppCompatActivity implements FragmentDownloadManager.OnFragmentDownloadManagerListener, ActionBar.TabListener {
 
     SearchEngineActivity activity;
     MoviesFragment moviesFragment;
@@ -67,7 +69,7 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver);
-        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results");
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results").addTabsToView(TabsPagerAdapter.getTabs(), this);
 
         viewPager = (ViewPager) findViewById(R.id.pager_search_activity);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
@@ -386,4 +388,18 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
     }
 
 
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
 }

@@ -10,6 +10,12 @@ import com.anddev.movieguide.tvShows.TvShowsFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
+    public static String[] tabs = {"Movies", "TvSows", "People"};
+
+    public static String[] getTabs() {
+        return tabs;
+    }
+
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
