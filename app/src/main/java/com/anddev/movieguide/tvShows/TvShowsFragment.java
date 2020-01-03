@@ -12,10 +12,7 @@ import android.view.ViewGroup;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.TvShows;
-import com.anddev.movieguide.movieActivity.MovieActvity_;
-import com.anddev.movieguide.moviesActivity.MoviesAdapter;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
-import com.anddev.movieguide.tvShow.TvShowActivity;
 import com.anddev.movieguide.tvShow.TvShowActivity_;
 
 import butterknife.BindView;
@@ -38,6 +35,10 @@ public class TvShowsFragment extends Fragment {
         activity = getActivity();
         ButterKnife.bind(this, rootView);
         tvShowsListRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+
+        if (tvShows != null) {
+            setData(tvShows);
+        }
 
         return rootView;
     }

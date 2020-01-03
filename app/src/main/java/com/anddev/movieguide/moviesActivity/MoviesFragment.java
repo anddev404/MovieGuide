@@ -36,6 +36,9 @@ public class MoviesFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         moviesListRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
 
+        if (movies != null) {
+            setData(movies);
+        }
         return rootView;
     }
 

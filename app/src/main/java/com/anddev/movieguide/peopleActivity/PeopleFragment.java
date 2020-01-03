@@ -36,6 +36,9 @@ public class PeopleFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         peopleListRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
 
+        if (people != null) {
+            setData(people);
+        }
         return rootView;
     }
 
