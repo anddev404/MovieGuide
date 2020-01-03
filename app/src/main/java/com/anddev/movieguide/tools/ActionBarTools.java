@@ -9,17 +9,19 @@ public class ActionBarTools {
 
     AppCompatActivity activity;
     ActionBarTools actionBarTools;
+    ActionBar actionBar;
 
     public ActionBarTools(AppCompatActivity activity) {
 
         this.activity = activity;
         actionBarTools = this;
+        actionBar = activity.getSupportActionBar();
     }
 
     public ActionBarTools addMenuButton() {
 
-        activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_button);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_button);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         return actionBarTools;
 
@@ -27,7 +29,7 @@ public class ActionBarTools {
 
     public ActionBarTools setTitle(String string) {
 
-        activity.getSupportActionBar().setTitle(string);
+        actionBar.setTitle(string);
 
         return actionBarTools;
 
@@ -37,17 +39,21 @@ public class ActionBarTools {
         try {
 
             for (String tab_name : tabs) {
-                activity.getSupportActionBar().addTab(activity.getSupportActionBar().newTab().setText(tab_name)
+                actionBar.addTab(activity.getSupportActionBar().newTab().setText(tab_name)
                         .setTabListener(tabListener));
             }
 
-            activity.getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         } catch (Exception e) {
 
         }
 
         return actionBarTools;
+    }
+
+    public ActionBar getActionBar() {
+        return actionBar;
     }
 
 }

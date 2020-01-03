@@ -75,6 +75,20 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mAdapter);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+
+                getSupportActionBar().setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
 
         client = RetrofitTools.getConnectionInterface();
 
@@ -88,10 +102,12 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
             }
         } catch (Exception e) {
         }
+
         fragmentDownloadManager = new FragmentDownloadManager();
 
         IntentFilter regFilter = new IntentFilter();
         regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
         registerReceiver(networkChangeReceiver, regFilter);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -390,7 +406,7 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
+        viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
