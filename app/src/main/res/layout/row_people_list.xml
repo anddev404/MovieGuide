@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingLeft="3dp"
         android:weightSum="10">
 
         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,17 +35,20 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="99dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="7"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:weightSum="10">
 
             <TextView
                 android:id="@+id/row_name_people_list_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="TextView"
                 android:textColor="@color/colorTextLight"
                 tools:ignore="MissingConstraints" />
@@ -53,7 +57,7 @@
                 android:id="@+id/row_movie_people_list_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="7"
                 android:text="TextView"
                 android:textColor="@color/colorTextDark" />
 

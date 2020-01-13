@@ -79,7 +79,10 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
         String movie = "";
         try {
             if (listOfMovie.get(0).getTitle() != null) {
-                movie = listOfMovie.get(0).getTitle();
+                if (listOfMovie.get(0).getTitle().length() > 0) {
+                    movie = listOfMovie.get(0).getTitle();
+
+                }
 
             }
 
@@ -90,7 +93,17 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
         }
         for (int i = 1; i < listOfMovie.size(); i++) {
             if (listOfMovie.get(i).getTitle() != null) {
-                movie = movie + ", " + listOfMovie.get(i).getTitle();
+                if (listOfMovie.get(i).getTitle().length() > 0) {
+
+                    if (movie.length() > 0) {
+                        movie = movie + ", " + listOfMovie.get(i).getTitle();
+
+                    } else {
+                        movie = listOfMovie.get(i).getTitle();
+
+                    }
+
+                }
 
             }
         }
