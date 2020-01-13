@@ -6,8 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
@@ -29,6 +33,7 @@ import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
+import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -64,6 +69,7 @@ public class PeopleActivity extends AppCompatActivity {
         navigationDrawer = new NavigationDrawerTools(activity, R.id.people_navigation_draver);
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("People");
         peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_people);
+        StatusBarAndSoftKey.changeColor(this);
 
         try {
 
