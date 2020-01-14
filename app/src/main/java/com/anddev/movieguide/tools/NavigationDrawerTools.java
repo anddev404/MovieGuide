@@ -64,4 +64,16 @@ public class NavigationDrawerTools {
             }
         }
     }
+
+    public boolean closeNavigationDrawerIfOpen() {
+        if (mDrawerLayout != null) {
+
+            if (mDrawerLayout.isDrawerOpen((int) Gravity.LEFT)) {
+
+                mDrawerLayout.closeDrawer((int) Gravity.LEFT);
+                return true;
+            }
+        }
+        return false;
+    }
 }

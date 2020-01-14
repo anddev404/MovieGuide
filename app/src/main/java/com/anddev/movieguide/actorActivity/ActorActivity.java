@@ -8,6 +8,7 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SnapHelper;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,6 +48,7 @@ import retrofit2.Response;
 @EActivity(R.layout.activity_actor)
 public class ActorActivity extends AppCompatActivity {
 
+    //region variables
     Activity activity;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
@@ -80,12 +82,15 @@ public class ActorActivity extends AppCompatActivity {
     Images images;
     Integer actorId;
 
+    //endregion
+
+    //region activity
     @AfterViews
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.actor_navigation_draver);
-        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Actor");
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(getString(R.string.Actor));
 
         try {
             if (activity.getIntent().getExtras() != null) {
@@ -119,7 +124,18 @@ public class ActorActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (navigationDrawer != null) {
+            if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+            }
+        }
+    }
 
+    //endregion
+
+    //region download
     @Background
     void downloadActorInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
         try {
@@ -235,7 +251,9 @@ public class ActorActivity extends AppCompatActivity {
         }
 
     }
+//endregion
 
+    //region show data
     @UiThread
     public void showDataOfActor(Actor actor) {
 
@@ -282,7 +300,6 @@ public class ActorActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(activity, imagesRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(activity, "Kliknięto " + images.getProfiles().get(position).getVote_average(), Toast.LENGTH_SHORT).show();
 
                         fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
                         fullScreenImagesRecyclerView.scrollToPosition(position);
@@ -307,7 +324,7 @@ public class ActorActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(activity, knownForRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        fullScreenImagesRecyclerView.setVisibility(View.GONE);
+//                        fullScreenImagesRecyclerView.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -325,7 +342,9 @@ public class ActorActivity extends AppCompatActivity {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
+    //endregion
 
+    //region actionBar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -370,4 +389,33 @@ public class ActorActivity extends AppCompatActivity {
         return true;
 
     }
+
+    //endregion
+
+    //region back Button
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+
+            if (navigationDrawer != null) {
+                if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+                    return true;
+                }
+
+            }
+
+            if (fullScreenImagesRecyclerView != null && fullScreenImagesRecyclerView.getVisibility() == View.VISIBLE) {
+                fullScreenImagesRecyclerView.setVisibility(View.GONE);
+                return true;
+            }
+            return super.onKeyDown(keyCode, event);
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //endregion
+
+
 }

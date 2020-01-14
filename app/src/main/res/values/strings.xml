@@ -3,4 +3,5 @@
     <string name="search_hint">Search: film, actor...</string>
 
     <string name="exampleTextView">TextView</string>
+    <string name="Actor">Actor</string>
 </resources>

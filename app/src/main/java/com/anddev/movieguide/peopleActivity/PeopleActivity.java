@@ -120,6 +120,15 @@ public class PeopleActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (navigationDrawer != null) {
+            if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+            }
+        }
+    }
+
     @Background
     void downloadPeopleInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
         try {

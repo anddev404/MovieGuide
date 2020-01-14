@@ -54,7 +54,8 @@
                                 android:layout_height="wrap_content"
                                 android:paddingBottom="10dp"
                                 android:text="TextView"
-                                android:textColor="@color/colorTextLight" />
+                                android:textColor="@color/colorTextLight"
+                                android:textSize="@dimen/_16ssp" />
 
                             <TextView
                                 android:id="@+id/age"
@@ -117,23 +118,6 @@
                             android:textColor="@color/colorTextDark" />
                     </LinearLayout>
 
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Znany z: "
-                        android:textColor="@color/colorTextLight" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/known_for_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:scrollbars="vertical" />
-
-
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
@@ -145,6 +129,21 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/images_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:scrollbars="vertical" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Znany z: "
+                        android:textColor="@color/colorTextLight" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/known_for_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
