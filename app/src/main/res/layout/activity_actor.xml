@@ -33,7 +33,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingTop="10dp">
+                        android:paddingTop="15dp">
 
                         <ImageView
                             android:id="@+id/imageViewActor"
@@ -53,15 +53,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingBottom="10dp"
-                                android:text="TextView"
+                                android:text="@string/exampleTextView"
                                 android:textColor="@color/colorTextLight"
-                                android:textSize="@dimen/_16ssp" />
+                                android:textSize="@dimen/_16ssp"
+                                android:typeface="serif" />
 
                             <TextView
                                 android:id="@+id/age"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="TextView"
+                                android:text="@string/exampleTextView"
                                 android:textColor="@color/colorTextDark" />
                         </LinearLayout>
                     </LinearLayout>
@@ -80,7 +81,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:text="Miejsce urodzenia: "
+                            android:text="@string/place_of_birth"
                             android:textColor="@color/colorTextLight" />
 
                         <TextView
@@ -88,7 +89,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:text="TextView"
+                            android:text="@string/exampleTextView"
                             android:textColor="@color/colorTextDark" />
                     </LinearLayout>
 
@@ -106,7 +107,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:text="Data urodzenia: "
+                            android:text="@string/birth_date"
                             android:textColor="@color/colorTextLight" />
 
                         <TextView
@@ -114,7 +115,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:text="TextView"
+                            android:text="@string/exampleTextView"
                             android:textColor="@color/colorTextDark" />
                     </LinearLayout>
 
@@ -124,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:paddingTop="0dp"
-                        android:text="Zdjęcia: "
+                        android:text="@string/images"
                         android:textColor="@color/colorTextLight" />
 
                     <android.support.v7.widget.RecyclerView
@@ -139,7 +140,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="Znany z: "
+                        android:text="@string/known_for"
                         android:textColor="@color/colorTextLight" />
 
                     <android.support.v7.widget.RecyclerView
