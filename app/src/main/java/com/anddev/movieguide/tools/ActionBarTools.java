@@ -27,6 +27,15 @@ public class ActionBarTools {
 
     }
 
+    public ActionBarTools addBackButton() {
+
+        actionBar.setHomeAsUpIndicator(R.drawable.back_button);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        return actionBarTools;
+
+    }
+
     public ActionBarTools setTitle(String string) {
 
         actionBar.setTitle(string);

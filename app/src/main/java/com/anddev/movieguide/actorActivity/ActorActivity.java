@@ -81,6 +81,9 @@ public class ActorActivity extends AppCompatActivity {
     KnownFor knownFor;
     Images images;
     Integer actorId;
+    
+    SnapHelper snapHelper;
+    LinearLayoutManager layoutManager;
 
     //endregion
 
@@ -106,10 +109,24 @@ public class ActorActivity extends AppCompatActivity {
 
         fullScreenImagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
         fullScreenImagesRecyclerView.setVisibility(View.GONE);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        SnapHelper snapHelper = new PagerSnapHelper();
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        snapHelper = new PagerSnapHelper();
         fullScreenImagesRecyclerView.setLayoutManager(layoutManager);
         snapHelper.attachToRecyclerView(fullScreenImagesRecyclerView);
+
+        fullScreenImagesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    View centerView = snapHelper.findSnapView(layoutManager);
+                    int pos = layoutManager.getPosition(centerView);
+                    actionBarTools.setTitle((pos + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+
+                }
+            }
+        });
 
         try {
 
@@ -300,6 +317,7 @@ public class ActorActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(activity, imagesRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
 
                         fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
                         fullScreenImagesRecyclerView.scrollToPosition(position);
@@ -380,7 +398,16 @@ public class ActorActivity extends AppCompatActivity {
         switch (itemId) {
             case android.R.id.home:
 
-                navigationDrawer.openOrCloseNavigationDrawer();
+                if (fullScreenImagesRecyclerView != null && fullScreenImagesRecyclerView.getVisibility() == View.VISIBLE) {
+
+                    actionBarTools.setTitle(getString(R.string.Actor)).addMenuButton();
+                    fullScreenImagesRecyclerView.setVisibility(View.GONE);
+
+                } else {
+
+                    navigationDrawer.openOrCloseNavigationDrawer();
+
+                }
 
                 break;
 
@@ -406,6 +433,7 @@ public class ActorActivity extends AppCompatActivity {
             }
 
             if (fullScreenImagesRecyclerView != null && fullScreenImagesRecyclerView.getVisibility() == View.VISIBLE) {
+                actionBarTools.setTitle(getString(R.string.Actor)).addMenuButton();
                 fullScreenImagesRecyclerView.setVisibility(View.GONE);
                 return true;
             }
