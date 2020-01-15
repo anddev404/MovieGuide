@@ -15,7 +15,7 @@ public class StatusBarAndSoftKey {
                 Window window = activity.getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-                window.setNavigationBarColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+                window.setNavigationBarColor(activity.getResources().getColor(R.color.colorPrimary));
             }
         } catch (Exception e) {
 

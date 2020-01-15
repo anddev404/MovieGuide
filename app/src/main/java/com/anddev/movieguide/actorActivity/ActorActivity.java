@@ -31,6 +31,7 @@ import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
+import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -81,7 +82,7 @@ public class ActorActivity extends AppCompatActivity {
     KnownFor knownFor;
     Images images;
     Integer actorId;
-    
+
     SnapHelper snapHelper;
     LinearLayoutManager layoutManager;
 
@@ -94,6 +95,7 @@ public class ActorActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.actor_navigation_draver);
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(getString(R.string.Actor));
+        StatusBarAndSoftKey.changeColor(this);
 
         try {
             if (activity.getIntent().getExtras() != null) {
@@ -277,7 +279,12 @@ public class ActorActivity extends AppCompatActivity {
         name.setText(actor.getName());
         birthday.setText(actor.getBirthday());
         placeOfBirth.setText(actor.getPlace_of_birth());
-        age.setText(DateTools.calculateAgeFromBirthday(actor.getBirthday()));
+
+        String yearsOld = DateTools.calculateAgeFromBirthday(actor.getBirthday());
+        if (yearsOld != null && yearsOld.length() > 0) {
+            age.setText(yearsOld + " " + getString(R.string.years_old));
+        }
+
 
     }
 

@@ -5,6 +5,7 @@
     android:id="@+id/actor_navigation_draver"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".actorActivity.ActorActivity">
 
     <FrameLayout
@@ -53,17 +54,17 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingBottom="10dp"
-                                android:text="@string/exampleTextView"
                                 android:textColor="@color/colorTextLight"
                                 android:textSize="@dimen/_16ssp"
-                                android:typeface="serif" />
+                                android:typeface="serif"
+                                tools:text="@string/example_name" />
 
                             <TextView
                                 android:id="@+id/age"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/exampleTextView"
-                                android:textColor="@color/colorTextDark" />
+                                android:textColor="@color/colorTextDark"
+                                tools:text="@string/example_years_old" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -89,8 +90,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:text="@string/exampleTextView"
-                            android:textColor="@color/colorTextDark" />
+                            android:textColor="@color/colorTextDark"
+                            tools:text="@string/example_place_of_birdth" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -115,8 +116,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
-                            android:text="@string/exampleTextView"
-                            android:textColor="@color/colorTextDark" />
+                            android:textColor="@color/colorTextDark"
+                            tools:text="@string/example_birthdate" />
                     </LinearLayout>
 
                     <TextView

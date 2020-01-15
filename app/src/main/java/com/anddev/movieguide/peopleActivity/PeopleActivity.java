@@ -6,32 +6,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
-import com.anddev.movieguide.actorActivity.ActorActivity_;
 import com.anddev.movieguide.model.PopularPeople;
-import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
-import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
@@ -40,7 +30,6 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,7 +72,7 @@ public class PeopleActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-
+        downloadAndShowPeopleOnScreen();
     }
 
     public void downloadAndShowPeopleOnScreen() {
@@ -116,7 +105,7 @@ public class PeopleActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        downloadAndShowPeopleOnScreen();
+
 
     }
 

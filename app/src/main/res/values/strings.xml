@@ -2,10 +2,18 @@
     <string name="app_name">Movie Guide</string>
     <string name="search_hint">Search: film, actor...</string>
 
-    <string name="exampleTextView">TextView</string>
     <string name="Actor">Actor</string>
     <string name="images">Images:</string>
     <string name="known_for">Known for:</string>
+
+    <string name="example_name">Vanesa Romero</string>
     <string name="place_of_birth">Place of birth:</string>
+    <string name="example_place_of_birdth">Aliciante, Spain</string>
     <string name="birth_date">Birthdate:</string>
+    <string name="example_birthdate">1978-06-04</string>
+    <string name="years_old">years old</string>
+    <string name="example_years_old">41 years old</string>
+
+    <string name="example_movies">9 meses</string>
+
 </resources>

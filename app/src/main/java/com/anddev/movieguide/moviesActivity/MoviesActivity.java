@@ -25,6 +25,7 @@ import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
+import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -53,6 +54,8 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         activity = this;
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movies_navigation_draver);
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movies");
+        StatusBarAndSoftKey.changeColor(this);
+
         fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
         client = RetrofitTools.getConnectionInterface();
 
