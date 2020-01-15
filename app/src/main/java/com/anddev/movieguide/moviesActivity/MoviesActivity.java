@@ -69,6 +69,15 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (navigationDrawer != null) {
+            if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+            }
+        }
+    }
+
     @Background
     void downloadMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
         try {

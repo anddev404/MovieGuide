@@ -16,4 +16,8 @@
 
     <string name="example_movies">9 meses</string>
 
+    <string name="example_movie">Joker</string>
+    <string name="example_release_date">2019-10-02</string>
+    <string name="example_vote">8.3</string>
+
 </resources>

@@ -124,10 +124,12 @@
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
+                        android:padding="@dimen/_3sdp"
                         android:paddingTop="0dp"
                         android:text="@string/images"
-                        android:textColor="@color/colorTextLight" />
+                        android:textColor="@color/colorTextLight"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/images_recycler_view"
@@ -140,9 +142,11 @@
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
+                        android:padding="@dimen/_4sdp"
                         android:text="@string/known_for"
-                        android:textColor="@color/colorTextLight" />
+                        android:textColor="@color/colorTextLight"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/known_for_recycler_view"
