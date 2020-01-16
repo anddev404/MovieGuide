@@ -16,7 +16,7 @@
         android:paddingLeft="@dimen/_3sdp"
         android:weightSum="10">
 
-        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/row_people_list_imageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -32,7 +32,8 @@
             app:riv_border_width="@dimen/_2sdp"
             app:riv_corner_radius="@dimen/_8sdp"
             app:riv_mutate_background="true"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:src="@tools:sample/avatars" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -59,7 +60,7 @@
                 android:textStyle="bold"
                 android:typeface="serif"
                 tools:ignore="MissingConstraints"
-                tools:text="@string/example_name" />
+                tools:text="@tools:sample/full_names" />
 
             <TextView
                 android:id="@+id/row_movie_people_list_textView"
@@ -68,7 +69,7 @@
                 android:layout_weight="7"
                 android:textColor="@color/colorTextDark"
                 android:textSize="@dimen/_11ssp"
-                tools:text="@string/example_movies" />
+                tools:text="@tools:sample/lorem" />
 
         </LinearLayout>
 

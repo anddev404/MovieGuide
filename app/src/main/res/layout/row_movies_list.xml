@@ -32,7 +32,8 @@
             app:riv_border_width="@dimen/_2sdp"
             app:riv_corner_radius="@dimen/_8sdp"
             app:riv_mutate_background="true"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:src="@tools:sample/avatars" />
 
         <LinearLayout
             android:layout_width="0dp"
