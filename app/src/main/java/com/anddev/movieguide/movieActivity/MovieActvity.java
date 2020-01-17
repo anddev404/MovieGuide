@@ -63,7 +63,7 @@ public class MovieActvity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movie");
 
         try {

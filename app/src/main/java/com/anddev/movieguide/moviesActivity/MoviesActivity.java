@@ -52,7 +52,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     @AfterViews
     public void onCreate() {
         activity = this;
-        navigationDrawer = new NavigationDrawerTools(activity, R.id.movies_navigation_draver);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.movies_navigation_draver).setOtherColorForMoviesButton();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movies");
         StatusBarAndSoftKey.changeColor(this);
 

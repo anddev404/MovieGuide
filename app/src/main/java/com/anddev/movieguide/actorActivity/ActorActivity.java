@@ -93,7 +93,7 @@ public class ActorActivity extends AppCompatActivity {
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(activity, R.id.actor_navigation_draver);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.actor_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(getString(R.string.Actor));
         StatusBarAndSoftKey.changeColor(this);
 

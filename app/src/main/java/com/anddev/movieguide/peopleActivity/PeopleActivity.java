@@ -55,7 +55,7 @@ public class PeopleActivity extends AppCompatActivity {
         activity = this;
         ButterKnife.bind(this);
 
-        navigationDrawer = new NavigationDrawerTools(activity, R.id.people_navigation_draver);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.people_navigation_draver).setOtherColorForPeopleButton();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("People");
         peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_people);
         StatusBarAndSoftKey.changeColor(this);
@@ -104,7 +104,6 @@ public class PeopleActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
 
 
     }

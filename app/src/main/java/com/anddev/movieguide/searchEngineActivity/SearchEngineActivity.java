@@ -68,7 +68,7 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver);
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results").addTabsToView(TabsPagerAdapter.getTabs(), this);
 
         viewPager = (ViewPager) findViewById(R.id.pager_search_activity);
