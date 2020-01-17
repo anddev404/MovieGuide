@@ -20,4 +20,9 @@
     <string name="example_release_date">2019-10-02</string>
     <string name="example_vote">8.3</string>
 
+    <string name="movies_navigation_drawer">Movies</string>
+    <string name="people_navigation_drawer">People</string>
+    <string name="options_navigation_drawer">Options</string>
+    <string name="contact_developer_navigation_drawer">Contact Developer</string>
+
 </resources>

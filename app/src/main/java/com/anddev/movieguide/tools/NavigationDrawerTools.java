@@ -41,15 +41,6 @@ public class NavigationDrawerTools {
         activity.startActivity(intent);
     }
 
-
-    @OnClick(R.id.search_engine_navigation_drawer_button)
-    public void onClickSearch() {
-
-        Intent intent = new Intent(activity, SearchEngineActivity_.class);
-        activity.startActivity(intent);
-
-    }
-
     public void openOrCloseNavigationDrawer() {
         if (mDrawerLayout != null) {
 
