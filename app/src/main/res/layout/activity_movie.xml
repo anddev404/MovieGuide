@@ -5,6 +5,7 @@
     android:id="@+id/movie_navigation_draver"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".movieActivity.MovieActvity">
 
     <FrameLayout
@@ -20,38 +21,68 @@
             <ImageView
                 android:id="@+id/poster_movie_imageView"
                 android:layout_width="match_parent"
-                android:layout_height="214dp"
-                tools:srcCompat="@drawable/ic_local_movies_black_24dp" />
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:scaleType="fitXY"
+                tools:src="@tools:sample/backgrounds/scenic[]" />
 
             <TextView
                 android:id="@+id/title_movie_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="title" />
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_translated_title_of_movie" />
 
             <TextView
                 android:id="@+id/oryginal_title_movie_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="oryginal title" />
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_original_title_of_movie" />
 
             <TextView
                 android:id="@+id/overview_movie_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="opis" />
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_overview" />
 
             <TextView
                 android:id="@+id/vote_average_movie_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7.5" />
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_vote" />
 
             <TextView
                 android:id="@+id/release_data_movie_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2019-10-09" />
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_release_date" />
+
+            <TextView
+                android:id="@+id/genres_movie_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_genres" />
+
+            <TextView
+                android:id="@+id/runtime_movie_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_runtime" />
+
+            <TextView
+                android:id="@+id/production_countries_movie_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextDark"
+                tools:text="@string/example_prduction_countries" />
+
         </LinearLayout>
     </FrameLayout>
 

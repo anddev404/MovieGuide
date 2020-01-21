@@ -30,6 +30,46 @@ public class Movie {
     private String backdrop_path;
     private boolean adult;
 
+    public String genresToString() {
+        try {
+            String genresString = "";
+
+            if (genres != null && genres.size() > 0) {
+                genresString = genres.get(0).getName();
+
+                for (int i = 1; i < genres.size(); i++) {
+                    genresString = genresString + ", " + genres.get(i).getName();
+                }
+            }
+            return genresString;
+
+
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
+
+    public String productionCountriesToString() {
+        try {
+            String productionCountriesString = "";
+
+            if (production_countries != null && production_countries.size() > 0) {
+                productionCountriesString = production_countries.get(0).getName();
+
+                for (int i = 1; i < production_countries.size(); i++) {
+                    productionCountriesString = productionCountriesString + ", " + production_countries.get(i).getName();
+                }
+            }
+            return productionCountriesString;
+
+
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
+
     public int getVote_count() {
         return vote_count;
     }

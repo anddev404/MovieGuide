@@ -6,19 +6,9 @@
     <string name="images">Images:</string>
     <string name="known_for">Known for:</string>
 
-    <string name="example_name">Vanesa Romero</string>
     <string name="place_of_birth">Place of birth:</string>
-    <string name="example_place_of_birdth">Aliciante, Spain</string>
     <string name="birth_date">Birthdate:</string>
-    <string name="example_birthdate">1978-06-04</string>
     <string name="years_old">years old</string>
-    <string name="example_years_old">41 years old</string>
-
-    <string name="example_movies">9 meses</string>
-
-    <string name="example_movie">Joker</string>
-    <string name="example_release_date">2019-10-02</string>
-    <string name="example_vote">8.3</string>
 
     <string name="movies_navigation_drawer">Movies</string>
     <string name="people_navigation_drawer">People</string>

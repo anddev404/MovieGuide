@@ -18,6 +18,7 @@ import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
+import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -59,13 +60,22 @@ public class MovieActvity extends AppCompatActivity {
     @BindView(R.id.release_data_movie_textView)
     TextView releaseData;
 
+    @BindView(R.id.genres_movie_textView)
+    TextView genres;
+
+    @BindView(R.id.runtime_movie_textView)
+    TextView runtime;
+
+    @BindView(R.id.production_countries_movie_textView)
+    TextView productionCountries;
+
     @AfterViews
     public void onCreate() {
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movie");
-
+        StatusBarAndSoftKey.changeColor(this);
         try {
             if (activity.getIntent().getExtras() != null) {
                 movieId = activity.getIntent().getExtras().getInt("Id", 0);
@@ -92,7 +102,7 @@ public class MovieActvity extends AppCompatActivity {
 
                     if (response.code() == 200) {
                         movie = response.body();
-                        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getPoster_path(), poster, ImageTools.DRAWABLE_FILM);
+                        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM);
                         showDataOfMovie(movie);
 
                     } else {
@@ -127,9 +137,11 @@ public class MovieActvity extends AppCompatActivity {
         title.setText(movie.getTitle());
         oryginalTitle.setText(movie.getOriginal_title());
         overview.setText(movie.getOverview());
-        voteAverage.setText(Double.toString(movie.getVote_average()));
+        voteAverage.setText(Double.toString(movie.getVote_average()) + "/10");
         releaseData.setText(movie.getRelease_date());
-
+        genres.setText(movie.genresToString());
+        runtime.setText(movie.getRuntime() + " min.");
+        productionCountries.setText(movie.productionCountriesToString());
     }
 
     @Override
