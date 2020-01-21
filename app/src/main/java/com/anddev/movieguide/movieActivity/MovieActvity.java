@@ -3,6 +3,7 @@ package com.anddev.movieguide.movieActivity;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -87,6 +88,15 @@ public class MovieActvity extends AppCompatActivity {
         }
         ConnectionInterface client = RetrofitTools.getConnectionInterface();
         downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (navigationDrawer != null) {
+            if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+            }
+        }
     }
 
     @Background
@@ -188,4 +198,23 @@ public class MovieActvity extends AppCompatActivity {
         return true;
 
     }
+
+    //region back Button
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            if (navigationDrawer != null) {
+                if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+                    return true;
+                }
+
+            }
+
+            return super.onKeyDown(keyCode, event);
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+    //endregion
 }

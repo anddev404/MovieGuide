@@ -10,9 +10,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
@@ -230,4 +232,23 @@ public class PeopleActivity extends AppCompatActivity {
         return true;
 
     }
+
+    //region back Button
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            if (navigationDrawer != null) {
+                if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+                    return true;
+                }
+
+            }
+
+            return super.onKeyDown(keyCode, event);
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+    //endregion
 }
