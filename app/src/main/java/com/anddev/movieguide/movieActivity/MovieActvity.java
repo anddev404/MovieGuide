@@ -1,23 +1,32 @@
 package com.anddev.movieguide.movieActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.actorActivity.ActorActivity_;
+import com.anddev.movieguide.actorActivity.KnownForAdapter;
+import com.anddev.movieguide.model.Credits;
+import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
+import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
@@ -41,7 +50,7 @@ public class MovieActvity extends AppCompatActivity {
 
     Movie movie;
     Integer movieId;
-
+    Credits credits;
 
     @BindView(R.id.poster_movie_imageView)
     ImageView poster;
@@ -70,6 +79,9 @@ public class MovieActvity extends AppCompatActivity {
     @BindView(R.id.production_countries_movie_textView)
     TextView productionCountries;
 
+    @BindView(R.id.credits_movie_recycler_view)
+    RecyclerView creditsRecyclerView;
+
     @AfterViews
     public void onCreate() {
         activity = this;
@@ -88,6 +100,10 @@ public class MovieActvity extends AppCompatActivity {
         }
         ConnectionInterface client = RetrofitTools.getConnectionInterface();
         downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+
+        creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
+
     }
 
     @Override
@@ -112,7 +128,7 @@ public class MovieActvity extends AppCompatActivity {
 
                     if (response.code() == 200) {
                         movie = response.body();
-                        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM);
+                        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
                         showDataOfMovie(movie);
 
                     } else {
@@ -130,6 +146,44 @@ public class MovieActvity extends AppCompatActivity {
             });
         } catch (Throwable e) {
             showError("Nieoczekiwany błąd!");
+        }
+
+    }
+
+    @Background
+    void downloadCreditsInBackground(ConnectionInterface client, Integer id, String apiKey) {
+        try {
+
+
+            Call<Credits> call = client.credits(id, apiKey);
+
+            call.enqueue(new Callback<Credits>() {
+
+                @Override
+                public void onResponse(Call<Credits> call, Response<Credits> response) {
+
+                    if (response.code() == 200) {
+
+                        credits = response.body();
+                        showCredits(credits);
+
+                    } else {
+
+                        showError("Nie można pobrać odpowiednich danych");
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Credits> call, Throwable t) {
+
+                    showError("Brak połączenia internetowego podczas pobierania aktorów!");
+
+                }
+            });
+        } catch (Throwable e) {
+            showError("Nieoczekiwan błąd!");
         }
 
     }
@@ -152,6 +206,30 @@ public class MovieActvity extends AppCompatActivity {
         genres.setText(movie.genresToString());
         runtime.setText(movie.getRuntime() + " min.");
         productionCountries.setText(movie.productionCountriesToString());
+    }
+
+    @UiThread
+    public void showCredits(final Credits credits) {
+
+        CreditsAdapter adapter = new CreditsAdapter(this, credits.getCast());
+        creditsRecyclerView.setAdapter(adapter);
+
+        creditsRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(activity, creditsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(activity, ActorActivity_.class);
+                        intent.putExtra("Id", credits.getCast().get(position).getId());
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                    }
+
+                })
+        );
+
     }
 
     @Override

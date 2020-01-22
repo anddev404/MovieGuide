@@ -30,6 +30,7 @@ import com.anddev.movieguide.tools.FragmentDownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
+import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 import com.anddev.movieguide.tvShows.TvShowsFragment;
 
 import org.androidannotations.annotations.AfterViews;
@@ -70,6 +71,7 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results").addTabsToView(TabsPagerAdapter.getTabs(), this);
+        StatusBarAndSoftKey.changeColor(this);
 
         viewPager = (ViewPager) findViewById(R.id.pager_search_activity);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
@@ -85,6 +87,7 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
             }
+
             @Override
             public void onPageScrollStateChanged(int arg0) {
             }
