@@ -195,13 +195,26 @@ public class MovieActvity extends AppCompatActivity {
 
     }
 
+    public String getPercentageFromDouble(Double d, int scale) {
+        try {
+
+            Double result = d / scale;
+            result = result * 100;
+            String s = "" + result.intValue() + "%";
+            return s;
+
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     @UiThread
     public void showDataOfMovie(Movie movie) {
 
         title.setText(movie.getTitle());
         oryginalTitle.setText(movie.getOriginal_title());
         overview.setText(movie.getOverview());
-        voteAverage.setText(Double.toString(movie.getVote_average()) + "/10");
+        voteAverage.setText(getPercentageFromDouble(movie.getVote_average(), 10));
         releaseData.setText(movie.getRelease_date());
         genres.setText(movie.genresToString());
         runtime.setText(movie.getRuntime() + " min.");

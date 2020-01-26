@@ -61,7 +61,7 @@
                 android:textStyle="bold"
                 android:typeface="serif"
                 tools:ignore="MissingConstraints"
-                tools:text="@string/example_title_of_movie" />
+                tools:text="@string/example_original_title_of_movie" />
 
             <TextView
                 android:id="@+id/row_release_date_movies_list_textView"
