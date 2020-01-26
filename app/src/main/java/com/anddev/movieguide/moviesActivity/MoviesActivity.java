@@ -24,6 +24,7 @@ import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
+import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
@@ -133,7 +134,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     public void downloadData() {
         try {
 
-            downloadMoviesInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, 1);
+            downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
 
         } catch (Exception e) {
 

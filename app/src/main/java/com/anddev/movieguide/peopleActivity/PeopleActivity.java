@@ -23,6 +23,7 @@ import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.InternetTools;
+import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
@@ -83,7 +84,7 @@ public class PeopleActivity extends AppCompatActivity {
             if (popularPeople == null) {
                 if (InternetTools.isNetworkAvailable(activity)) {
 
-                    downloadPeopleInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, 1);
+                    downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
 
                 } else {
                     internetDialog = InternetTools.showNoConnectionDialog(activity);

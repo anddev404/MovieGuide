@@ -28,6 +28,7 @@ import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.FragmentDownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
+import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
@@ -386,13 +387,13 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
     public void downloadData(Fragment fragment) {
 
         if (fragment == moviesFragment) {
-            downloadMoviesInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, query, 1);
+            downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
         }
         if (fragment == tvShowsFragment) {
-            downloadTvShowsInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, query, 1);
+            downloadTvShowsInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
         }
         if (fragment == peopleFragment) {
-            downloadPeopleInBackground(client, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE, query, 1);
+            downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
         }
     }
 

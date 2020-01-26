@@ -16,6 +16,7 @@ import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RetrofitTools;
 
@@ -77,7 +78,7 @@ public class TvShowActivity extends AppCompatActivity {
             tvShowId = RetrofitTools.EXAMPLE_ID_MOVIE;
         }
         ConnectionInterface client = RetrofitTools.getConnectionInterface();
-        downloadTvShowInBackground(client, tvShowId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+        downloadTvShowInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
     }
 
     @Background

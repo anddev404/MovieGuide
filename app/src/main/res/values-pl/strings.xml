@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Movie Guide</string>
+    <string name="search_hint">Szukaj: filmy, aktorzy...</string>
+
+    <string name="Actor">Aktor</string>
+    <string name="images">Zdjęcia:</string>
+    <string name="known_for">Znany z:</string>
+
+    <string name="place_of_birth">Miejsce Urodzenia:</string>
+    <string name="birth_date">Data Urodzenia:</string>
+    <string name="years_old">lat</string>
+
+    <string name="movies_navigation_drawer">Filmy</string>
+    <string name="people_navigation_drawer">Ludzie</string>
+    <string name="options_navigation_drawer">Opcje</string>
+    <string name="contact_developer_navigation_drawer">Kontakt</string>
+    <string name="available_soon_navigation_drawer">Opcja dostępna wkrótce</string>
+
+    <string name="cast" translatable="false">Obsada:</string>
+    <string name="original_title">Oryginalny Tytuł:</string>
+    <string name="production_country">Kraje:</string>
+</resources>

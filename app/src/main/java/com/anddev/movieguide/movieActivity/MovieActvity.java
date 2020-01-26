@@ -25,6 +25,7 @@ import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
@@ -99,7 +100,7 @@ public class MovieActvity extends AppCompatActivity {
             movieId = RetrofitTools.EXAMPLE_ID_MOVIE;
         }
         ConnectionInterface client = RetrofitTools.getConnectionInterface();
-        downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+        downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
 
         creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);

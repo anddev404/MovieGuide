@@ -8,10 +8,8 @@ public class RetrofitTools {
 
     public static final String API_BASE_URL = "https://api.themoviedb.org";
     public static final String API_KEY = "3a3657f217097dc333bd92af0d39bee4";
-    public static final String LANGUAGE = "pl-PL";
     public static final Integer EXAMPLE_ID_MOVIE = 338967;
-    public static final String EXAMPLE_SEARCH_MOVIE = "terminator";
-    public static final String EXAMPLE_SEARCH_PERSON = "Naomi Scott";
+
 
     public static ConnectionInterface getConnectionInterface() {
 

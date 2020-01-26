@@ -28,6 +28,7 @@ import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
@@ -133,9 +134,9 @@ public class ActorActivity extends AppCompatActivity {
         try {
 
             ConnectionInterface client = RetrofitTools.getConnectionInterface();
-            downloadActorInBackground(client, actorId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
-            downloadKnownForInBackground(client, actorId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
-            downloadImagesOfActorInBackground(client, actorId, RetrofitTools.API_KEY, RetrofitTools.LANGUAGE);
+            downloadActorInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+            downloadKnownForInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+            downloadImagesOfActorInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
 
         } catch (Exception e) {
 
