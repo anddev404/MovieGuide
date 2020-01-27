@@ -129,7 +129,7 @@ public class MovieActvity extends AppCompatActivity {
 
                     if (response.code() == 200) {
                         movie = response.body();
-                        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
+                        ImageTools.getWideImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
                         showDataOfMovie(movie);
 
                     } else {

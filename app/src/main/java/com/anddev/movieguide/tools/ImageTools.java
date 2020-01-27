@@ -25,4 +25,14 @@ public class ImageTools {
                 .into(imageView);
 
     }
+
+    public static void getWideImageFromInternet(Activity activity, String url, ImageView imageView, int drawableError) {
+
+        Picasso.with(activity)
+                .load(url)
+                .placeholder(activity.getResources().getDrawable(R.drawable.ic_file_download_black_48dp))
+                .error(activity.getResources().getDrawable(drawableError))
+                .into(imageView);
+
+    }
 }
