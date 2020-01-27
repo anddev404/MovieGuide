@@ -11,10 +11,8 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,9 +21,7 @@ import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
-import com.anddev.movieguide.actorActivity.KnownForAdapter;
 import com.anddev.movieguide.model.Credits;
-import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
@@ -135,6 +131,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     protected void onPause() {
         super.onPause();
         unregisterNetworkChangeReceiver();
+        actionBarTools.closeSearchEngineIfOpen();
 
         if (navigationDrawer != null) {
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
@@ -279,27 +276,13 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint(getString(R.string.search_hint));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                SearchEngineActivity.searchAndOpenResults(query, activity);
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                return false;
-            }
-        });
+        actionBarTools.addSearchEngine(activity, R.menu.action_bar, R.id.app_bar_search, menu,
+                new ActionBarTools.OnSearchEngineListener() {
+                    @Override
+                    public void onQueryTextSubmit(String query) {
+                        SearchEngineActivity.searchAndOpenResults(query, activity);
+                    }
+                });
 
         return super.onCreateOptionsMenu(menu);
     }

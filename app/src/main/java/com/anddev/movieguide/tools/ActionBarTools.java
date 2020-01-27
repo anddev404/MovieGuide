@@ -1,7 +1,14 @@
 package com.anddev.movieguide.tools;
 
+import android.app.Activity;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.anddev.movieguide.R;
 
@@ -65,4 +72,59 @@ public class ActionBarTools {
         return actionBar;
     }
 
+    //region search engine
+    SearchView searchView;
+    MenuItem searchItem;
+
+    public void addSearchEngine(Activity activity, int idLayoutActionBar, int idSearchView, Menu menu, OnSearchEngineListener onSearchEngineListener) {
+        try {
+
+            mListener = onSearchEngineListener;
+
+            MenuInflater inflater = activity.getMenuInflater();
+            inflater.inflate(idLayoutActionBar, menu);
+
+            searchItem = menu.findItem(idSearchView);
+            searchView = (SearchView) searchItem.getActionView();
+            searchView.setQueryHint(activity.getString(R.string.search_hint));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+
+                    if (mListener != null) {
+                        mListener.onQueryTextSubmit(query);
+                    }
+
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void closeSearchEngineIfOpen() {
+
+        try {
+            searchView.setInputType(InputType.TYPE_NULL);
+            MenuItemCompat.collapseActionView(searchItem);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    //////////////////////////////
+    private OnSearchEngineListener mListener;
+
+    public interface OnSearchEngineListener {
+        void onQueryTextSubmit(String query);
+    }
+    //endregion
 }
