@@ -1,7 +1,13 @@
 package com.anddev.movieguide.movieActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +30,9 @@ import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
@@ -43,8 +51,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_movie)
-public class MovieActvity extends AppCompatActivity {
+public class MovieActvity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener {
 
+    //region variables
     Activity activity;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
@@ -52,6 +61,10 @@ public class MovieActvity extends AppCompatActivity {
     Movie movie;
     Integer movieId;
     Credits credits;
+
+    DownloadManager downloadManager;
+    ConnectionInterface client;
+    AlertDialog internetDialog;
 
     @BindView(R.id.poster_movie_imageView)
     ImageView poster;
@@ -82,7 +95,9 @@ public class MovieActvity extends AppCompatActivity {
 
     @BindView(R.id.credits_movie_recycler_view)
     RecyclerView creditsRecyclerView;
+    // endregion
 
+    //region activity
     @AfterViews
     public void onCreate() {
         activity = this;
@@ -99,23 +114,36 @@ public class MovieActvity extends AppCompatActivity {
         } catch (Exception e) {
             movieId = RetrofitTools.EXAMPLE_ID_MOVIE;
         }
-        ConnectionInterface client = RetrofitTools.getConnectionInterface();
-        downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        client = RetrofitTools.getConnectionInterface();
 
         creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
+
+        downloadManager = new DownloadManager(InternetTools.isNetworkAvailable(activity), false);
+        downloadManager.setOnDownloadManagerListener(this);
+        downloadManager.processStates();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerNetworkChangeReceiver();
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        unregisterNetworkChangeReceiver();
+
         if (navigationDrawer != null) {
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
             }
         }
     }
+    //endregion
 
+    //region download
     @Background
     void downloadMovieInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
         try {
@@ -130,7 +158,7 @@ public class MovieActvity extends AppCompatActivity {
                     if (response.code() == 200) {
                         movie = response.body();
                         ImageTools.getWideImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
-                        showDataOfMovie(movie);
+                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
 
                     } else {
 
@@ -142,11 +170,12 @@ public class MovieActvity extends AppCompatActivity {
                 public void onFailure(Call<Movie> call, Throwable t) {
 
                     showError("Brak połączenia internetowego!");
-
+                    downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                 }
             });
         } catch (Throwable e) {
             showError("Nieoczekiwany błąd!");
+            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
         }
 
     }
@@ -195,6 +224,7 @@ public class MovieActvity extends AppCompatActivity {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
+    //endregion
 
     public String getPercentageFromDouble(Double d, int scale) {
         try {
@@ -307,6 +337,72 @@ public class MovieActvity extends AppCompatActivity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+    //endregion
+
+    //region download manager
+    @Override
+    public void downloadData() {
+
+        downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
+    }
+
+    @Override
+    public void showData() {
+        showDataOfMovie(movie);
+    }
+
+    @Override
+    public void showNoInternetNotification() {
+        if (internetDialog != null) {
+
+            internetDialog.show();
+
+        } else {
+            internetDialog = InternetTools.showNoConnectionDialog(activity);
+
+        }
+    }
+
+    @Override
+    public void hideNoInternetNotification() {
+        if (internetDialog != null) {
+
+            internetDialog.dismiss();
+
+        }
+    }
+    //endregion
+
+    //region checkInternetConnection
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getExtras() != null) {
+                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
+
+                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+
+                } else {
+                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+
+                }
+            }
+
+        }
+    };
+
+    public void registerNetworkChangeReceiver() {
+        IntentFilter regFilter = new IntentFilter();
+        regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, regFilter);
+    }
+
+    public void unregisterNetworkChangeReceiver() {
+        unregisterReceiver(networkChangeReceiver);
     }
     //endregion
 }
