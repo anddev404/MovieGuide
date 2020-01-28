@@ -10,6 +10,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 
+import com.anddev.movieguide.R;
+
 
 public class InternetTools {
 
@@ -29,15 +31,15 @@ public class InternetTools {
         final Context ctx = ctx1;
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setCancelable(true);
-        builder.setMessage("Włącz internet");
-        builder.setTitle("Brak połączenia z internetem");
-        builder.setPositiveButton("Ustawienia", new DialogInterface.OnClickListener() {
+        builder.setMessage(ctx.getString(R.string.turn_on_the_internet));
+        builder.setTitle(ctx.getString(R.string.no_internet_connection));
+        builder.setPositiveButton(ctx.getString(R.string.settings), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                ctx.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                ctx.startActivity(new Intent(Settings.ACTION_SETTINGS));
                 return;
             }
         });
-        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(ctx1.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
                 return;

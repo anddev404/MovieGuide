@@ -16,7 +16,12 @@
     <string name="contact_developer_navigation_drawer">Kontakt</string>
     <string name="available_soon_navigation_drawer">Opcja dostępna wkrótce</string>
 
-    <string name="cast" translatable="false">Obsada:</string>
+    <string name="cast">Obsada:</string>
     <string name="original_title">Oryginalny Tytuł:</string>
     <string name="production_country">Kraje:</string>
+
+    <string name="turn_on_the_internet">Włącz Internet</string>
+    <string name="no_internet_connection">Brak połączenia z internetem</string>
+    <string name="settings">Ustawienia</string>
+    <string name="cancel">Anuluj</string>
 </resources>
