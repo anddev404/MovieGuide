@@ -10,7 +10,8 @@ import com.anddev.movieguide.tvShows.TvShowsFragment;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-    public static String[] tabs = {"Movies", "TvShows", "People"};
+    //public static String[] tabs = {"Movies", "TvShows", "People"};
+    public static String[] tabs = {"Movies", "People"};
 
     public static String[] getTabs() {
         return tabs;
@@ -23,6 +24,21 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int index) {
 
+//        switch (index) {
+//
+//
+//            case 0:
+//
+//                return new MoviesFragment();
+//
+//            case 1:
+//
+//                return new TvShowsFragment();
+//
+//            case 2:
+//
+//                return new PeopleFragment();
+//        }
         switch (index) {
 
 
@@ -32,18 +48,14 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
             case 1:
 
-                return new TvShowsFragment();
-
-            case 2:
-
                 return new PeopleFragment();
         }
-
         return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+//        return 3;
+        return 2;
     }
 }
