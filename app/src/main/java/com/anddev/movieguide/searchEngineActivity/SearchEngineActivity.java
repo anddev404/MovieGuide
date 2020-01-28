@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -348,6 +349,25 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
         return true;
 
     }
+
+    //region back Button
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            if (navigationDrawer != null) {
+                if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+                    return true;
+                }
+
+            }
+
+            return super.onKeyDown(keyCode, event);
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+    //endregion
 
     @Override
     public void showData(Fragment fragment) {
