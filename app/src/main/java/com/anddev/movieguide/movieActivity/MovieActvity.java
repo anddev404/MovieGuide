@@ -2,12 +2,7 @@ package com.anddev.movieguide.movieActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +26,7 @@ import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
+import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
@@ -47,12 +43,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_movie)
-public class MovieActvity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener {
+public class MovieActvity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener {
 
     //region variables
     Activity activity;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
+    NetworkChangeReceiver networkChangeReceiver;
 
     Movie movie;
     Integer movieId;
@@ -101,6 +98,8 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movie");
         StatusBarAndSoftKey.changeColor(this);
+        networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
+
         try {
             if (activity.getIntent().getExtras() != null) {
                 movieId = activity.getIntent().getExtras().getInt("Id", 0);
@@ -123,14 +122,14 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @Override
     protected void onResume() {
         super.onResume();
-        registerNetworkChangeReceiver();
+        networkChangeReceiver.registerNetworkChangeReceiver();
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterNetworkChangeReceiver();
+        networkChangeReceiver.unregisterNetworkChangeReceiver(activity);
         actionBarTools.closeSearchEngineIfOpen();
 
         if (navigationDrawer != null) {
@@ -359,33 +358,16 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     //endregion
 
     //region checkInternetConnection
-    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
 
-            if (intent.getExtras() != null) {
-                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
-
-                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
-
-                } else {
-                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
-
-                }
-            }
-
-        }
-    };
-
-    public void registerNetworkChangeReceiver() {
-        IntentFilter regFilter = new IntentFilter();
-        regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeReceiver, regFilter);
+    @Override
+    public void userTurnedInternetOn() {
+        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
     }
 
-    public void unregisterNetworkChangeReceiver() {
-        unregisterReceiver(networkChangeReceiver);
+    @Override
+    public void userTurnedInternetOff() {
+        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
     }
+
     //endregion
 }

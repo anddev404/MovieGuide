@@ -23,6 +23,7 @@ import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
+import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
@@ -36,11 +37,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_movies)
-public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener {
+public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener {
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
+    NetworkChangeReceiver networkChangeReceiver;
 
     MoviesFragment fragment;
     ConnectionInterface client;
@@ -54,13 +56,10 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movies_navigation_draver).setOtherColorForMoviesButton();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movies");
         StatusBarAndSoftKey.changeColor(this);
+        networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
         fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
         client = RetrofitTools.getConnectionInterface();
-
-        IntentFilter regFilter = new IntentFilter();
-        regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeReceiver, regFilter);
 
         downloadManager = new DownloadManager(InternetTools.isNetworkAvailable(activity), false);
         downloadManager.setOnDownloadManagerListener(this);
@@ -72,10 +71,19 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     protected void onPause() {
         super.onPause();
         actionBarTools.closeSearchEngineIfOpen();
+        networkChangeReceiver.unregisterNetworkChangeReceiver(activity);
+
         if (navigationDrawer != null) {
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkChangeReceiver.registerNetworkChangeReceiver();
+
     }
 
     @Background
@@ -167,24 +175,6 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         }
     }
 
-    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            if (intent.getExtras() != null) {
-                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
-
-                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
-
-                } else {
-                    downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
-
-                }
-            }
-
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -234,5 +224,19 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
         return super.onKeyDown(keyCode, event);
     }
+    //endregion
+
+    //region checkInternetConnection
+
+    @Override
+    public void userTurnedInternetOn() {
+        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+    }
+
+    @Override
+    public void userTurnedInternetOff() {
+        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+    }
+
     //endregion
 }

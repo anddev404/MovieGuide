@@ -1,6 +1,7 @@
 package com.anddev.movieguide.searchEngineActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,10 +25,12 @@ import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.FragmentDownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
+import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 import com.anddev.movieguide.tvShows.TvShowsFragment;
@@ -43,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_search_engine)
-public class SearchEngineActivity extends AppCompatActivity implements FragmentDownloadManager.OnFragmentDownloadManagerListener, ActionBar.TabListener {
+public class SearchEngineActivity extends AppCompatActivity implements FragmentDownloadManager.OnFragmentDownloadManagerListener, ActionBar.TabListener, NetworkChangeReceiver.onSubmitListener {
 
     SearchEngineActivity activity;
     MoviesFragment moviesFragment;
@@ -53,6 +56,8 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
 
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
+    NetworkChangeReceiver networkChangeReceiver;
+    AlertDialog internetDialog;
 
     String query = "";
     ConnectionInterface client;
@@ -71,6 +76,7 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
         navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results").addTabsToView(TabsPagerAdapter.getTabs(), this);
         StatusBarAndSoftKey.changeColor(this);
+        networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
         viewPager = (ViewPager) findViewById(R.id.pager_search_activity);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
@@ -107,10 +113,6 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
 
         fragmentDownloadManager = new FragmentDownloadManager();
 
-        IntentFilter regFilter = new IntentFilter();
-        regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-
-        registerReceiver(networkChangeReceiver, regFilter);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -158,11 +160,19 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
     protected void onPause() {
         super.onPause();
         actionBarTools.closeSearchEngineIfOpen();
+        networkChangeReceiver.unregisterNetworkChangeReceiver(activity);
 
         if (navigationDrawer != null) {
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkChangeReceiver.registerNetworkChangeReceiver();
+
     }
 
     @Background
@@ -294,30 +304,6 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
 
     }
 
-    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            if (intent.getExtras() != null) {
-                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
-
-                    fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, moviesFragment);
-                    fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, tvShowsFragment);
-                    fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, peopleFragment);
-
-
-                } else {
-
-                    fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, moviesFragment);
-                    fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, tvShowsFragment);
-                    fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, peopleFragment);
-
-                }
-            }
-
-        }
-    };
 
     @UiThread
     public void showError(String message) {
@@ -393,12 +379,23 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
 
     @Override
     public void showNoInternetNotification(Fragment fragment) {
+        if (internetDialog != null) {
 
+            internetDialog.show();
+
+        } else {
+            internetDialog = InternetTools.showNoConnectionDialog(activity);
+
+        }
     }
 
     @Override
     public void hideNoInternetNotification(Fragment fragment) {
+        if (internetDialog != null) {
 
+            internetDialog.dismiss();
+
+        }
     }
 
 
@@ -416,4 +413,20 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
     }
+
+    //region checkInternetConnection
+
+    @Override
+    public void userTurnedInternetOn() {
+        fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, moviesFragment);
+        fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, tvShowsFragment);
+        fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, peopleFragment);    }
+
+    @Override
+    public void userTurnedInternetOff() {
+        fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, moviesFragment);
+        fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, tvShowsFragment);
+        fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, peopleFragment);    }
+
+    //endregion
 }

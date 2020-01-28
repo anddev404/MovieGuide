@@ -19,9 +19,11 @@ import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
+import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
@@ -36,12 +38,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_people)
-public class PeopleActivity extends AppCompatActivity {
+public class PeopleActivity extends AppCompatActivity implements NetworkChangeReceiver.onSubmitListener {
 
     Activity activity;
     PeopleFragment peopleFragment;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
+    NetworkChangeReceiver networkChangeReceiver;
 
     PopularPeople popularPeople;
 
@@ -59,15 +62,10 @@ public class PeopleActivity extends AppCompatActivity {
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("People");
         peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_people);
         StatusBarAndSoftKey.changeColor(this);
-
+        networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
         try {
 
             client = RetrofitTools.getConnectionInterface();
-
-            IntentFilter regFilter = new IntentFilter();
-            regFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            registerReceiver(networkChangeReceiver, regFilter);
-
 
         } catch (Exception e) {
 
@@ -104,7 +102,7 @@ public class PeopleActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        networkChangeReceiver.registerNetworkChangeReceiver();
 
     }
 
@@ -112,6 +110,7 @@ public class PeopleActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         actionBarTools.closeSearchEngineIfOpen();
+        networkChangeReceiver.unregisterNetworkChangeReceiver(activity);
 
         if (navigationDrawer != null) {
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
@@ -167,26 +166,6 @@ public class PeopleActivity extends AppCompatActivity {
 
     }
 
-    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            if (intent.getExtras() != null) {
-                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
-
-                    if (internetDialog != null) {
-
-                        internetDialog.dismiss();
-
-                    }
-                    downloadAndShowPeopleOnScreen();
-
-                }
-            }
-
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -236,5 +215,23 @@ public class PeopleActivity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+    //endregion
+
+    //region checkInternetConnection
+
+    @Override
+    public void userTurnedInternetOn() {
+        if (internetDialog != null) {
+
+            internetDialog.dismiss();
+
+        }
+        downloadAndShowPeopleOnScreen();
+    }
+
+    @Override
+    public void userTurnedInternetOff() {
+    }
+
     //endregion
 }
