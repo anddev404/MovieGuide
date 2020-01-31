@@ -84,18 +84,19 @@
                     android:adjustViewBounds="true"
                     android:background="@null"
                     android:scaleType="fitXY"
+                    android:src="@mipmap/tmd"
+                    android:paddingRight="@dimen/_4sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/row_average_vote_date_movies_list_textView"
-                    app:layout_constraintTop_toTopOf="@id/row_average_vote_date_movies_list_textView"
-                    app:srcCompat="@drawable/the_movie_database_logo" />
+                    app:layout_constraintTop_toTopOf="@id/row_average_vote_date_movies_list_textView" />
 
                 <TextView
                     android:id="@+id/row_average_vote_date_movies_list_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTextDark"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/logo_the_movie_database"
                     tools:text="@string/example_vote" />
