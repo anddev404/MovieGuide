@@ -50,10 +50,10 @@
 
             <TextView
                 android:id="@+id/row_title_movies_list_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:layout_weight="1"
+                android:layout_weight="0.2"
                 android:gravity="center_vertical"
                 android:text="TextView"
                 android:textColor="@color/colorTextLight"
@@ -65,20 +65,41 @@
 
             <TextView
                 android:id="@+id/row_release_date_movies_list_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorTextDark"
                 android:textSize="@dimen/_11ssp"
                 tools:text="@string/example_release_date" />
 
-            <TextView
-                android:id="@+id/row_average_vote_date_movies_list_textView"
-                android:layout_width="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/colorTextDark"
-                android:textSize="@dimen/_11ssp"
-                tools:text="@string/example_vote" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/logo_the_movie_database"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/row_average_vote_date_movies_list_textView"
+                    app:layout_constraintTop_toTopOf="@id/row_average_vote_date_movies_list_textView"
+                    app:srcCompat="@drawable/the_movie_database_logo" />
+
+                <TextView
+                    android:id="@+id/row_average_vote_date_movies_list_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/logo_the_movie_database"
+                    tools:text="@string/example_vote" />
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
