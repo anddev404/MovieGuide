@@ -8,10 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.ResultsMovie;
+import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -19,10 +23,25 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     private Activity activity;
 
     private Movies moviesList;
+    private Genre genres;
 
     public MoviesAdapter(Activity activity, Movies moviesList) {
         this.activity = activity;
         this.moviesList = moviesList;
+    }
+
+    public MoviesAdapter(Activity activity, Movies moviesList, Genre genres) {
+        this.activity = activity;
+        this.moviesList = moviesList;
+        this.genres = genres;
+    }
+
+    public void setGenres(Genre genres) {
+
+        if (this.genres == null) {
+            this.genres = genres;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -39,11 +58,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
         ResultsMovie result = moviesList.getResults().get(position);
 
-        holder.titleTextView.setText(result.getTitle());
-        holder.releaseDateTextView.setText(result.getRelease_date());
+        holder.titleTextView.setText(result.getTitle() + " " + DateTools.getOnlyYear(result.getRelease_date()));
         holder.averageVoteTextView.setText(Double.toString(result.getVote_average()));
         ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_500px + result.getPoster_path(), holder.moviesImageView, ImageTools.DRAWABLE_PERSON);
+        if (genres != null) {
+            String s = "";
 
+            try {
+                s = genresToString(result.getGenre_ids(), genres);
+                holder.releaseDateTextView.setText(s);
+            } catch (Exception e) {
+
+            }
+        }
+        //holder.releaseDateTextView.setText(holder.releaseDateTextView.getText() + "\n" ));
 
     }
 
@@ -70,6 +98,42 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             averageVoteTextView = itemView.findViewById(R.id.row_average_vote_date_movies_list_textView);
             moviesImageView = itemView.findViewById(R.id.row_image_movies_list_imageView);
 
+        }
+    }
+
+    public String getGenre(int id, Genre genres) {
+        String genreString = "";
+        try {
+
+
+            for (Genre.Genres g : genres.getGenres()) {
+                if (g.getId() == id) {
+                    return g.getName();
+                }
+            }
+        } catch (Exception e) {
+
+        }
+        return genreString;
+    }
+
+    public String genresToString(List<Integer> listGenresId, Genre genres) {
+        String genresString = "";
+
+        try {
+
+            if (genres.getGenres() != null && genres.getGenres().size() > 0) {
+                genresString = getGenre(listGenresId.get(0), genres);
+
+                for (int i = 1; i < listGenresId.size(); i++) {
+                    genresString = genresString + ", " + getGenre(listGenresId.get(i), genres);
+                }
+            }
+            return genresString;
+
+
+        } catch (Exception e) {
+            return "";
         }
     }
 }

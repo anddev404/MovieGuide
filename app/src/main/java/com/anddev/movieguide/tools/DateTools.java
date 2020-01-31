@@ -9,6 +9,25 @@ import java.time.format.DateTimeFormatter;
 public class DateTools {
 
     //format 1967-07-26
+    public static String getOnlyYear(String dateString) {
+        try {
+
+
+            LocalDate date = null;
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                return "(" + Integer.toString(date.getYear()) + ")";
+            }
+
+        } catch (Exception e) {
+
+        }
+        return dateString;
+    }
+
+    //format 1967-07-26
     public static String calculateAgeFromBirthday(String birthday) {
         try {
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
@@ -23,6 +24,8 @@ public class MoviesFragment extends Fragment {
     View rootView;
     Activity activity;
     Movies movies;
+    Genre genres;
+    MoviesAdapter adapter;
 
     @BindView(R.id.movies_list_recycler_view)
     RecyclerView moviesListRecyclerView;
@@ -37,7 +40,7 @@ public class MoviesFragment extends Fragment {
         moviesListRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
 
         if (movies != null) {
-            setData(movies);
+            setData(movies, genres);
         }
         return rootView;
     }
@@ -46,7 +49,7 @@ public class MoviesFragment extends Fragment {
 
         this.movies = movies;
 
-        MoviesAdapter adapter = new MoviesAdapter(activity, movies);
+        adapter = new MoviesAdapter(activity, movies);
         moviesListRecyclerView.setAdapter(adapter);
 
         moviesListRecyclerView.addOnItemTouchListener(
@@ -66,6 +69,38 @@ public class MoviesFragment extends Fragment {
         );
 
 
+    }
+
+    public void setData(final Movies movies, Genre genres) {
+
+        this.movies = movies;
+
+        adapter = new MoviesAdapter(activity, movies, genres);
+        moviesListRecyclerView.setAdapter(adapter);
+
+        moviesListRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), moviesListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(getActivity(), MovieActvity_.class);
+                        intent.putExtra("Id", movies.getResults().get(position).getId());
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                    }
+
+                })
+        );
+
+
+    }
+
+    public void setGenres(Genre genres) {
+        if (adapter != null) {
+            adapter.setGenres(genres);
+        }
     }
 }
 

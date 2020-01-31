@@ -2,12 +2,6 @@ package com.anddev.movieguide.moviesActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
@@ -49,6 +44,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     DownloadManager downloadManager;
     AlertDialog internetDialog;
     Movies movies;
+    Genre genres;
 
     @AfterViews
     public void onCreate() {
@@ -128,6 +124,41 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
     }
 
+    @Background
+    void downloadGenresInBackground(ConnectionInterface client, String apiKey, String language) {
+        try {
+
+
+            Call<Genre> call = client.genres(apiKey, language);
+
+            call.enqueue(new Callback<Genre>() {
+
+                @Override
+                public void onResponse(Call<Genre> call, Response<Genre> response) {
+
+                    if (response.code() == 200) {
+
+                        genres = response.body();
+
+                        if (fragment != null) {
+                            fragment.setGenres(genres);
+                        }
+
+                    } else {
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Genre> call, Throwable t) {
+                }
+            });
+        } catch (Throwable e) {
+        }
+
+    }
+
     @UiThread
     public void showError(String message) {
 
@@ -141,6 +172,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         try {
 
             downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+            downloadGenresInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
 
         } catch (Exception e) {
 
@@ -149,7 +181,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
     @Override
     public void showData() {
-        fragment.setData(movies);
+        fragment.setData(movies, genres);
 
     }
 
