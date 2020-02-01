@@ -3,6 +3,7 @@ package com.anddev.movieguide.moviesActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,9 +58,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
         client = RetrofitTools.getConnectionInterface();
 
-        downloadManager = new DownloadManager(InternetTools.isNetworkAvailable(activity), false);
+        downloadManager = new DownloadManager();
         downloadManager.setOnDownloadManagerListener(this);
-        downloadManager.processStates();
+        downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
     }
 
@@ -84,8 +85,8 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
     @Background
     void downloadMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
-        try {
 
+        try {
 
             Call<Movies> call = client.popularMovie(apiKey, language, page);
 
@@ -93,7 +94,6 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                 @Override
                 public void onResponse(Call<Movies> call, Response<Movies> response) {
-
                     if (response.code() == 200) {
 
                         movies = response.body();
@@ -103,24 +103,32 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                         showError("Nie można pobrać odpowiednich danych");
                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                        Log.d("nie pobrano 1", "MARCIN");//filtrowanie w logCat po treści - nie tagu
 
                     }
+                    downloadManager.changeStateDownloadInProgress(false);
 
                 }
 
                 @Override
                 public void onFailure(Call<Movies> call, Throwable t) {
+                    Log.d("nie pobrano 2", "MARCIN");//filtrowanie w logCat po treści - nie tagu
 
                     showError("Brak połączenia internetowego!");
                     downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    downloadManager.changeStateDownloadInProgress(false);
 
                 }
             });
         } catch (Throwable e) {
             showError("Nieoczekiwany błąd!");
+            Log.d("nie pobrano 3", "MARCIN");//filtrowanie w logCat po treści - nie tagu
+
             downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            downloadManager.changeStateDownloadInProgress(false);
 
         }
+        // downloadManager.changeStateInProgress(false);
 
     }
 
@@ -168,7 +176,10 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
 
     @Override
-    public void downloadData() {
+    public void downloadData(DownloadManager downloadManager) {
+
+        downloadManager.changeStateDownloadInProgress(true);
+
         try {
 
             downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
@@ -180,13 +191,16 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     }
 
     @Override
-    public void showData() {
+    public void showData(DownloadManager downloadManager) {
         fragment.setData(movies, genres);
+        downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+        Log.d("show data", "MARCIN");//filtrowanie w logCat po treści - nie tagu
 
     }
 
     @Override
-    public void showNoInternetNotification() {
+    public void showNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_SHOWING);
         if (internetDialog != null) {
 
             internetDialog.show();
@@ -199,7 +213,8 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     }
 
     @Override
-    public void hideNoInternetNotification() {
+    public void hideNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_NOT_SHOWING);
         if (internetDialog != null) {
 
             internetDialog.dismiss();

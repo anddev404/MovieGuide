@@ -113,9 +113,9 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
         creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        downloadManager = new DownloadManager(InternetTools.isNetworkAvailable(activity), false);
+        downloadManager = new DownloadManager();
         downloadManager.setOnDownloadManagerListener(this);
-        downloadManager.processStates();
+        downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
     }
 
@@ -156,22 +156,24 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
                         ImageTools.getWideImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
 
-                    } else {
-
                     }
+                    downloadManager.changeStateDownloadInProgress(false);
 
                 }
 
                 @Override
                 public void onFailure(Call<Movie> call, Throwable t) {
 
-                    showError("Brak połączenia internetowego!");
                     downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    downloadManager.changeStateDownloadInProgress(false);
+
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
+
             downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            downloadManager.changeStateDownloadInProgress(false);
+
         }
 
     }
@@ -324,19 +326,23 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     //region download manager
     @Override
-    public void downloadData() {
+    public void downloadData(DownloadManager downloadManager) {
+
+        downloadManager.changeStateDownloadInProgress(true);
 
         downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
         downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
     }
 
     @Override
-    public void showData() {
+    public void showData(DownloadManager downloadManager) {
+        downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
         showDataOfMovie(movie);
+
     }
 
     @Override
-    public void showNoInternetNotification() {
+    public void showNoInternetNotification(DownloadManager downloadManager) {
         if (internetDialog != null) {
 
             internetDialog.show();
@@ -348,7 +354,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     }
 
     @Override
-    public void hideNoInternetNotification() {
+    public void hideNoInternetNotification(DownloadManager downloadManager) {
         if (internetDialog != null) {
 
             internetDialog.dismiss();

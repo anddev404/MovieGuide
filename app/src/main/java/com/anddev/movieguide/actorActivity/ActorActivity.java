@@ -151,9 +151,9 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
 
         }
         networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
-        downloadManager = new DownloadManager(InternetTools.isNetworkAvailable(activity), false);
+        downloadManager = new DownloadManager();
         downloadManager.setOnDownloadManagerListener(this);
-        downloadManager.processStates();
+        downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
     }
 
@@ -198,23 +198,25 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
 
                     } else {
 
-                        showError("Nie można pobrać odpowiednich danych");
                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
+                    downloadManager.changeStateDownloadInProgress(false);
 
                 }
 
                 @Override
                 public void onFailure(Call<Actor> call, Throwable t) {
 
-                    showError("Brak połączenia internetowego!");
                     downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    downloadManager.changeStateDownloadInProgress(false);
 
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
+
+            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            downloadManager.changeStateDownloadInProgress(false);
         }
 
     }
@@ -236,23 +238,15 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                         knownFor = response.body();
                         showKnownFor(knownFor);
 
-                    } else {
-
-                        showError("Nie można pobrać odpowiednich danych");
-
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<KnownFor> call, Throwable t) {
-
-                    showError("Brak połączenia internetowego podczas pobierania filmów w których grał aktor!");
-
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwan błąd!");
         }
 
     }
@@ -274,23 +268,15 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                         images = response.body();
                         showImages(images);
 
-                    } else {
-
-                        showError("Nie można pobrać odpowiednich danych");
-
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<Images> call, Throwable t) {
-
-                    showError("Brak połączenia internetowego podczas pobierania filmów w których grał aktor!");
-
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwan błąd!");
         }
 
     }
@@ -476,7 +462,9 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     //endregion
 
     @Override
-    public void downloadData() {
+    public void downloadData(DownloadManager downloadManager) {
+
+        downloadManager.changeStateDownloadInProgress(true);
 
         downloadActorInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
         downloadKnownForInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
@@ -484,12 +472,13 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     }
 
     @Override
-    public void showData() {
+    public void showData(DownloadManager downloadManager) {
+        downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
         showDataOfActor(actor);
     }
 
     @Override
-    public void showNoInternetNotification() {
+    public void showNoInternetNotification(DownloadManager downloadManager) {
         if (internetDialog != null) {
 
             internetDialog.show();
@@ -501,7 +490,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     }
 
     @Override
-    public void hideNoInternetNotification() {
+    public void hideNoInternetNotification(DownloadManager downloadManager) {
         if (internetDialog != null) {
 
             internetDialog.dismiss();
