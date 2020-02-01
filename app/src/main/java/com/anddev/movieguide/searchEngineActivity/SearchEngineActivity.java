@@ -194,6 +194,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         movies = response.body();
                         moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
 
+                        if (movies != null && movies.getResults() != null) {
+                            actionBarTools.setTextToTabOfActionBar(0, getResources().getString(R.string.movies) + " (" + movies.getResults().size() + ")");
+                        }
 
                     } else {
 
@@ -280,6 +283,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         people = response.body();
                         peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
 
+                        if (people != null && people.getResults() != null) {
+                            actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
+                        }
 
                     } else {
 

@@ -68,6 +68,18 @@ public class ActionBarTools {
         return actionBarTools;
     }
 
+    public ActionBarTools setTextToTabOfActionBar(int position, String string) {
+        try {
+
+            actionBar.getTabAt(position).setText(string);
+
+        } catch (Exception e) {
+
+        }
+
+        return actionBarTools;
+    }
+
     public ActionBar getActionBar() {
         return actionBar;
     }
@@ -126,5 +138,5 @@ public class ActionBarTools {
     public interface OnSearchEngineListener {
         void onQueryTextSubmit(String query);
     }
-    //endregion
+//endregion
 }
