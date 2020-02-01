@@ -200,6 +200,9 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
                         movies = response.body();
                         fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_DOWNLOAD, moviesFragment);
 
+                        if (movies != null && movies.getResults() != null) {
+                            actionBarTools.setTextToTabOfActionBar(0, getResources().getString(R.string.movies) + " (" + movies.getResults().size() + ")");
+                        }
 
                     } else {
 
@@ -286,6 +289,9 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
                         people = response.body();
                         fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_DOWNLOAD, peopleFragment);
 
+                        if (people != null && people.getResults() != null) {
+                            actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
+                        }
 
                     } else {
 

@@ -2,6 +2,9 @@
     <string name="app_name">Movie Guide</string>
     <string name="search_hint">Szukaj: filmy, aktorzy...</string>
 
+    <string name="movies">Filmy</string>
+    <string name="people">Ludzie</string>
+
     <string name="Actor">Aktor</string>
     <string name="images">Zdjęcia:</string>
     <string name="known_for">Znany z:</string>
