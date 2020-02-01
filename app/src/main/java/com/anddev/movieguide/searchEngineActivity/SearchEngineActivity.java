@@ -2,13 +2,7 @@ package com.anddev.movieguide.searchEngineActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -27,14 +21,12 @@ import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DownloadManager;
-import com.anddev.movieguide.tools.FragmentDownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
-import com.anddev.movieguide.tvShows.TvShowsFragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -47,13 +39,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_search_engine)
-public class SearchEngineActivity extends AppCompatActivity implements FragmentDownloadManager.OnFragmentDownloadManagerListener, ActionBar.TabListener, NetworkChangeReceiver.onSubmitListener {
+public class SearchEngineActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, ActionBar.TabListener, NetworkChangeReceiver.onSubmitListener {
 
     SearchEngineActivity activity;
     MoviesFragment moviesFragment;
     //    TvShowsFragment tvShowsFragment;
     PeopleFragment peopleFragment;
-    FragmentDownloadManager fragmentDownloadManager;
+    DownloadManager moviesDownloadManager;
+    DownloadManager peopleDownloadManager;
 
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
@@ -112,7 +105,8 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
         } catch (Exception e) {
         }
 
-        fragmentDownloadManager = new FragmentDownloadManager();
+        moviesDownloadManager = new DownloadManager();
+        peopleDownloadManager = new DownloadManager();
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -128,8 +122,8 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
                     String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 0;
                     moviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);
 
-                    fragmentDownloadManager.setOnDownloadManagerListener(activity, moviesFragment, InternetTools.isNetworkAvailable(activity), FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, FragmentDownloadManager.FRAGMENT_IS_NO_CREATED);
-                    fragmentDownloadManager.changeStateFragmentIsCreated(FragmentDownloadManager.FRAGMENT_IS_CREATED, moviesFragment);
+                    moviesDownloadManager.setOnDownloadManagerListener(activity);
+                    moviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
                 }
 //                if (tvShowsFragment == null && arg0 == 1) {
 //                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
@@ -149,8 +143,8 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
                     String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
                     peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentByTag(tag);
 
-                    fragmentDownloadManager.setOnDownloadManagerListener(activity, peopleFragment, InternetTools.isNetworkAvailable(activity), FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, FragmentDownloadManager.FRAGMENT_IS_NO_CREATED);
-                    fragmentDownloadManager.changeStateFragmentIsCreated(FragmentDownloadManager.FRAGMENT_IS_CREATED, peopleFragment);
+                    peopleDownloadManager.setOnDownloadManagerListener(activity);
+                    peopleDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
                 }
             }
 
@@ -198,29 +192,29 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
                     if (response.code() == 200) {
 
                         movies = response.body();
-                        fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_DOWNLOAD, moviesFragment);
+                        moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
 
 
                     } else {
 
-                        showError("Nie można pobrać odpowiednich danych");
-                        fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, moviesFragment);
+                        moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
+                    moviesDownloadManager.changeStateDownloadInProgress(false);
 
                 }
 
                 @Override
                 public void onFailure(Call<Movies> call, Throwable t) {
 
-                    showError("Brak połączenia internetowego!");
-                    fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, moviesFragment);
+                    moviesDownloadManager.changeStateDownloadInProgress(false);
+                    moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
-            fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, moviesFragment);
+            moviesDownloadManager.changeStateDownloadInProgress(false);
+            moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
         }
 
@@ -284,29 +278,29 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
                     if (response.code() == 200) {
 
                         people = response.body();
-                        fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_DOWNLOAD, peopleFragment);
+                        peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
 
 
                     } else {
 
-                        showError("Nie można pobrać odpowiednich danych");
-                        fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, peopleFragment);
+                        peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
+                    peopleDownloadManager.changeStateDownloadInProgress(false);
 
                 }
 
                 @Override
                 public void onFailure(Call<PopularPeople> call, Throwable t) {
 
-                    showError("Brak połączenia internetowego!");
-                    fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, peopleFragment);
+                    peopleDownloadManager.changeStateDownloadInProgress(false);
+                    peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
-            fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, peopleFragment);
+            peopleDownloadManager.changeStateDownloadInProgress(false);
+            peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
         }
 
@@ -377,35 +371,39 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
     //endregion
 
     @Override
-    public void showData(Fragment fragment) {
+    public void showData(DownloadManager downloadManager) {
 
-        if (fragment == moviesFragment) {
+        if (downloadManager == moviesDownloadManager) {
+            downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
             moviesFragment.setData(movies);
         }
 //        if (fragment == tvShowsFragment) {
 //            tvShowsFragment.setData(tvShows);
 //        }
-        if (fragment == peopleFragment) {
+        if (downloadManager == peopleDownloadManager) {
+            downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
             peopleFragment.setData(people);
         }
     }
 
     @Override
-    public void downloadData(Fragment fragment) {
+    public void downloadData(DownloadManager downloadManager) {
 
-        if (fragment == moviesFragment) {
+        if (downloadManager == moviesDownloadManager) {
+            moviesDownloadManager.changeStateDownloadInProgress(true);
             downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
         }
 //        if (fragment == tvShowsFragment) {
 //            downloadTvShowsInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
 //        }
-        if (fragment == peopleFragment) {
+        if (downloadManager == peopleDownloadManager) {
+            moviesDownloadManager.changeStateDownloadInProgress(true);
             downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
         }
     }
 
     @Override
-    public void showNoInternetNotification(Fragment fragment) {
+    public void showNoInternetNotification(DownloadManager downloadManager) {
         if (internetDialog != null) {
 
             internetDialog.show();
@@ -417,7 +415,7 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
     }
 
     @Override
-    public void hideNoInternetNotification(Fragment fragment) {
+    public void hideNoInternetNotification(DownloadManager downloadManager) {
         if (internetDialog != null) {
 
             internetDialog.dismiss();
@@ -445,16 +443,16 @@ public class SearchEngineActivity extends AppCompatActivity implements FragmentD
 
     @Override
     public void userTurnedInternetOn() {
-        fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, moviesFragment);
+        moviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
 //        fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, tvShowsFragment);
-        fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, peopleFragment);
+        peopleDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
     }
 
     @Override
     public void userTurnedInternetOff() {
-        fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, moviesFragment);
+        moviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
 //        fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, tvShowsFragment);
-        fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, peopleFragment);
+        peopleDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
     }
 
     //endregion
