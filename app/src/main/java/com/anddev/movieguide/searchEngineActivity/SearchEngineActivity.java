@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -108,6 +109,12 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
         moviesDownloadManager = new DownloadManager();
         peopleDownloadManager = new DownloadManager();
 
+        moviesDownloadManager.setOnDownloadManagerListener(this);
+        moviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+
+        peopleDownloadManager.setOnDownloadManagerListener(this);
+        peopleDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -122,8 +129,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 0;
                     moviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);
 
-                    moviesDownloadManager.setOnDownloadManagerListener(activity);
-                    moviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+                    if (movies != null) {
+                        moviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                        moviesFragment.setData(movies);
+                    }
                 }
 //                if (tvShowsFragment == null && arg0 == 1) {
 //                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
@@ -143,8 +152,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
                     peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentByTag(tag);
 
-                    peopleDownloadManager.setOnDownloadManagerListener(activity);
-                    peopleDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+                    if (people != null) {
+                        peopleDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                        peopleFragment.setData(people);
+                    }
                 }
             }
 
@@ -380,15 +391,20 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
     public void showData(DownloadManager downloadManager) {
 
         if (downloadManager == moviesDownloadManager) {
-            downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
-            moviesFragment.setData(movies);
+            if (moviesFragment != null) {
+                downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                moviesFragment.setData(movies);
+            }
+
         }
 //        if (fragment == tvShowsFragment) {
 //            tvShowsFragment.setData(tvShows);
 //        }
         if (downloadManager == peopleDownloadManager) {
-            downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
-            peopleFragment.setData(people);
+            if (peopleFragment != null) {
+                downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                peopleFragment.setData(people);
+            }
         }
     }
 
@@ -403,7 +419,7 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 //            downloadTvShowsInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
 //        }
         if (downloadManager == peopleDownloadManager) {
-            moviesDownloadManager.changeStateDownloadInProgress(true);
+            peopleDownloadManager.changeStateDownloadInProgress(true);
             downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
         }
     }
