@@ -4,6 +4,9 @@
 
     <string name="movies">Filmy</string>
     <string name="people">Ludzie</string>
+    <string name="actor">Aktor</string>
+    <string name="movie">Film</string>
+    <string name="search_results">Wyniki wyszukiwania</string>
 
     <string name="Actor">Aktor</string>
     <string name="images">Zdjęcia:</string>

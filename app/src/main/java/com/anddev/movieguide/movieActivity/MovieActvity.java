@@ -25,6 +25,7 @@ import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
+import com.anddev.movieguide.tools.MyApplication;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
@@ -96,7 +97,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
-        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Movie");
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(MyApplication.getStringFromResource(R.string.movie));
         StatusBarAndSoftKey.changeColor(this);
         networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
@@ -239,7 +240,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     @UiThread
     public void showDataOfMovie(Movie movie) {
-
         title.setText(movie.getTitle());
         oryginalTitle.setText(movie.getOriginal_title());
         overview.setText(movie.getOverview());
@@ -343,6 +343,8 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     @Override
     public void showNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_SHOWING);
+
         if (internetDialog != null) {
 
             internetDialog.show();
@@ -355,6 +357,8 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     @Override
     public void hideNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_NOT_SHOWING);
+
         if (internetDialog != null) {
 
             internetDialog.dismiss();

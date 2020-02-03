@@ -24,6 +24,7 @@ import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
+import com.anddev.movieguide.tools.MyApplication;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
@@ -69,7 +70,7 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver).setNormalColorForAllButtons();
-        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("Search Results").addTabsToView(TabsPagerAdapter.getTabs(), this);
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(MyApplication.getStringFromResource(R.string.search_results)).addTabsToView(TabsPagerAdapter.getTabs(), this);
         StatusBarAndSoftKey.changeColor(this);
         networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
@@ -426,6 +427,8 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
     @Override
     public void showNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_SHOWING);
+
         if (internetDialog != null) {
 
             internetDialog.show();
@@ -438,6 +441,8 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
     @Override
     public void hideNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_NOT_SHOWING);
+
         if (internetDialog != null) {
 
             internetDialog.dismiss();

@@ -90,7 +90,7 @@ public class DownloadManager {
             }
 
 
-            if (isInternetConnection == THERE_IS_INTERNET_CONNECTION && isDownloadingInProgress == DOWNLOAD_IS_NOT_IN_PROGRESS && isNotificationShowing == NOTIFICATION_IS_SHOWING) {
+            if (isInternetConnection == THERE_IS_INTERNET_CONNECTION &&  isNotificationShowing == NOTIFICATION_IS_SHOWING) {
 
                 listener.hideNoInternetNotification(this);
                 Log.d("hide notification", "DOWNLOAD_MANAGER");
