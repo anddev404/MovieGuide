@@ -9,6 +9,7 @@
 
 
     <LinearLayout
+        android:id="@+id/row_movies_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -83,9 +84,9 @@
                     android:layout_height="0dp"
                     android:adjustViewBounds="true"
                     android:background="@null"
+                    android:paddingRight="@dimen/_4sdp"
                     android:scaleType="fitXY"
                     android:src="@mipmap/tmd"
-                    android:paddingRight="@dimen/_4sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/row_average_vote_date_movies_list_textView"
@@ -100,6 +101,19 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/logo_the_movie_database"
                     tools:text="@string/example_vote" />
+
+                <ImageButton
+                    android:id="@+id/row_favourite_movies_list_imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/row_average_vote_date_movies_list_textView"
+                    app:srcCompat="@android:drawable/star_big_off" />
+                
             </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>

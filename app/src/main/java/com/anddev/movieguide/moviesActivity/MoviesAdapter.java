@@ -1,16 +1,22 @@
 package com.anddev.movieguide.moviesActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.ResultsMovie;
+import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -72,7 +78,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             }
         }
         //holder.releaseDateTextView.setText(holder.releaseDateTextView.getText() + "\n" ));
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(activity, MovieActvity_.class);
+                intent.putExtra("Id", result.getId());
+                activity.startActivity(intent);
+
+            }
+        });
+        holder.starImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
     }
 
 
@@ -88,7 +110,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         TextView releaseDateTextView;
         TextView averageVoteTextView;
         RoundedImageView moviesImageView;
-
+        ImageButton starImageButton;
+        LinearLayout layout;
 
         public MoviesViewHolder(View itemView) {
             super(itemView);
@@ -97,7 +120,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             releaseDateTextView = itemView.findViewById(R.id.row_release_date_movies_list_textView);
             averageVoteTextView = itemView.findViewById(R.id.row_average_vote_date_movies_list_textView);
             moviesImageView = itemView.findViewById(R.id.row_image_movies_list_imageView);
-
+            starImageButton = itemView.findViewById(R.id.row_favourite_movies_list_imageButton);
+            layout = itemView.findViewById(R.id.row_movies_list_layout);
         }
     }
 
