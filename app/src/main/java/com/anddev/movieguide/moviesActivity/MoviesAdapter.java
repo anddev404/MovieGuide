@@ -18,6 +18,7 @@ import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.ResultsMovie;
 import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.tools.DateTools;
+import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -31,15 +32,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     private Movies moviesList;
     private Genre genres;
 
+    FavouriteTools favouriteTools;
+
     public MoviesAdapter(Activity activity, Movies moviesList) {
         this.activity = activity;
         this.moviesList = moviesList;
+        favouriteTools = new FavouriteTools(activity);
     }
 
     public MoviesAdapter(Activity activity, Movies moviesList, Genre genres) {
         this.activity = activity;
         this.moviesList = moviesList;
         this.genres = genres;
+        favouriteTools = new FavouriteTools(activity);
     }
 
     public void setGenres(Genre genres) {
@@ -88,13 +93,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
             }
         });
-        holder.starImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-            }
-        });
+        favouriteTools.manageFavouriteMovieButton(holder.starImageButton, result.getId());
     }
 
 

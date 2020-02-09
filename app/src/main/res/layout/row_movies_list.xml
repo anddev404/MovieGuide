@@ -112,8 +112,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/row_average_vote_date_movies_list_textView"
-                    app:srcCompat="@android:drawable/star_big_off" />
-                
+                    app:srcCompat="@mipmap/star_big_off" />
+
             </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>

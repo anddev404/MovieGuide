@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Favourite implements Serializable {
 
-    static final int FAVOURITE_MOVIE = 1;
-    static final int FAVOURITE_ACTOR = 2;
+    public static final int FAVOURITE_MOVIE = 1;
+    public static final int FAVOURITE_ACTOR = 2;
 
     @DatabaseField(generatedId = true)
     public int id;
