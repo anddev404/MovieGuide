@@ -23,6 +23,7 @@ import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
+import com.anddev.movieguide.tools.UpdateDownloader;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -34,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_movies)
-public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener {
+public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener {
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
@@ -47,6 +48,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     AlertDialog internetDialog;
     Movies movies;
     Genre genres;
+    UpdateDownloader updateDownloader;
 
     @AfterViews
     public void onCreate() {
@@ -63,6 +65,8 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         downloadManager.setOnDownloadManagerListener(this);
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
+        updateDownloader = new UpdateDownloader(fragment.moviesListRecyclerView);
+        updateDownloader.setOnUpdateDownloaderListener(this);
     }
 
     @Override
@@ -97,36 +101,41 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                 public void onResponse(Call<Movies> call, Response<Movies> response) {
                     if (response.code() == 200) {
 
-                        movies = response.body();
-                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        if (page > 1) {
+                            updateDownloader.downloadedPage(page);
+                            fragment.addData(response.body());
+                        } else {
+                            movies = response.body();
+                            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        }
 
                     } else {
 
                         showError("Nie można pobrać odpowiednich danych");
                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                        Log.d("nie pobrano 1", "MARCIN");//filtrowanie w logCat po treści - nie tagu
 
                     }
                     downloadManager.changeStateDownloadInProgress(false);
+                    updateDownloader.notDownloadedPage(page);
 
                 }
 
                 @Override
                 public void onFailure(Call<Movies> call, Throwable t) {
-                    Log.d("nie pobrano 2", "MARCIN");//filtrowanie w logCat po treści - nie tagu
 
-                    showError("Brak połączenia internetowego!");
+                    //showError("Brak połączenia internetowego!");
                     downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     downloadManager.changeStateDownloadInProgress(false);
+                    updateDownloader.notDownloadedPage(page);
 
                 }
             });
         } catch (Throwable e) {
             showError("Nieoczekiwany błąd!");
-            Log.d("nie pobrano 3", "MARCIN");//filtrowanie w logCat po treści - nie tagu
 
             downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             downloadManager.changeStateDownloadInProgress(false);
+            updateDownloader.notDownloadedPage(page);
 
         }
         // downloadManager.changeStateInProgress(false);
@@ -189,6 +198,13 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         } catch (Exception e) {
 
         }
+    }
+
+    @Override
+    public void downloadPage(int page) {
+
+        downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
+
     }
 
     @Override
