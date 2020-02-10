@@ -102,6 +102,15 @@ public class MoviesFragment extends Fragment {
             adapter.setGenres(genres);
         }
     }
+
+    public void addData(Movies movies) {
+
+        try {
+            this.movies.getResults().addAll(movies.getResults());
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+        }
+    }
 }
 
 
