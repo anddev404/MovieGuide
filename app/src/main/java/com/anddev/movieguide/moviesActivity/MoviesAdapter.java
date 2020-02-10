@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.ResultsMovie;
@@ -94,7 +95,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             }
         });
 
-        favouriteTools.manageFavouriteMovieButton(holder.starImageButton, result.getId());
+        favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_MOVIE);
     }
 
 
