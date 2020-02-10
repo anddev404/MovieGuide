@@ -1,7 +1,6 @@
 package com.anddev.movieguide.peopleActivity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.anddev.movieguide.R;
-import com.anddev.movieguide.actorActivity.ActorActivity_;
 import com.anddev.movieguide.model.PopularPeople;
-import com.anddev.movieguide.tools.RecyclerItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,21 +46,21 @@ public class PeopleFragment extends Fragment {
         PeopleAdapter adapter = new PeopleAdapter(activity, people.getResults());
         peopleListRecyclerView.setAdapter(adapter);
 
-        peopleListRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), peopleListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getActivity(), ActorActivity_.class);
-                        intent.putExtra("Id", people.getResults().get(position).getId());
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                    }
-
-                })
-        );
+//        peopleListRecyclerView.addOnItemTouchListener(
+//                new RecyclerItemClickListener(getActivity(), peopleListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+//                        Intent intent = new Intent(getActivity(), ActorActivity_.class);
+//                        intent.putExtra("Id", people.getResults().get(position).getId());
+//                        startActivity(intent);
+//                    }
+//
+//                    @Override
+//                    public void onLongItemClick(View view, int position) {
+//                    }
+//
+//                })
+//        );
 
 
     }

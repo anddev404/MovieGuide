@@ -9,6 +9,7 @@
     tools:context=".peopleActivity.PeopleActivity">
 
     <LinearLayout
+        android:id="@+id/row_people_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -64,12 +65,42 @@
 
             <TextView
                 android:id="@+id/row_movie_people_list_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:textColor="@color/colorTextDark"
                 android:textSize="@dimen/_11ssp"
                 tools:text="@tools:sample/lorem" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/_4sdp">
+
+                <TextView
+                    android:id="@+id/row_popularity_people_list_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/row_favourite_people_list_imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/row_popularity_people_list_textView"
+                    app:srcCompat="@mipmap/star_big_off" />
+
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 

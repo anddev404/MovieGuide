@@ -1,16 +1,21 @@
 package com.anddev.movieguide.peopleActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.actorActivity.ActorActivity_;
+import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.KnownForPopular;
 import com.anddev.movieguide.model.Results;
+import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -21,12 +26,13 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
 
 
     private Activity context;
-
+    private FavouriteTools favouriteTools;
     private List<Results> peopleList;
 
     public PeopleAdapter(Activity context, List<Results> peopleList) {
         this.context = context;
         this.peopleList = peopleList;
+        favouriteTools = new FavouriteTools(context);
     }
 
     @Override
@@ -46,8 +52,18 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
         holder.nameTextView.setText(result.getName());
         holder.movieTextView.setText(getMovieOfActor(result.getKnownForPopular()));
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + peopleList.get(position).getProfile_path(), holder.peopleImageView, ImageTools.DRAWABLE_PERSON);
+        favouriteTools.manageFavouriteButton(holder.starButton, result.getId(), Favourite.FAVOURITE_ACTOR);
 
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(context, ActorActivity_.class);
+                intent.putExtra("Id", peopleList.get(position).getId());
+                context.startActivity(intent);
+
+            }
+        });
     }
 
 
@@ -62,6 +78,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
         TextView nameTextView;
         TextView movieTextView;
         RoundedImageView peopleImageView;
+        ImageButton starButton;
+        LinearLayout layout;
 
 
         public PeopleViewHolder(View itemView) {
@@ -70,6 +88,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
             nameTextView = itemView.findViewById(R.id.row_name_people_list_textView);
             movieTextView = itemView.findViewById(R.id.row_movie_people_list_textView);
             peopleImageView = itemView.findViewById(R.id.row_people_list_imageView);
+            starButton = itemView.findViewById(R.id.row_favourite_people_list_imageButton);
+            layout = itemView.findViewById(R.id.row_people_list_layout);
 
         }
     }
