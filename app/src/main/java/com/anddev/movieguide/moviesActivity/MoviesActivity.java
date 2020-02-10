@@ -111,12 +111,11 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     } else {
 
-                        showError("Nie można pobrać odpowiednich danych");
+                        updateDownloader.notDownloadedPage(page);
                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
                     downloadManager.changeStateDownloadInProgress(false);
-                    updateDownloader.notDownloadedPage(page);
 
                 }
 
