@@ -20,6 +20,7 @@ import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
+import com.anddev.movieguide.tools.UpdateDownloader;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -32,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_people)
-public class PeopleActivity extends AppCompatActivity implements NetworkChangeReceiver.onSubmitListener {
+public class PeopleActivity extends AppCompatActivity implements NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener {
 
     Activity activity;
     PeopleFragment peopleFragment;
@@ -45,6 +46,7 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
     AlertDialog internetDialog;
 
     ConnectionInterface client;
+    UpdateDownloader updateDownloader;
 
     @AfterViews
     public void onCreate() {
@@ -55,6 +57,8 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
         navigationDrawer = new NavigationDrawerTools(activity, R.id.people_navigation_draver).setOtherColorForPeopleButton();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(MyApplication.getStringFromResource(R.string.people));
         peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_people);
+        updateDownloader = new UpdateDownloader(peopleFragment.peopleListRecyclerView);
+        updateDownloader.setOnUpdateDownloaderListener(this);
         StatusBarAndSoftKey.changeColor(this);
         networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
         try {
@@ -126,32 +130,43 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
 
                     if (response.code() == 200) {
 
-                        popularPeople = response.body();
-                        peopleFragment.setData(popularPeople);
+
+                        if (page > 1) {
+                            updateDownloader.downloadedPage(page);
+                            peopleFragment.addData(response.body());
+                        } else {
+                            popularPeople = response.body();
+                            peopleFragment.setData(popularPeople);
+                        }
                     } else {
 
-                        showError("Nie można pobrać odpowiednich danych");
+                        updateDownloader.notDownloadedPage(page);
 
                     }
-
                 }
 
                 @Override
                 public void onFailure(Call<PopularPeople> call, Throwable t) {
 
-                    showError("Brak połączenia internetowego!");
+                    updateDownloader.notDownloadedPage(page);
                     downloadAndShowPeopleOnScreen();
 
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
+            updateDownloader.notDownloadedPage(page);
             downloadAndShowPeopleOnScreen();
 
         }
 
     }
 
+    @Override
+    public void downloadPage(int page) {
+
+        downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
+
+    }
 
     @UiThread
     public void showError(String message) {

@@ -2,6 +2,7 @@ package com.anddev.movieguide.peopleActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +21,10 @@ public class PeopleFragment extends Fragment {
     View rootView;
     Activity activity;
     PopularPeople people;
+    PeopleAdapter adapter;
 
     @BindView(R.id.people_list_recycler_view)
-    RecyclerView peopleListRecyclerView;
+    public RecyclerView peopleListRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +45,7 @@ public class PeopleFragment extends Fragment {
 
         this.people = people;
 
-        PeopleAdapter adapter = new PeopleAdapter(activity, people.getResults());
+        adapter = new PeopleAdapter(activity, people.getResults());
         peopleListRecyclerView.setAdapter(adapter);
 
 //        peopleListRecyclerView.addOnItemTouchListener(
@@ -64,5 +66,15 @@ public class PeopleFragment extends Fragment {
 
 
     }
+
+    public void addData(PopularPeople people) {
+
+        try {
+            this.people.getResults().addAll(people.getResults());
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+        }
+    }
+
 }
 
