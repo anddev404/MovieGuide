@@ -3,6 +3,7 @@ package com.anddev.movieguide.peopleActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -162,7 +163,7 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
     }
 
     @Override
-    public void downloadPage(int page) {
+    public void downloadPage(RecyclerView recyclerView, int page) {
 
         downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
 

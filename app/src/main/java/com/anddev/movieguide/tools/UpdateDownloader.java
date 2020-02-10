@@ -29,7 +29,7 @@ public class UpdateDownloader {
                 if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                     if (mListener != null) {
                         isLoading = true;
-                        mListener.downloadPage(pageToDownlad);
+                        mListener.downloadPage(recyclerView, pageToDownlad);
                         Log.d("page " + pageToDownlad + " is downloading", "UPDATE_DOWNLOADER");//filtrowanie w logCat po treści - nie tagu
 
                     }
@@ -64,7 +64,7 @@ public class UpdateDownloader {
     }
 
     public interface OnUpdatePageDownloaderListener {
-        void downloadPage(int page);
+        void downloadPage(RecyclerView recyclerView, int page);
     }
 
     //////////////////////////////

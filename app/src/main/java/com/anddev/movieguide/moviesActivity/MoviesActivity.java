@@ -3,6 +3,7 @@ package com.anddev.movieguide.moviesActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -200,7 +201,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     }
 
     @Override
-    public void downloadPage(int page) {
+    public void downloadPage(RecyclerView recyclerView, int page) {
 
         downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
 
