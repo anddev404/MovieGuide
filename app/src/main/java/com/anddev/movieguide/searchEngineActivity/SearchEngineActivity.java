@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -29,6 +30,7 @@ import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
+import com.anddev.movieguide.tools.UpdateDownloader;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -41,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_search_engine)
-public class SearchEngineActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, ActionBar.TabListener, NetworkChangeReceiver.onSubmitListener {
+public class SearchEngineActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, ActionBar.TabListener, NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener {
 
     SearchEngineActivity activity;
     MoviesFragment moviesFragment;
@@ -49,6 +51,8 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
     PeopleFragment peopleFragment;
     DownloadManager moviesDownloadManager;
     DownloadManager peopleDownloadManager;
+    UpdateDownloader moviesUpdateDownloader;
+    UpdateDownloader peopleUpdateDownloader;
 
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
@@ -134,6 +138,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         moviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
                         moviesFragment.setData(movies);
                     }
+
+                    moviesUpdateDownloader = new UpdateDownloader(moviesFragment.moviesListRecyclerView);
+                    moviesUpdateDownloader.setOnUpdateDownloaderListener(activity);
+
                 }
 //                if (tvShowsFragment == null && arg0 == 1) {
 //                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
@@ -157,6 +165,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         peopleDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
                         peopleFragment.setData(people);
                     }
+
+                    peopleUpdateDownloader = new UpdateDownloader(peopleFragment.peopleListRecyclerView);
+                    peopleUpdateDownloader.setOnUpdateDownloaderListener(activity);
+
                 }
             }
 
@@ -203,16 +215,27 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
                     if (response.code() == 200) {
 
-                        movies = response.body();
-                        moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        if (page > 1) {
+                            moviesUpdateDownloader.downloadedPage(page);
+                            try {
+                                moviesFragment.addData(response.body());
+                            } catch (Exception e) {
+                            }
+                        } else {
+                            movies = response.body();
+                            moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        }
 
-                        if (movies != null && movies.getResults() != null) {
+                        try {
                             actionBarTools.setTextToTabOfActionBar(0, getResources().getString(R.string.movies) + " (" + movies.getResults().size() + ")");
+
+                        } catch (Exception e) {
                         }
 
                     } else {
 
                         moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                        moviesUpdateDownloader.notDownloadedPage(page);
 
                     }
                     moviesDownloadManager.changeStateDownloadInProgress(false);
@@ -224,12 +247,14 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
                     moviesDownloadManager.changeStateDownloadInProgress(false);
                     moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    moviesUpdateDownloader.notDownloadedPage(page);
 
                 }
             });
         } catch (Throwable e) {
             moviesDownloadManager.changeStateDownloadInProgress(false);
             moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            moviesUpdateDownloader.notDownloadedPage(page);
 
         }
 
@@ -292,16 +317,30 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
                     if (response.code() == 200) {
 
-                        people = response.body();
-                        peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        if (page > 1) {
+                            peopleUpdateDownloader.downloadedPage(page);
+                            try {
+                                //people.getResults().addAll(response.body().getResults());
+                                peopleFragment.addData(response.body());
+                            } catch (Exception e) {
+                            }
 
-                        if (people != null && people.getResults() != null) {
+                        } else {
+                            people = response.body();
+                            peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        }
+
+                        try {
                             actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
+
+                        } catch (Exception e) {
+
                         }
 
                     } else {
 
                         peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                        peopleUpdateDownloader.notDownloadedPage(page);
 
                     }
                     peopleDownloadManager.changeStateDownloadInProgress(false);
@@ -313,17 +352,34 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
                     peopleDownloadManager.changeStateDownloadInProgress(false);
                     peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    peopleUpdateDownloader.notDownloadedPage(page);
 
                 }
             });
         } catch (Throwable e) {
             peopleDownloadManager.changeStateDownloadInProgress(false);
             peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            peopleUpdateDownloader.notDownloadedPage(page);
 
         }
 
     }
 
+    @Override
+    public void downloadPage(UpdateDownloader updateDownloader, int page) {
+        try {
+
+            if (updateDownloader == moviesUpdateDownloader) {
+                downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, page);
+
+            }
+            if (updateDownloader == peopleUpdateDownloader) {
+                downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, page);
+
+            }
+        } catch (Exception e) {
+        }
+    }
 
     @UiThread
     public void showError(String message) {
