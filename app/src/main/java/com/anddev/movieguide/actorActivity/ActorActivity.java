@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Actor;
+import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Images;
 import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Profiles;
@@ -32,6 +34,7 @@ import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.DownloadManager;
+import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
@@ -88,9 +91,13 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     @BindView(R.id.full_screen_images_recycler_view)
     RecyclerView fullScreenImagesRecyclerView;
 
+    @BindView(R.id.actor_favourite_FloatingActionButton)
+    FloatingActionButton favouriteFloatingActionButton;
+
     DownloadManager downloadManager;
     ConnectionInterface client;
     AlertDialog internetDialog;
+    FavouriteTools favouriteTools;
 
     Actor actor;
     KnownFor knownFor;
@@ -156,6 +163,8 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         downloadManager.setOnDownloadManagerListener(this);
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
+        favouriteTools = new FavouriteTools(activity);
+        favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR);
     }
 
     @Override

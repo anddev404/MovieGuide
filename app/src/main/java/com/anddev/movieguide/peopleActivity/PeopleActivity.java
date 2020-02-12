@@ -83,12 +83,6 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
                 } else {
                     internetDialog = InternetTools.showNoConnectionDialog(activity);
                 }
-            } else {
-                // if (peopleListRecyclerView == null) {
-
-                peopleFragment.setData(popularPeople);
-
-                //}
             }
 
         } catch (Exception e) {

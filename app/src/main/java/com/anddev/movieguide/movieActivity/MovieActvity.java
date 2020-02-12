@@ -3,6 +3,7 @@ package com.anddev.movieguide.movieActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +18,13 @@ import android.widget.Toast;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
 import com.anddev.movieguide.model.Credits;
+import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DownloadManager;
+import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
@@ -59,6 +62,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     DownloadManager downloadManager;
     ConnectionInterface client;
     AlertDialog internetDialog;
+    FavouriteTools favouriteTools;
 
     @BindView(R.id.poster_movie_imageView)
     ImageView poster;
@@ -89,6 +93,9 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     @BindView(R.id.credits_movie_recycler_view)
     RecyclerView creditsRecyclerView;
+
+    @BindView(R.id.movie_favourite_FloatingActionButton)
+    FloatingActionButton favouriteFloatingActionButton;
     // endregion
 
     //region activity
@@ -117,6 +124,9 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         downloadManager = new DownloadManager();
         downloadManager.setOnDownloadManagerListener(this);
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+
+        favouriteTools = new FavouriteTools(activity);
+        favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE);
 
     }
 
