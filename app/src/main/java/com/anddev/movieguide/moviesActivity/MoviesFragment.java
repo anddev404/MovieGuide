@@ -28,7 +28,7 @@ public class MoviesFragment extends Fragment {
     MoviesAdapter adapter;
 
     @BindView(R.id.movies_list_recycler_view)
-    RecyclerView moviesListRecyclerView;
+    public RecyclerView moviesListRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

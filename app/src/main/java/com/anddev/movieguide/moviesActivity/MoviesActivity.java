@@ -201,7 +201,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     }
 
     @Override
-    public void downloadPage(RecyclerView recyclerView, int page) {
+    public void downloadPage(UpdateDownloader updateDownloader, int page) {
 
         downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
 

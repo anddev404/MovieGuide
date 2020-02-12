@@ -163,7 +163,7 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
     }
 
     @Override
-    public void downloadPage(RecyclerView recyclerView, int page) {
+    public void downloadPage(UpdateDownloader updateDownloader, int page) {
 
         downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
 

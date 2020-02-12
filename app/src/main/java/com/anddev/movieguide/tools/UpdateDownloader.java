@@ -8,6 +8,7 @@ import android.widget.AbsListView;
 
 public class UpdateDownloader {
 
+    UpdateDownloader instance;
     int pageToDownlad;
     RecyclerView recyclerView;
     private int visibleThreshold = 5;
@@ -16,6 +17,7 @@ public class UpdateDownloader {
 
     public UpdateDownloader(RecyclerView recyclerView) {
 
+        instance = this;
         this.recyclerView = recyclerView;
         pageToDownlad = 2;
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -29,7 +31,7 @@ public class UpdateDownloader {
                 if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                     if (mListener != null) {
                         isLoading = true;
-                        mListener.downloadPage(recyclerView, pageToDownlad);
+                        mListener.downloadPage(instance, pageToDownlad);
                         Log.d("page " + pageToDownlad + " is downloading", "UPDATE_DOWNLOADER");//filtrowanie w logCat po treści - nie tagu
 
                     }
@@ -42,14 +44,17 @@ public class UpdateDownloader {
     public void downloadedPage(int page) {
 
         if (page == pageToDownlad) {
+            Log.d("page " + pageToDownlad + " downloaded", "UPDATE_DOWNLOADER");//filtrowanie w logCat po treści - nie tagu
             pageToDownlad++;
             isLoading = false;
+
         }
     }
 
     public void notDownloadedPage(int page) {
 
         if (page == pageToDownlad) {
+            Log.d("page " + pageToDownlad + " not downloaded", "UPDATE_DOWNLOADER");//filtrowanie w logCat po treści - nie tagu
             isLoading = false;
         }
     }
@@ -64,7 +69,7 @@ public class UpdateDownloader {
     }
 
     public interface OnUpdatePageDownloaderListener {
-        void downloadPage(RecyclerView recyclerView, int page);
+        void downloadPage(UpdateDownloader updateDownloader, int page);
     }
 
     //////////////////////////////
