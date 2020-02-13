@@ -13,10 +13,11 @@
         android:roundIcon="@mipmap/icon_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".favouriteActivity.FavouriteActivity"></activity>
         <activity
             android:name=".tvShow.TvShowActivity_"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".searchEngineActivity.SearchEngineActivity_"
             android:configChanges="orientation|keyboardHidden"
