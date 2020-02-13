@@ -3,11 +3,17 @@ package com.anddev.movieguide.favouriteActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.anddev.movieguide.R;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+
+@EActivity(R.layout.activity_favourite)
 public class FavouriteActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourite);
+    @AfterViews
+    public void onCreate() {
+
     }
+
 }
