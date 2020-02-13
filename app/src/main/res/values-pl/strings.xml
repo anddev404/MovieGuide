@@ -18,6 +18,7 @@
 
     <string name="movies_navigation_drawer">Filmy</string>
     <string name="people_navigation_drawer">Ludzie</string>
+    <string name="favourite_navigation_drawer">Ulubione</string>
     <string name="options_navigation_drawer">Opcje</string>
     <string name="contact_developer_navigation_drawer">Kontakt</string>
     <string name="available_soon_navigation_drawer">Opcja dostępna wkrótce</string>

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.favouriteActivity.FavouriteActivity_;
 import com.anddev.movieguide.moviesActivity.MoviesActivity_;
 import com.anddev.movieguide.peopleActivity.PeopleActivity_;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity_;
@@ -48,6 +49,13 @@ public class NavigationDrawerTools {
     public void onClickMovies() {
 
         Intent intent = new Intent(activity, MoviesActivity_.class);
+        activity.startActivity(intent);
+    }
+
+    @OnClick(R.id.favourites_navigation_drawer_button)
+    public void onClickFavourite() {
+
+        Intent intent = new Intent(activity, FavouriteActivity_.class);
         activity.startActivity(intent);
     }
 
