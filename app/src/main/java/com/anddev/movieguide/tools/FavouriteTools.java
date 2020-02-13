@@ -23,7 +23,7 @@ public class FavouriteTools {
         updateList();
     }
 
-    public void manageFavouriteButton(ImageButton starImageButton, int id, int type) {
+    public void manageFavouriteButton(ImageButton starImageButton, int id, int type, String name, String description, String rating) {
         try {
             changeMovieStarIconOnButton(starImageButton, id);
 
@@ -33,7 +33,7 @@ public class FavouriteTools {
                     try {
 
 
-                        if (addOrRemoveFromFavourite(id, type)) {
+                        if (addOrRemoveFromFavourite(id, type, name, description, rating)) {
                             changeStarIconOnButton(starImageButton, true);
                         } else {
                             changeStarIconOnButton(starImageButton, false);
@@ -60,18 +60,18 @@ public class FavouriteTools {
         return this;
     }
 
-    private boolean addOrRemoveFromFavourite(int idMovie, int type) {
+    private boolean addOrRemoveFromFavourite(int id, int type, String name, String description, String rating) {
         try {
             updateList();
             for (Favourite f : favourites) {
-                if (f.favouriteId == idMovie) {
+                if (f.favouriteId == id) {
                     DatabaseHelper.getFavouriteDataDao(activity).delete(f);
                     Log.d("remove from favourite ", "FAVOURITE_TOOLS");
                     updateList();
                     return false;
                 }
             }
-            DatabaseHelper.getFavouriteDataDao(activity).create(new Favourite(idMovie, type));
+            DatabaseHelper.getFavouriteDataDao(activity).create(new Favourite(id, type, name, description, rating));
             Log.d("add to favourite", "FAVOURITE_TOOLS");
             updateList();
             return true;

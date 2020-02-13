@@ -126,7 +126,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
         favouriteTools = new FavouriteTools(activity);
-        favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE);
 
     }
 
@@ -258,6 +257,12 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         genres.setText(movie.genresToString());
         runtime.setText(movie.getRuntime() + " min.");
         productionCountries.setText(movie.productionCountriesToString());
+
+        try {
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE, movie.getTitle(), movie.getRelease_date(), Double.toString(movie.getVote_average()));
+        } catch (Exception e) {
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE, "id: " + movieId, "", "");
+        }
     }
 
     @UiThread

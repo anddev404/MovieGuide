@@ -20,12 +20,24 @@ public class Favourite implements Serializable {
     @DatabaseField
     public int type;
 
+    @DatabaseField
+    public String name;
+
+    @DatabaseField
+    public String description;
+
+    @DatabaseField
+    public String rating;
+
     public Favourite() {
     }
 
-    public Favourite(int favouriteId, int type) {
+    public Favourite(int favouriteId, int type, String name, String description, String rating) {
         this.favouriteId = favouriteId;
         this.type = type;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
     }
 
     public int getId() {
@@ -52,28 +64,27 @@ public class Favourite implements Serializable {
         this.type = type;
     }
 
-    public static List<Favourite> getExampleFavouriteMovie() {
-
-
-        List<Favourite> dane = new ArrayList<>();
-
-        dane.add(new Favourite(234534, 1));
-        dane.add(new Favourite(678234, 1));
-
-        return dane;
-
+    public String getName() {
+        return name;
     }
 
-    public static List<Favourite> getExampleFavouritePeople() {
-
-
-        List<Favourite> dane = new ArrayList<>();
-
-        dane.add(new Favourite(3453, 1));
-        dane.add(new Favourite(2345, 1));
-
-        return dane;
-
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 }

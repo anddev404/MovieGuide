@@ -95,7 +95,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             }
         });
 
-        favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_MOVIE);
+        try {
+            favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_MOVIE, result.getTitle(), result.getRelease_date(), Double.toString(result.getVote_average()));
+        } catch (Exception e) {
+        }
     }
 
 

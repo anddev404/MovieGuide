@@ -164,7 +164,6 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
         favouriteTools = new FavouriteTools(activity);
-        favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR);
     }
 
     @Override
@@ -485,6 +484,13 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     public void showData(DownloadManager downloadManager) {
         downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
         showDataOfActor(actor);
+
+        try {
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, actor.getName(), "", "");
+        } catch (Exception e) {
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, "id: " + actorId, "", "");
+        }
+
     }
 
     @Override

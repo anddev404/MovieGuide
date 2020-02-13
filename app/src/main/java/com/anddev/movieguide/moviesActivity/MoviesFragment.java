@@ -51,24 +51,24 @@ public class MoviesFragment extends Fragment {
 
         adapter = new MoviesAdapter(activity, movies);
         moviesListRecyclerView.setAdapter(adapter);
-
-        moviesListRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), moviesListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getActivity(), MovieActvity_.class);
-                        intent.putExtra("Id", movies.getResults().get(position).getId());
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                    }
-
-                })
-        );
-
-
+//
+//        moviesListRecyclerView.addOnItemTouchListener(
+//                new RecyclerItemClickListener(getActivity(), moviesListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+//                        Intent intent = new Intent(getActivity(), MovieActvity_.class);
+//                        intent.putExtra("Id", movies.getResults().get(position).getId());
+//                        startActivity(intent);
+//                    }
+//
+//                    @Override
+//                    public void onLongItemClick(View view, int position) {
+//                    }
+//
+//                })
+//        );
+//
+//
     }
 
     public void setData(final Movies movies, Genre genres) {

@@ -52,7 +52,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
         holder.nameTextView.setText(result.getName());
         holder.movieTextView.setText(getMovieOfActor(result.getKnownForPopular()));
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + peopleList.get(position).getProfile_path(), holder.peopleImageView, ImageTools.DRAWABLE_PERSON);
-        favouriteTools.manageFavouriteButton(holder.starButton, result.getId(), Favourite.FAVOURITE_ACTOR);
+
+        try {
+            favouriteTools.manageFavouriteButton(holder.starButton, result.getId(), Favourite.FAVOURITE_ACTOR, result.getName(), "", "");
+        } catch (Exception e) {
+        }
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
