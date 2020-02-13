@@ -88,6 +88,12 @@ public class ActionBarTools {
     SearchView searchView;
     MenuItem searchItem;
 
+    public void clearFocus() {
+        if (searchView != null) {
+            searchView.clearFocus();
+        }
+    }
+
     public void addSearchEngine(Activity activity, int idLayoutActionBar, int idSearchView, Menu menu, OnSearchEngineListener onSearchEngineListener) {
         try {
 
