@@ -27,7 +27,8 @@ public class NavigationDrawerTools {
     LinearLayout peopleButton;
     @BindView(R.id.movies_navigation_drawer_button)
     LinearLayout moviesButton;
-
+    @BindView(R.id.favourites_navigation_drawer_button)
+    LinearLayout favouritesButton;
 
     public NavigationDrawerTools(Activity activity, int navigationDrawerLayoutId) {
 
@@ -88,6 +89,7 @@ public class NavigationDrawerTools {
 
         moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
         peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
 
         return this;
     }
@@ -96,6 +98,16 @@ public class NavigationDrawerTools {
 
         moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
         peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
+        favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+
+        return this;
+    }
+
+    public NavigationDrawerTools setOtherColorForFavouriteButton() {
+
+        moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
 
         return this;
     }
@@ -104,6 +116,7 @@ public class NavigationDrawerTools {
 
         moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
         peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
 
         return this;
     }
