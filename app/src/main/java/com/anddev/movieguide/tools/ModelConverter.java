@@ -20,7 +20,7 @@ public class ModelConverter {
             for (Favourite f : favourites) {
                 if (type == f.type) {
                     ResultsMovie r = new ResultsMovie();
-                    r.setId(f.getId());
+                    r.setId(f.getFavouriteId());
                     r.setTitle(f.getName() + "\n\n" + f.getDescription());
                     Double doubleString;
                     try {
@@ -46,7 +46,7 @@ public class ModelConverter {
             for (Favourite f : favourites) {
                 if (type == f.type) {
                     Results r = new Results();
-                    r.setId(f.getId());
+                    r.setId(f.getFavouriteId());
                     r.setName(f.getName());
                     results.add(r);
                 }

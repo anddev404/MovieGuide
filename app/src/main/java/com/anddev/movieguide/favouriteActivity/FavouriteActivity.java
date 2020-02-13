@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.database.DatabaseHelper;
+import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
@@ -16,11 +18,14 @@ import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.searchEngineActivity.TabsPagerAdapter;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.ModelConverter;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+
+import java.util.List;
 
 @EActivity(R.layout.activity_favourite)
 public class FavouriteActivity extends AppCompatActivity implements ActionBar.TabListener {
@@ -48,6 +53,13 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
         navigationDrawer = new NavigationDrawerTools(activity, R.id.favourite_navigation_draver).setOtherColorForFavouriteButton();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(getString(R.string.favourite)).addTabsToView(TabsPagerAdapter.getTabs(), this);
         StatusBarAndSoftKey.changeColor(this);
+
+        List<Favourite> favourite = null;
+        favourite = DatabaseHelper.getFavouriteDataDao(activity).queryForAll();
+        movies = ModelConverter.favouritesToMovies(favourite, Favourite.FAVOURITE_MOVIE);
+        people = ModelConverter.favouritesToPopularPeople(favourite, Favourite.FAVOURITE_ACTOR);
+        actionBarTools.setTextToTabOfActionBar(0, getResources().getString(R.string.movies) + " (" + movies.getResults().size() + ")");
+        actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
 
         viewPager = (ViewPager) findViewById(R.id.pager_favourite_activity);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
