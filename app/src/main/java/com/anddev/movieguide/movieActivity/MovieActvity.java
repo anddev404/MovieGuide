@@ -23,6 +23,7 @@ import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
@@ -259,9 +260,9 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         productionCountries.setText(movie.productionCountriesToString());
 
         try {
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE, movie.getTitle(), movie.getRelease_date(), Double.toString(movie.getVote_average()));
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE, movie.getTitle() + " " + DateTools.getOnlyYear(movie.getRelease_date()), "", Double.toString(movie.getVote_average()), movie.getPoster_path());
         } catch (Exception e) {
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE, "id: " + movieId, "", "");
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE, "id: " + movieId, "", "", "");
         }
     }
 

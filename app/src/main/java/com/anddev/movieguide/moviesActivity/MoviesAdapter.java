@@ -72,7 +72,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
         holder.titleTextView.setText(result.getTitle() + " " + DateTools.getOnlyYear(result.getRelease_date()));
         holder.averageVoteTextView.setText(Double.toString(result.getVote_average()));
-        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_500px + result.getPoster_path(), holder.moviesImageView, ImageTools.DRAWABLE_PERSON);
+        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_500px + result.getPoster_path(), holder.moviesImageView, ImageTools.DRAWABLE_FILM);
         if (genres != null) {
             String s = "";
 
@@ -96,7 +96,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         });
 
         try {
-            favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_MOVIE, result.getTitle(), result.getRelease_date(), Double.toString(result.getVote_average()));
+            favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_MOVIE, result.getTitle() + " " + DateTools.getOnlyYear(result.getRelease_date()), "", Double.toString(result.getVote_average()), result.getPoster_path());
         } catch (Exception e) {
         }
     }

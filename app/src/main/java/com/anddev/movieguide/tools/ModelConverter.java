@@ -21,7 +21,9 @@ public class ModelConverter {
                 if (type == f.type) {
                     ResultsMovie r = new ResultsMovie();
                     r.setId(f.getFavouriteId());
-                    r.setTitle(f.getName() + "\n\n" + f.getDescription());
+                    r.setTitle(f.getName());
+                    r.setPoster_path(f.getPosterPath());
+
                     Double doubleString;
                     try {
                         doubleString = Double.parseDouble(f.getRating());
@@ -48,6 +50,7 @@ public class ModelConverter {
                     Results r = new Results();
                     r.setId(f.getFavouriteId());
                     r.setName(f.getName());
+                    r.setProfile_path(f.getPosterPath());
                     results.add(r);
                 }
             }

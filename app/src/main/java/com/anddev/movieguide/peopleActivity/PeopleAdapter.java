@@ -15,6 +15,7 @@ import com.anddev.movieguide.actorActivity.ActorActivity_;
 import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.KnownForPopular;
 import com.anddev.movieguide.model.Results;
+import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -54,7 +55,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + peopleList.get(position).getProfile_path(), holder.peopleImageView, ImageTools.DRAWABLE_PERSON);
 
         try {
-            favouriteTools.manageFavouriteButton(holder.starButton, result.getId(), Favourite.FAVOURITE_ACTOR, result.getName(), "", "");
+            favouriteTools.manageFavouriteButton(holder.starButton, result.getId(), Favourite.FAVOURITE_ACTOR, result.getName(), "", "", result.getProfile_path());
         } catch (Exception e) {
         }
 

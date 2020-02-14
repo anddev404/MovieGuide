@@ -29,15 +29,20 @@ public class Favourite implements Serializable {
     @DatabaseField
     public String rating;
 
+    @DatabaseField
+    public String posterPath;
+
     public Favourite() {
     }
 
-    public Favourite(int favouriteId, int type, String name, String description, String rating) {
+    public Favourite(int favouriteId, int type, String name, String description, String rating, String posterPath) {
         this.favouriteId = favouriteId;
         this.type = type;
         this.name = name;
         this.description = description;
         this.rating = rating;
+        this.posterPath = posterPath;
+
     }
 
     public int getId() {
@@ -86,5 +91,13 @@ public class Favourite implements Serializable {
 
     public void setRating(String rating) {
         this.rating = rating;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 }

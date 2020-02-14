@@ -486,13 +486,9 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         showDataOfActor(actor);
 
         try {
-            String yearsOld = DateTools.calculateAgeFromBirthday(actor.getBirthday());
-            if (yearsOld != null && yearsOld.length() > 0) {
-                age.setText(yearsOld + " " + getString(R.string.years_old));
-            }
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, actor.getName(), yearsOld, "");
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, actor.getName(), "", "", actor.getProfile_path());
         } catch (Exception e) {
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, "id: " + actorId, "", "");
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, "id: " + actorId, "", "", "");
         }
 
     }
