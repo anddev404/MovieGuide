@@ -24,7 +24,10 @@ public class DateTools {
         } catch (Exception e) {
 
         }
-        return dateString;
+        if (dateString != null) {
+            return dateString;
+        }
+        return "";
     }
 
     //format 1967-07-26
