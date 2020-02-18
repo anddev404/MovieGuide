@@ -19,6 +19,21 @@ public class ActionBarTools {
     ActionBarTools actionBarTools;
     ActionBar actionBar;
 
+    int changeView = 0;
+    public static final int NORMAL_VIEW = 0;
+    public static final int GRID1_VIEW = 1;
+    public static final int GRID2_VIEW = 2;
+    public static final int GRID3_VIEW = 3;
+    public static final int GRID4_VIEW = 4;
+
+    public int getTypeOfView() {
+        return changeView;
+    }
+
+    public void setTypeOfView(int changeView) {
+        this.changeView = changeView;
+    }
+
     public ActionBarTools(AppCompatActivity activity) {
 
         this.activity = activity;
