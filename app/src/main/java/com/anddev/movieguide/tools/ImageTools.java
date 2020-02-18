@@ -1,6 +1,7 @@
 package com.anddev.movieguide.tools;
 
 import android.app.Activity;
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.anddev.movieguide.R;
@@ -22,6 +23,16 @@ public class ImageTools {
                 .load(url)
                 .placeholder(activity.getResources().getDrawable(R.drawable.download))
                 .error(activity.getResources().getDrawable(drawableError))
+                .into(imageView);
+
+    }
+
+    public static void getImageFromInternet(Context context, String url, ImageView imageView, int drawableError) {
+
+        Picasso.with(context)
+                .load(url)
+                .placeholder(context.getResources().getDrawable(R.drawable.download))
+                .error(context.getResources().getDrawable(drawableError))
                 .into(imageView);
 
     }
