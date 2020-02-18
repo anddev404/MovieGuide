@@ -32,4 +32,11 @@
     <string name="no_internet_connection">Brak połączenia z internetem</string>
     <string name="settings">Ustawienia</string>
     <string name="cancel">Anuluj</string>
+
+    <string name="normal_view">widok normalny</string>
+    <string name="grid1_view">jedna kolumna</string>
+    <string name="grid2_view">dwie kolumny</string>
+    <string name="grid3_view">trzy kolumny</string>
+    <string name="grid4_view">cztery kolumny</string>
+
 </resources>
