@@ -247,7 +247,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
                     moviesDownloadManager.changeStateDownloadInProgress(false);
                     moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                    moviesUpdateDownloader.notDownloadedPage(page);
+                    if (moviesUpdateDownloader != null) {
+                        moviesUpdateDownloader.notDownloadedPage(page);
+                    }
 
                 }
             });
@@ -352,7 +354,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
                     peopleDownloadManager.changeStateDownloadInProgress(false);
                     peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                    peopleUpdateDownloader.notDownloadedPage(page);
+                    if (peopleUpdateDownloader != null) {
+                        peopleUpdateDownloader.notDownloadedPage(page);
+                    }
 
                 }
             });
