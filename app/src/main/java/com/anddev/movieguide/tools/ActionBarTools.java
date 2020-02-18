@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.anddev.movieguide.R;
 
@@ -122,6 +123,30 @@ public class ActionBarTools {
                     return false;
                 }
             });
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void addButtonChangeView(Activity activity, int idLayoutActionBar, Menu menu) {
+        try {
+            MenuItem chooseViewButton = menu.findItem(R.id.choose_view_button);
+
+            MenuItem normal = menu.findItem(R.id.row_action_bar);
+            MenuItem grid1 = menu.findItem(R.id.grid_view_1_action_bar);
+            MenuItem grid2 = menu.findItem(R.id.grid_view_2_action_bar);
+            MenuItem grid3 = menu.findItem(R.id.grid_view_3_action_bar);
+            MenuItem grid4 = menu.findItem(R.id.grid_view_4_action_bar);
+
+
+            chooseViewButton.setVisible(true);
+
+            normal.setVisible(true);
+            grid1.setVisible(true);
+            grid2.setVisible(true);
+            grid3.setVisible(true);
+            grid4.setVisible(true);
+
         } catch (Exception e) {
 
         }
