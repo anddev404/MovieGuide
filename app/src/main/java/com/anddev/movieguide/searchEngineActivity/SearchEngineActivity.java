@@ -401,13 +401,17 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        actionBarTools.addSearchEngine(activity, R.menu.action_bar, R.id.app_bar_search, menu,
-                new ActionBarTools.OnSearchEngineListener() {
-                    @Override
-                    public void onQueryTextSubmit(String query) {
-                        SearchEngineActivity.searchAndOpenResults(query, activity);
-                    }
-                });
+        if (actionBarTools != null) {
+            actionBarTools.addSearchEngine(activity, R.menu.action_bar, R.id.app_bar_search, menu,
+                    new ActionBarTools.OnSearchEngineListener() {
+                        @Override
+                        public void onQueryTextSubmit(String query) {
+                            SearchEngineActivity.searchAndOpenResults(query, activity);
+                        }
+                    });
+
+            actionBarTools.addButtonChangeViewAndSetOnClickListener(activity, R.menu.action_bar, menu);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
