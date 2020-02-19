@@ -3,7 +3,6 @@ package com.anddev.movieguide.peopleActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_people)
-public class PeopleActivity extends AppCompatActivity implements NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener {
+public class PeopleActivity extends AppCompatActivity implements NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener, ActionBarTools.OnChangeViewListener {
 
     Activity activity;
     PeopleFragment peopleFragment;
@@ -170,6 +169,15 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
 
     }
 
+    @Override
+    public void changeView(int viewType) {
+        try {
+            peopleFragment.setViewType(viewType);
+            peopleFragment.initializeRecyclerViewAndSetAdapter();
+
+        } catch (Exception e) {
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -184,6 +192,7 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
                     });
 
             actionBarTools.addButtonChangeViewAndSetOnClickListener(activity, R.menu.action_bar, menu);
+            actionBarTools.setOnChangeViewListener(this::changeView);
         }
 
         return super.onCreateOptionsMenu(menu);
