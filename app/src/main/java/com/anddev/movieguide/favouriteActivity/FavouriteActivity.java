@@ -1,9 +1,11 @@
 package com.anddev.movieguide.favouriteActivity;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +30,7 @@ import org.androidannotations.annotations.EActivity;
 import java.util.List;
 
 @EActivity(R.layout.activity_favourite)
-public class FavouriteActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class FavouriteActivity extends AppCompatActivity implements ActionBar.TabListener, ActionBarTools.OnChangeViewListener {
 
     //region variables
 
@@ -162,9 +164,30 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
                     });
 
             actionBarTools.addButtonChangeViewAndSetOnClickListener(activity, R.menu.action_bar, menu);
+            actionBarTools.setOnChangeViewListener(this::changeView);
         }
-        
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void changeView(int viewType) {
+        try {
+
+            Fragment actualFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager_favourite_activity + ":" + viewPager.getCurrentItem());
+
+            if (actualFragment == moviesFragment) {
+                moviesFragment.setViewType(viewType);
+                moviesFragment.initializeRecyclerViewAndSetAdapter();
+            }
+            if (actualFragment == peopleFragment) {
+                peopleFragment.setViewType(viewType);
+                peopleFragment.initializeRecyclerViewAndSetAdapter();
+            }
+
+
+        } catch (Exception e) {
+        }
     }
 
     @Override
