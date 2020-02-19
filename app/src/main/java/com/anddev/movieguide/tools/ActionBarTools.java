@@ -102,6 +102,109 @@ public class ActionBarTools {
         return actionBar;
     }
 
+    //region change view
+    public void addButtonChangeViewAndSetOnClickListener(Activity activity, int idLayoutActionBar, Menu menu) {
+        try {
+            MenuItem chooseViewButton = menu.findItem(R.id.choose_view_button);
+
+            MenuItem normal = menu.findItem(R.id.row_action_bar);
+            MenuItem grid1 = menu.findItem(R.id.grid_view_1_action_bar);
+            MenuItem grid2 = menu.findItem(R.id.grid_view_2_action_bar);
+            MenuItem grid3 = menu.findItem(R.id.grid_view_3_action_bar);
+            MenuItem grid4 = menu.findItem(R.id.grid_view_4_action_bar);
+
+
+            chooseViewButton.setVisible(true);
+
+            normal.setVisible(true);
+            grid1.setVisible(true);
+            grid2.setVisible(true);
+            grid3.setVisible(true);
+            grid4.setVisible(true);
+
+            normal.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    changeView = 0;
+                    Log.d("ACTION_BAR_TOOLS", "change view: normal");
+
+                    if (changeViewListener != null) {
+                        changeViewListener.changeView(changeView);
+                    }
+                    return false;
+                }
+            });
+
+            grid1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    changeView = 1;
+                    Log.d("ACTION_BAR_TOOLS", "change view: grid 1");
+
+                    if (changeViewListener != null) {
+                        changeViewListener.changeView(changeView);
+                    }
+                    return false;
+                }
+            });
+
+            grid2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    changeView = 2;
+                    Log.d("ACTION_BAR_TOOLS", "change view: grid 2");
+
+                    if (changeViewListener != null) {
+                        changeViewListener.changeView(changeView);
+                    }
+                    return false;
+                }
+            });
+
+            grid3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    changeView = 3;
+                    Log.d("ACTION_BAR_TOOLS", "change view: grid 3");
+
+                    if (changeViewListener != null) {
+                        changeViewListener.changeView(changeView);
+                    }
+                    return false;
+                }
+            });
+
+            grid4.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    changeView = 4;
+                    Log.d("ACTION_BAR_TOOLS", "change view: grid 4");
+
+                    if (changeViewListener != null) {
+                        changeViewListener.changeView(changeView);
+                    }
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+
+        }
+    }
+
+    //////////////////////////////
+    OnChangeViewListener changeViewListener;
+
+    public void setOnChangeViewListener(OnChangeViewListener onChangeViewListener) {
+        changeViewListener = onChangeViewListener;
+    }
+
+    public interface OnChangeViewListener {
+        void changeView(int viewType);
+
+    }
+    //////////////////////////////
+    //endregion
+
     //region search engine
     SearchView searchView;
     MenuItem searchItem;
@@ -136,79 +239,6 @@ public class ActionBarTools {
 
                 @Override
                 public boolean onQueryTextChange(String query) {
-
-                    return false;
-                }
-            });
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void addButtonChangeViewAndSetOnClickListener(Activity activity, int idLayoutActionBar, Menu menu) {
-        try {
-            MenuItem chooseViewButton = menu.findItem(R.id.choose_view_button);
-
-            MenuItem normal = menu.findItem(R.id.row_action_bar);
-            MenuItem grid1 = menu.findItem(R.id.grid_view_1_action_bar);
-            MenuItem grid2 = menu.findItem(R.id.grid_view_2_action_bar);
-            MenuItem grid3 = menu.findItem(R.id.grid_view_3_action_bar);
-            MenuItem grid4 = menu.findItem(R.id.grid_view_4_action_bar);
-
-
-            chooseViewButton.setVisible(true);
-
-            normal.setVisible(true);
-            grid1.setVisible(true);
-            grid2.setVisible(true);
-            grid3.setVisible(true);
-            grid4.setVisible(true);
-
-            normal.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    changeView = 0;
-                    Log.d("ACTION_BAR_TOOLS", "change view: normal");
-
-                    return false;
-                }
-            });
-
-            grid1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    changeView = 1;
-                    Log.d("ACTION_BAR_TOOLS", "change view: grid 1");
-
-                    return false;
-                }
-            });
-
-            grid2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    changeView = 2;
-                    Log.d("ACTION_BAR_TOOLS", "change view: grid 2");
-
-                    return false;
-                }
-            });
-
-            grid3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    changeView = 3;
-                    Log.d("ACTION_BAR_TOOLS", "change view: grid 3");
-
-                    return false;
-                }
-            });
-
-            grid4.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    changeView = 4;
-                    Log.d("ACTION_BAR_TOOLS", "change view: grid 4");
 
                     return false;
                 }
