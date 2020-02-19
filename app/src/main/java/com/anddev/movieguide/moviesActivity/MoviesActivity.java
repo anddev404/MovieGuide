@@ -36,7 +36,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_movies)
-public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener {
+public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener, ActionBarTools.OnChangeViewListener {
 
     Activity activity;
     NavigationDrawerTools navigationDrawer;
@@ -253,6 +253,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                     });
 
             actionBarTools.addButtonChangeViewAndSetOnClickListener(activity, R.menu.action_bar, menu);
+            actionBarTools.setOnChangeViewListener(this::changeView);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -273,6 +274,16 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
         return true;
 
+    }
+
+    @Override
+    public void changeView(int viewType) {
+        try {
+            fragment.setViewType(viewType);
+            fragment.initializeRecyclerViewAndSetAdapter();
+
+        } catch (Exception e) {
+        }
     }
 
     //region back Button
