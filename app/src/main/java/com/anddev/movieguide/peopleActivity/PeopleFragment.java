@@ -2,16 +2,18 @@ package com.anddev.movieguide.peopleActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.PopularPeople;
+import com.anddev.movieguide.tools.ActionBarTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +24,11 @@ public class PeopleFragment extends Fragment {
     Activity activity;
     PopularPeople people;
     PeopleAdapter adapter;
+    PeopleGridViewAdapter adapterGridView;
 
     @BindView(R.id.people_list_recycler_view)
     public RecyclerView peopleListRecyclerView;
+    int viewType = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,10 +37,9 @@ public class PeopleFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_people, container, false);
         activity = getActivity();
         ButterKnife.bind(this, rootView);
-        peopleListRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
 
         if (people != null) {
-            setData(people);
+            initializeRecyclerViewAndSetAdapter();
         }
         return rootView;
     }
@@ -45,26 +48,7 @@ public class PeopleFragment extends Fragment {
 
         this.people = people;
 
-        adapter = new PeopleAdapter(activity, people.getResults());
-        peopleListRecyclerView.setAdapter(adapter);
-
-//        peopleListRecyclerView.addOnItemTouchListener(
-//                new RecyclerItemClickListener(getActivity(), peopleListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(View view, int position) {
-//                        Intent intent = new Intent(getActivity(), ActorActivity_.class);
-//                        intent.putExtra("Id", people.getResults().get(position).getId());
-//                        startActivity(intent);
-//                    }
-//
-//                    @Override
-//                    public void onLongItemClick(View view, int position) {
-//                    }
-//
-//                })
-//        );
-
-
+        initializeRecyclerViewAndSetAdapter();
     }
 
     public void addData(PopularPeople people) {
@@ -75,6 +59,52 @@ public class PeopleFragment extends Fragment {
         } catch (Exception e) {
         }
     }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
+
+    public void initializeRecyclerViewAndSetAdapter() {
+        Log.d("PEOPLE_FRAGMENT", "initialize view");
+
+        try {
+            if (viewType == ActionBarTools.GRID1_VIEW) {
+                peopleListRecyclerView.setLayoutManager(new GridLayoutManager(activity, 1));
+                adapterGridView = new PeopleGridViewAdapter(activity, people.getResults());
+                peopleListRecyclerView.setAdapter(adapterGridView);
+
+            } else if (viewType == ActionBarTools.GRID2_VIEW) {
+                peopleListRecyclerView.setLayoutManager(new GridLayoutManager(activity, 2));
+                adapterGridView = new PeopleGridViewAdapter(activity, people.getResults());
+                peopleListRecyclerView.setAdapter(adapterGridView);
+
+
+            } else if (viewType == ActionBarTools.GRID3_VIEW) {
+                peopleListRecyclerView.setLayoutManager(new GridLayoutManager(activity, 3));
+                adapterGridView = new PeopleGridViewAdapter(activity, people.getResults());
+                peopleListRecyclerView.setAdapter(adapterGridView);
+
+
+            } else if (viewType == ActionBarTools.GRID4_VIEW) {
+                peopleListRecyclerView.setLayoutManager(new GridLayoutManager(activity, 4));
+                adapterGridView = new PeopleGridViewAdapter(activity, people.getResults());
+                peopleListRecyclerView.setAdapter(adapterGridView);
+
+
+            } else {
+                peopleListRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+                adapter = new PeopleAdapter(activity, people.getResults());
+                peopleListRecyclerView.setAdapter(adapter);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+
+    }
+
 
 }
 
