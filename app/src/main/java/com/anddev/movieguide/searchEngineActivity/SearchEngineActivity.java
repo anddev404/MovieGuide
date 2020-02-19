@@ -3,6 +3,7 @@ package com.anddev.movieguide.searchEngineActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -43,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_search_engine)
-public class SearchEngineActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, ActionBar.TabListener, NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener {
+public class SearchEngineActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, ActionBar.TabListener, NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener, ActionBarTools.OnChangeViewListener {
 
     SearchEngineActivity activity;
     MoviesFragment moviesFragment;
@@ -411,9 +412,30 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     });
 
             actionBarTools.addButtonChangeViewAndSetOnClickListener(activity, R.menu.action_bar, menu);
+            actionBarTools.setOnChangeViewListener(this::changeView);
         }
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void changeView(int viewType) {
+        try {
+
+            Fragment actualFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager_search_activity + ":" + viewPager.getCurrentItem());
+
+            if (actualFragment == moviesFragment) {
+                moviesFragment.setViewType(viewType);
+                moviesFragment.initializeRecyclerViewAndSetAdapter();
+            }
+            if (actualFragment == peopleFragment) {
+                peopleFragment.setViewType(viewType);
+                peopleFragment.initializeRecyclerViewAndSetAdapter();
+            }
+
+
+        } catch (Exception e) {
+        }
     }
 
     @Override
