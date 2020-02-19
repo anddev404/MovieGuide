@@ -19,25 +19,10 @@ public class MoviesGridViewAdapter extends RecyclerView.Adapter<MoviesGridViewAd
     private Context context;
 
     private Movies moviesList;
-    private Genre genres;
 
     public MoviesGridViewAdapter(Context context, Movies movies) {
         this.context = context;
         this.moviesList = movies;
-    }
-
-    public MoviesGridViewAdapter(Context context, Movies moviesList, Genre genres) {
-        this.context = context;
-        this.moviesList = moviesList;
-        this.genres = genres;
-    }
-
-    public void setGenres(Genre genres) {
-
-        if (this.genres == null) {
-            this.genres = genres;
-            notifyDataSetChanged();
-        }
     }
 
     @Override
