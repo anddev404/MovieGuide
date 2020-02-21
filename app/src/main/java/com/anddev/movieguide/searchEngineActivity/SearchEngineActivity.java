@@ -217,8 +217,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     if (response.code() == 200) {
 
                         if (page > 1) {
-                            moviesUpdateDownloader.downloadedPage(page);
                             try {
+                                if (response.body().getResults().size() > 0) {
+                                    moviesUpdateDownloader.downloadedPage(page);
+                                }
                                 moviesFragment.addData(response.body());
                             } catch (Exception e) {
                             }
@@ -321,10 +323,12 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     if (response.code() == 200) {
 
                         if (page > 1) {
-                            peopleUpdateDownloader.downloadedPage(page);
                             try {
-                                //people.getResults().addAll(response.body().getResults());
-                                peopleFragment.addData(response.body());
+                                if (response.body().getResults().size() > 0) {
+                                    peopleUpdateDownloader.downloadedPage(page);
+                                    peopleFragment.addData(response.body());
+                                }
+
                             } catch (Exception e) {
                             }
 

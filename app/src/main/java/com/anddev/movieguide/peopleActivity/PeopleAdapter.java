@@ -74,7 +74,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
 
     @Override
     public int getItemCount() {
-        return peopleList.size();
+        try {
+            return peopleList.size();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
 

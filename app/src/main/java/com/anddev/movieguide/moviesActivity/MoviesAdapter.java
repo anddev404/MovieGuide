@@ -104,7 +104,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public int getItemCount() {
-        return moviesList.getResults().size();
+        try {
+            return moviesList.getResults().size();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
 

@@ -103,8 +103,13 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                     if (response.code() == 200) {
 
                         if (page > 1) {
-                            updateDownloader.downloadedPage(page);
-                            fragment.addData(response.body());
+                            try {
+                                if (response.body().getResults().size() > 0) {
+                                    updateDownloader.downloadedPage(page);
+                                    fragment.addData(response.body());
+                                }
+                            } catch (Exception e) {
+                            }
                         } else {
                             movies = response.body();
                             downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);

@@ -126,8 +126,14 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
 
 
                         if (page > 1) {
-                            updateDownloader.downloadedPage(page);
-                            peopleFragment.addData(response.body());
+                            try {
+                                if (response.body().getResults().size() > 0) {
+                                    updateDownloader.downloadedPage(page);
+                                    peopleFragment.addData(response.body());
+                                }
+                            } catch (Exception e) {
+                            }
+
                         } else {
                             popularPeople = response.body();
                             peopleFragment.setData(popularPeople);
