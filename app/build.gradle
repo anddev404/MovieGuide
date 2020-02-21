@@ -104,3 +104,6 @@ dependencies {
 dependencies {
     implementation 'com.android.support:palette-v7:28.0.+'
 }
+dependencies {
+    implementation 'com.pixplicity.easyprefs:library:1.9.0'
+}
