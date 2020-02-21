@@ -3,6 +3,7 @@ package com.anddev.movieguide.peopleActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import android.widget.ImageButton;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
 import com.anddev.movieguide.model.Results;
+import com.anddev.movieguide.moviesActivity.CustomImageView;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.PaletteTools;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,8 +44,8 @@ public class PeopleGridViewAdapter extends RecyclerView.Adapter<PeopleGridViewAd
 
         try {
 
-            ImageTools.getImageFromInternet(context, ImageTools.IMAGE_PATH_500px + peopleList.get(position).getProfile_path(), holder.poster, ImageTools.DRAWABLE_PERSON);
-            holder.poster.setOnClickListener(new View.OnClickListener() {
+            holder.poster.getTextView().setText(peopleList.get(position).getName());
+            holder.poster.getImageButton().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
@@ -53,7 +57,29 @@ public class PeopleGridViewAdapter extends RecyclerView.Adapter<PeopleGridViewAd
                     }
                 }
             });
+            Picasso.with(context)
+                    .load(ImageTools.IMAGE_PATH_500px + peopleList.get(position).getProfile_path())
+                    .placeholder(context.getResources().getDrawable(R.drawable.download))
+                    .error(ImageTools.DRAWABLE_PERSON)
+                    .into(holder.poster.getImageButton(), new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            if (holder.poster.getImageButton().getDrawable() != null) {
+                                try {
 
+                                    PaletteTools.setBackgroundColorToTextViewFromProminentColorOfImageButton(holder.poster.getTextView(), holder.poster.getImageButton(), context.getResources().getColor(R.color.colorPrimaryDark));
+                                    holder.poster.getTextView().setAlpha(0.80f);
+
+                                } catch (Exception e) {
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError() {
+                        }
+                    });
         } catch (Exception e) {
 
         }
@@ -71,12 +97,12 @@ public class PeopleGridViewAdapter extends RecyclerView.Adapter<PeopleGridViewAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageButton poster;
+        CustomImageView poster;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            poster = (ImageButton) itemView.findViewById(R.id.imageButton_item_grid_view);
+            poster = (CustomImageView) itemView.findViewById(R.id.imageButton_item_grid_view);
         }
     }
 }
