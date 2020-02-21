@@ -352,19 +352,27 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
                 @Override
                 public void onFailure(Call<PopularPeople> call, Throwable t) {
-
-                    peopleDownloadManager.changeStateDownloadInProgress(false);
-                    peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                    if (peopleUpdateDownloader != null) {
-                        peopleUpdateDownloader.notDownloadedPage(page);
+                    try {
+                        if (peopleDownloadManager != null) {
+                            peopleDownloadManager.changeStateDownloadInProgress(false);
+                            peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                        }
+                        if (peopleUpdateDownloader != null) {
+                            peopleUpdateDownloader.notDownloadedPage(page);
+                        }
+                    } catch (Throwable e) {
                     }
-
                 }
             });
         } catch (Throwable e) {
-            peopleDownloadManager.changeStateDownloadInProgress(false);
-            peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-            peopleUpdateDownloader.notDownloadedPage(page);
+            try {
+                if (peopleDownloadManager != null) {
+                    peopleDownloadManager.changeStateDownloadInProgress(false);
+                    peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    peopleUpdateDownloader.notDownloadedPage(page);
+                }
+            } catch (Throwable t) {
+            }
 
         }
 

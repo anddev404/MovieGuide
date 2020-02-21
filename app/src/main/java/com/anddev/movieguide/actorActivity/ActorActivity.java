@@ -343,10 +343,23 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                 new RecyclerItemClickListener(activity, imagesRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+                        try {
+                            if (actionBarTools != null) {
+                                if (images.getProfiles() != null) {
+                                    actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+                                } else {
+                                    actionBarTools.setTitle(actor.getName()).addBackButton();
 
-                        fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
-                        fullScreenImagesRecyclerView.scrollToPosition(position);
+                                }
+                            }
+                            if (fullScreenImagesRecyclerView != null) {
+                                fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
+                                fullScreenImagesRecyclerView.scrollToPosition(position);
+                            }
+                        } catch (Exception e) {
+
+                        }
+
                     }
 
                     @Override
