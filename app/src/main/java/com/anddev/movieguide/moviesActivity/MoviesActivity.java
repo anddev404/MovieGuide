@@ -2,9 +2,7 @@ package com.anddev.movieguide.moviesActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -58,6 +56,21 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     Movies popularMovies;
     UpdateDownloader popularMoviesUpdateDownloader;
 
+    MoviesFragment topRatedMoviesFragment;
+    DownloadManager topRatedMoviesDownloadManager;
+    Movies topRatedMovies;
+    UpdateDownloader topRatedMoviesUpdateDownloader;
+
+    MoviesFragment upcomingMoviesFragment;
+    DownloadManager upcomingMoviesDownloadManager;
+    Movies upcomingMovies;
+    UpdateDownloader upcomingMoviesUpdateDownloader;
+
+    MoviesFragment nowPlayingMoviesFragment;
+    DownloadManager nowPlayingMoviesDownloadManager;
+    Movies nowPlayingMovies;
+    UpdateDownloader nowPlayingMoviesUpdateDownloader;
+
     @AfterViews
     public void onCreate() {
         activity = this;
@@ -78,6 +91,17 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         popularMoviesDownloadManager.setOnDownloadManagerListener(this);
         popularMoviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
+        topRatedMoviesDownloadManager = new DownloadManager();
+        topRatedMoviesDownloadManager.setOnDownloadManagerListener(this);
+        topRatedMoviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+
+        upcomingMoviesDownloadManager = new DownloadManager();
+        upcomingMoviesDownloadManager.setOnDownloadManagerListener(this);
+        upcomingMoviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+
+        nowPlayingMoviesDownloadManager = new DownloadManager();
+        nowPlayingMoviesDownloadManager.setOnDownloadManagerListener(this);
+        nowPlayingMoviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
     }
 
@@ -160,6 +184,177 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     }
 
     @Background
+    void downloadTopRatedMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
+
+        try {
+
+            Call<Movies> call = client.topRatedMovies(apiKey, language, page);
+
+            call.enqueue(new Callback<Movies>() {
+
+                @Override
+                public void onResponse(Call<Movies> call, Response<Movies> response) {
+                    if (response.code() == 200) {
+
+                        if (page > 1) {
+                            try {
+                                if (response.body().getResults().size() > 0) {
+                                    topRatedMoviesFragment.addData(response.body());
+                                    topRatedMoviesUpdateDownloader.downloadedPage(page);
+
+                                }
+                            } catch (Exception e) {
+                            }
+                        } else {
+                            topRatedMovies = response.body();
+                            topRatedMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        }
+
+                    } else {
+
+                        topRatedMoviesUpdateDownloader.notDownloadedPage(page);
+                        topRatedMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+
+                    }
+                    topRatedMoviesDownloadManager.changeStateDownloadInProgress(false);
+
+                }
+
+                @Override
+                public void onFailure(Call<Movies> call, Throwable t) {
+
+                    topRatedMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    topRatedMoviesDownloadManager.changeStateDownloadInProgress(false);
+                    topRatedMoviesUpdateDownloader.notDownloadedPage(page);
+
+                }
+            });
+        } catch (Throwable e) {
+            showError("Nieoczekiwany błąd!");
+
+            popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            popularMoviesDownloadManager.changeStateDownloadInProgress(false);
+            popularMoviesUpdateDownloader.notDownloadedPage(page);
+
+        }
+
+    }
+
+    @Background
+    void downloadUpcomingMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
+
+        try {
+
+            Call<Movies> call = client.upcomingMovies(apiKey, language, page);
+
+            call.enqueue(new Callback<Movies>() {
+
+                @Override
+                public void onResponse(Call<Movies> call, Response<Movies> response) {
+                    if (response.code() == 200) {
+
+                        if (page > 1) {
+                            try {
+                                if (response.body().getResults().size() > 0) {
+                                    upcomingMoviesFragment.addData(response.body());
+                                    upcomingMoviesUpdateDownloader.downloadedPage(page);
+
+                                }
+                            } catch (Exception e) {
+                            }
+                        } else {
+                            upcomingMovies = response.body();
+                            upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        }
+
+                    } else {
+
+                        upcomingMoviesUpdateDownloader.notDownloadedPage(page);
+                        upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+
+                    }
+                    upcomingMoviesDownloadManager.changeStateDownloadInProgress(false);
+
+                }
+
+                @Override
+                public void onFailure(Call<Movies> call, Throwable t) {
+
+                    upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    upcomingMoviesDownloadManager.changeStateDownloadInProgress(false);
+                    upcomingMoviesUpdateDownloader.notDownloadedPage(page);
+
+                }
+            });
+        } catch (Throwable e) {
+            showError("Nieoczekiwany błąd!");
+
+            upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            upcomingMoviesDownloadManager.changeStateDownloadInProgress(false);
+            upcomingMoviesUpdateDownloader.notDownloadedPage(page);
+
+        }
+
+    }
+
+    @Background
+    void downloadNowPlayingMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
+
+        try {
+
+            Call<Movies> call = client.nowPlayingMovies(apiKey, language, page);
+
+            call.enqueue(new Callback<Movies>() {
+
+                @Override
+                public void onResponse(Call<Movies> call, Response<Movies> response) {
+                    if (response.code() == 200) {
+
+                        if (page > 1) {
+                            try {
+                                if (response.body().getResults().size() > 0) {
+                                    nowPlayingMoviesFragment.addData(response.body());
+                                    nowPlayingMoviesUpdateDownloader.downloadedPage(page);
+
+                                }
+                            } catch (Exception e) {
+                            }
+                        } else {
+                            nowPlayingMovies = response.body();
+                            nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        }
+
+                    } else {
+
+                        nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
+                        nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+
+                    }
+                    nowPlayingMoviesDownloadManager.changeStateDownloadInProgress(false);
+
+                }
+
+                @Override
+                public void onFailure(Call<Movies> call, Throwable t) {
+
+                    nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    nowPlayingMoviesDownloadManager.changeStateDownloadInProgress(false);
+                    nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
+
+                }
+            });
+        } catch (Throwable e) {
+            showError("Nieoczekiwany błąd!");
+
+            nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            nowPlayingMoviesDownloadManager.changeStateDownloadInProgress(false);
+            nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
+
+        }
+
+    }
+
+    @Background
     void downloadGenresInBackground(ConnectionInterface client, String apiKey, String language) {
         try {
 
@@ -177,6 +372,15 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                         if (popularMoviesFragment != null) {
                             popularMoviesFragment.setGenres(genres);
+                        }
+                        if (topRatedMoviesFragment != null) {
+                            topRatedMoviesFragment.setGenres(genres);
+                        }
+                        if (upcomingMoviesFragment != null) {
+                            upcomingMoviesFragment.setGenres(genres);
+                        }
+                        if (nowPlayingMoviesFragment != null) {
+                            nowPlayingMoviesFragment.setGenres(genres);
                         }
 
                     } else {
@@ -216,16 +420,55 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
             }
         }
+        if (downloadManager == topRatedMoviesDownloadManager) {
+            downloadManager.changeStateDownloadInProgress(true);
 
+            try {
+
+                downloadTopRatedMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+
+            } catch (Exception e) {
+
+            }
+        }
+        if (downloadManager == upcomingMoviesDownloadManager) {
+            downloadManager.changeStateDownloadInProgress(true);
+
+            try {
+
+                downloadUpcomingMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+
+            } catch (Exception e) {
+
+            }
+        }
+        if (downloadManager == nowPlayingMoviesDownloadManager) {
+            downloadManager.changeStateDownloadInProgress(true);
+
+            try {
+
+                downloadNowPlayingMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     @Override
     public void downloadPage(UpdateDownloader updateDownloader, int page) {
         if (updateDownloader == popularMoviesUpdateDownloader) {
             downloadPopularMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
-
         }
-
+        if (updateDownloader == topRatedMoviesUpdateDownloader) {
+            downloadTopRatedMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
+        }
+        if (updateDownloader == upcomingMoviesUpdateDownloader) {
+            downloadUpcomingMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
+        }
+        if (updateDownloader == nowPlayingMoviesUpdateDownloader) {
+            downloadNowPlayingMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
+        }
     }
 
     @Override
@@ -234,10 +477,26 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             if (popularMoviesFragment != null) {
                 popularMoviesFragment.setData(popularMovies, genres);
                 downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
-                Log.d("show data", "MARCIN");//filtrowanie w logCat po treści - nie tagu
             }
         }
-
+        if (downloadManager == topRatedMoviesDownloadManager) {
+            if (topRatedMoviesFragment != null) {
+                topRatedMoviesFragment.setData(topRatedMovies, genres);
+                downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+            }
+        }
+        if (downloadManager == upcomingMoviesDownloadManager) {
+            if (upcomingMoviesFragment != null) {
+                upcomingMoviesFragment.setData(upcomingMovies, genres);
+                downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+            }
+        }
+        if (downloadManager == nowPlayingMoviesDownloadManager) {
+            if (nowPlayingMoviesFragment != null) {
+                nowPlayingMoviesFragment.setData(nowPlayingMovies, genres);
+                downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+            }
+        }
     }
 
     @Override
@@ -309,6 +568,24 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
         } catch (Exception e) {
         }
+        try {
+            topRatedMoviesFragment.setViewType(viewType);
+            topRatedMoviesFragment.initializeRecyclerViewAndSetAdapter();
+
+        } catch (Exception e) {
+        }
+        try {
+            upcomingMoviesFragment.setViewType(viewType);
+            upcomingMoviesFragment.initializeRecyclerViewAndSetAdapter();
+
+        } catch (Exception e) {
+        }
+        try {
+            nowPlayingMoviesFragment.setViewType(viewType);
+            nowPlayingMoviesFragment.initializeRecyclerViewAndSetAdapter();
+
+        } catch (Exception e) {
+        }
     }
 
     //region back Button
@@ -334,12 +611,34 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
     @Override
     public void userTurnedInternetOn() {
-        popularMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+        if (popularMoviesDownloadManager != null) {
+            popularMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+        }
+        if (topRatedMoviesDownloadManager != null) {
+            topRatedMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+        }
+        if (upcomingMoviesDownloadManager != null) {
+            upcomingMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+        }
+        if (nowPlayingMoviesDownloadManager != null) {
+            nowPlayingMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+        }
     }
 
     @Override
     public void userTurnedInternetOff() {
-        popularMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+        if (popularMoviesDownloadManager != null) {
+            popularMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+        }
+        if (topRatedMoviesDownloadManager != null) {
+            topRatedMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+        }
+        if (upcomingMoviesDownloadManager != null) {
+            upcomingMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+        }
+        if (nowPlayingMoviesDownloadManager != null) {
+            nowPlayingMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+        }
     }
 
     //endregion
@@ -359,6 +658,48 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
             popularMoviesUpdateDownloader = new UpdateDownloader(popularMoviesFragment.moviesListRecyclerView);
             popularMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
+
+        }
+        
+        if (topRatedMoviesFragment == null && i == 1) {
+            String tag = "android:switcher:" + R.id.pager_movies_activity + ":" + 1;
+            topRatedMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);
+
+            if (topRatedMovies != null) {
+                topRatedMoviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                topRatedMoviesFragment.setData(topRatedMovies);
+            }
+
+            topRatedMoviesUpdateDownloader = new UpdateDownloader(topRatedMoviesFragment.moviesListRecyclerView);
+            topRatedMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
+
+        }
+        
+        if (upcomingMoviesFragment == null && i == 2) {
+            String tag = "android:switcher:" + R.id.pager_movies_activity + ":" + 2;
+            upcomingMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);
+
+            if (upcomingMovies != null) {
+                upcomingMoviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                upcomingMoviesFragment.setData(upcomingMovies);
+            }
+
+            upcomingMoviesUpdateDownloader = new UpdateDownloader(upcomingMoviesFragment.moviesListRecyclerView);
+            upcomingMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
+
+        }
+        
+        if (nowPlayingMoviesFragment == null && i == 3) {
+            String tag = "android:switcher:" + R.id.pager_movies_activity + ":" + 3;
+            nowPlayingMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);
+
+            if (nowPlayingMovies != null) {
+                nowPlayingMoviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                nowPlayingMoviesFragment.setData(nowPlayingMovies);
+            }
+
+            nowPlayingMoviesUpdateDownloader = new UpdateDownloader(nowPlayingMoviesFragment.moviesListRecyclerView);
+            nowPlayingMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
 
         }
     }
