@@ -11,7 +11,7 @@ public class UpdateDownloader {
     UpdateDownloader instance;
     int pageToDownlad;
     RecyclerView recyclerView;
-    private int visibleThreshold = 5;
+    private int visibleThreshold = 10;
     private int lastVisibleItem, totalItemCount;
     private boolean isLoading;
 
