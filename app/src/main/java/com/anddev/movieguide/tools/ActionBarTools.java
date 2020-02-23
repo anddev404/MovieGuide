@@ -1,7 +1,9 @@
 package com.anddev.movieguide.tools;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -10,8 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 
@@ -78,6 +78,58 @@ public class ActionBarTools {
             }
 
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        } catch (Exception e) {
+
+        }
+
+        return actionBarTools;
+    }
+
+    public ActionBarTools addTabsToViewAndSetListeners(String[] tabs, ViewPager viewPager) {
+        try {
+
+            for (String tab_name : tabs) {
+                actionBar.addTab(activity.getSupportActionBar().newTab().setText(tab_name)
+                        .setTabListener(new ActionBar.TabListener() {
+                            @Override
+                            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+                                viewPager.setCurrentItem(tab.getPosition());
+
+                            }
+
+                            @Override
+                            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+                            }
+
+                            @Override
+                            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+                            }
+                        }));
+            }
+
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int i, float v, int i1) {
+
+                }
+
+                @Override
+                public void onPageSelected(int i) {
+                    actionBar.setSelectedNavigationItem(i);
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int i) {
+
+                }
+            });
+
 
         } catch (Exception e) {
 
