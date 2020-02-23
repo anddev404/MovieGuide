@@ -43,14 +43,15 @@ public interface ConnectionInterface {
     @GET("3/movie/{id}")
     Call<Movie> movie(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
 
+
     //https://api.themoviedb.org/3/movie/popular?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
     @GET("3/movie/popular")
-    Call<Movies> popularMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
-
+    Call<Movies> popularMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
 
     //https://api.themoviedb.org/3/movie/top_rated?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
     @GET("3/movie/top_rated")
-    Call<Movies> topRatedMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+    Call<Movies> topRatedMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+
 
     //https://api.themoviedb.org/3/movie/338967/credits?api_key=3a3657f217097dc333bd92af0d39bee4
     @GET("3/movie/{id}/credits")

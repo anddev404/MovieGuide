@@ -3,7 +3,6 @@ package com.anddev.movieguide.moviesActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -39,17 +38,19 @@ import retrofit2.Response;
 public class MoviesActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener, UpdateDownloader.OnUpdatePageDownloaderListener, ActionBarTools.OnChangeViewListener {
 
     Activity activity;
+
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
     NetworkChangeReceiver networkChangeReceiver;
-
-    MoviesFragment fragment;
-    ConnectionInterface client;
-    DownloadManager downloadManager;
     AlertDialog internetDialog;
-    Movies movies;
+
+    ConnectionInterface client;
     Genre genres;
-    UpdateDownloader updateDownloader;
+
+    MoviesFragment popularMoviesFragment;
+    DownloadManager popularMoviesDownloadManager;
+    Movies popularMovies;
+    UpdateDownloader popularMoviesUpdateDownloader;
 
     @AfterViews
     public void onCreate() {
@@ -59,15 +60,15 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         StatusBarAndSoftKey.changeColor(this);
         networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
-        fragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+        popularMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
         client = RetrofitTools.getConnectionInterface();
 
-        downloadManager = new DownloadManager();
-        downloadManager.setOnDownloadManagerListener(this);
-        downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+        popularMoviesDownloadManager = new DownloadManager();
+        popularMoviesDownloadManager.setOnDownloadManagerListener(this);
+        popularMoviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
-        updateDownloader = new UpdateDownloader(fragment.moviesListRecyclerView);
-        updateDownloader.setOnUpdateDownloaderListener(this);
+        popularMoviesUpdateDownloader = new UpdateDownloader(popularMoviesFragment.moviesListRecyclerView);
+        popularMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
     }
 
     @Override
@@ -90,11 +91,11 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     }
 
     @Background
-    void downloadMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
+    void downloadPopularMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
 
         try {
 
-            Call<Movies> call = client.popularMovie(apiKey, language, page);
+            Call<Movies> call = client.popularMovies(apiKey, language, page);
 
             call.enqueue(new Callback<Movies>() {
 
@@ -105,24 +106,24 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                         if (page > 1) {
                             try {
                                 if (response.body().getResults().size() > 0) {
-                                    fragment.addData(response.body());
-                                    updateDownloader.downloadedPage(page);
+                                    popularMoviesFragment.addData(response.body());
+                                    popularMoviesUpdateDownloader.downloadedPage(page);
 
                                 }
                             } catch (Exception e) {
                             }
                         } else {
-                            movies = response.body();
-                            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                            popularMovies = response.body();
+                            popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
                         }
 
                     } else {
 
-                        updateDownloader.notDownloadedPage(page);
-                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                        popularMoviesUpdateDownloader.notDownloadedPage(page);
+                        popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
-                    downloadManager.changeStateDownloadInProgress(false);
+                    popularMoviesDownloadManager.changeStateDownloadInProgress(false);
 
                 }
 
@@ -130,21 +131,21 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                 public void onFailure(Call<Movies> call, Throwable t) {
 
                     //showError("Brak połączenia internetowego!");
-                    downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                    downloadManager.changeStateDownloadInProgress(false);
-                    updateDownloader.notDownloadedPage(page);
+                    popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    popularMoviesDownloadManager.changeStateDownloadInProgress(false);
+                    popularMoviesUpdateDownloader.notDownloadedPage(page);
 
                 }
             });
         } catch (Throwable e) {
             showError("Nieoczekiwany błąd!");
 
-            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-            downloadManager.changeStateDownloadInProgress(false);
-            updateDownloader.notDownloadedPage(page);
+            popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            popularMoviesDownloadManager.changeStateDownloadInProgress(false);
+            popularMoviesUpdateDownloader.notDownloadedPage(page);
 
         }
-        // downloadManager.changeStateInProgress(false);
+        // popularMoviesDownloadManager.changeStateInProgress(false);
 
     }
 
@@ -164,8 +165,8 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                         genres = response.body();
 
-                        if (fragment != null) {
-                            fragment.setGenres(genres);
+                        if (popularMoviesFragment != null) {
+                            popularMoviesFragment.setGenres(genres);
                         }
 
                     } else {
@@ -198,7 +199,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
         try {
 
-            downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+            downloadPopularMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
             downloadGenresInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
 
         } catch (Exception e) {
@@ -209,13 +210,13 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     @Override
     public void downloadPage(UpdateDownloader updateDownloader, int page) {
 
-        downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
+        downloadPopularMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), page);
 
     }
 
     @Override
     public void showData(DownloadManager downloadManager) {
-        fragment.setData(movies, genres);
+        popularMoviesFragment.setData(popularMovies, genres);
         downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
         Log.d("show data", "MARCIN");//filtrowanie w logCat po treści - nie tagu
 
@@ -285,8 +286,8 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
     @Override
     public void changeView(int viewType) {
         try {
-            fragment.setViewType(viewType);
-            fragment.initializeRecyclerViewAndSetAdapter();
+            popularMoviesFragment.setViewType(viewType);
+            popularMoviesFragment.initializeRecyclerViewAndSetAdapter();
 
         } catch (Exception e) {
         }
@@ -315,12 +316,12 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
     @Override
     public void userTurnedInternetOn() {
-        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+        popularMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
     }
 
     @Override
     public void userTurnedInternetOff() {
-        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+        popularMoviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
     }
 
     //endregion
