@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.PreferenceTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,7 @@ public class PeopleFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_people, container, false);
         activity = getActivity();
         ButterKnife.bind(this, rootView);
+        PreferenceTools.initializePreferenceLibrary(activity);
 
         if (people != null) {
             initializeRecyclerViewAndSetAdapter();
@@ -62,10 +64,12 @@ public class PeopleFragment extends Fragment {
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
+        PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_PEOPLE, activity);
     }
 
     public void initializeRecyclerViewAndSetAdapter() {
         Log.d("PEOPLE_FRAGMENT", "initialize view");
+        viewType = PreferenceTools.getTypeOfView(ActionBarTools.NORMAL_VIEW, PreferenceTools.SAVE_PEOPLE, activity);
 
         try {
             if (viewType == ActionBarTools.GRID1_VIEW) {

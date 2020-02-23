@@ -15,6 +15,7 @@ import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.PreferenceTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +40,7 @@ public class MoviesFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_movies, container, false);
         activity = getActivity();
         ButterKnife.bind(this, rootView);
-
+        PreferenceTools.initializePreferenceLibrary(activity);
         if (movies != null) {
             initializeRecyclerViewAndSetAdapter();
         }
@@ -48,10 +49,12 @@ public class MoviesFragment extends Fragment {
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
+        PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_MOVIES, activity);
     }
 
     public void initializeRecyclerViewAndSetAdapter() {
         Log.d("MOVIES_FRAGMENT", "initialize view");
+        viewType=PreferenceTools.getTypeOfView(ActionBarTools.NORMAL_VIEW, PreferenceTools.SAVE_MOVIES, activity);
 
         try {
             if (viewType == ActionBarTools.GRID1_VIEW) {
