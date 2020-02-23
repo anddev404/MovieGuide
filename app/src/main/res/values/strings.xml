@@ -9,6 +9,11 @@
     <string name="search_results">Search Results</string>
     <string name="favourite">Favourite</string>
 
+    <string name="popular_movies">Popular</string>
+    <string name="top_rated_movies">Top Rated</string>
+    <string name="upcoming_movies">Upcoming</string>
+    <string name="now_playing_movies">Now Playing</string>
+
     <string name="Actor">Actor</string>
     <string name="images">Images:</string>
     <string name="known_for">Known for:</string>

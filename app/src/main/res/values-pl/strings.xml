@@ -9,6 +9,11 @@
     <string name="search_results">Wyniki wyszukiwania</string>
     <string name="favourite">Ulubione</string>
 
+    <string name="popular_movies">Popularne</string>
+    <string name="top_rated_movies">najwyżej Oceniane</string>
+    <string name="upcoming_movies">Nadchodzące</string>
+    <string name="now_playing_movies">Teraz Grane</string>
+
     <string name="Actor">Aktor</string>
     <string name="images">Zdjęcia:</string>
     <string name="known_for">Znany z:</string>
