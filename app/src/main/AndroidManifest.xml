@@ -14,36 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".favouriteActivity.FavouriteActivity_"></activity>
-        <activity
-            android:name=".tvShow.TvShowActivity_"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".searchEngineActivity.SearchEngineActivity_"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".peopleActivity.PeopleActivity_"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
+        <activity android:name=".tvShow.TvShowActivity_" />
+        <activity android:name=".searchEngineActivity.SearchEngineActivity_" />
+        <activity android:name=".peopleActivity.PeopleActivity_" />
         <activity
             android:name=".movieActivity.MovieActvity_"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".moviesActivity.MoviesActivity_"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".moviesActivity.MoviesActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".actorActivity.ActorActivity_"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
+        <activity android:name=".actorActivity.ActorActivity_" />
         <activity android:name=".MainActivity" />
     </application>
 
