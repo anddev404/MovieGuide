@@ -159,8 +159,8 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 //                    fragmentDownloadManager.setOnDownloadManagerListener(activity, peopleFragment, InternetTools.isNetworkAvailable(activity), FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, FragmentDownloadManager.FRAGMENT_IS_NO_CREATED);
 //                    fragmentDownloadManager.changeStateFragmentIsCreated(FragmentDownloadManager.FRAGMENT_IS_CREATED, peopleFragment);
 //                }
-                if (peopleFragment == null && arg0 == 1) {
-                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
+                if (peopleFragment == null && arg0 == 2) {
+                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 2;
                     peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentByTag(tag);
 
                     if (people != null) {
@@ -339,7 +339,7 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         }
 
                         try {
-                            actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
+                            actionBarTools.setTextToTabOfActionBar(2, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
 
                         } catch (Exception e) {
 
