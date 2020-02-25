@@ -64,6 +64,7 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
         actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
 
         viewPager = (ViewPager) findViewById(R.id.pager_favourite_activity);
+        viewPager.setOffscreenPageLimit(3);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mAdapter);
 

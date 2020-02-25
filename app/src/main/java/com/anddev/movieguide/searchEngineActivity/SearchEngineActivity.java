@@ -81,6 +81,7 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
         viewPager = (ViewPager) findViewById(R.id.pager_search_activity);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(mAdapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -83,6 +83,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager_movies_activity);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(mAdapter);
         actionBarTools.addTabsToViewAndSetListeners(TabsPagerAdapter.getTabs(), viewPager);
         viewPager.addOnPageChangeListener(this);
