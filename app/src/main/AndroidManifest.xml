@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/icon_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".favouriteActivity.FavouriteActivity_"></activity>
+        <activity android:name=".tvShows.TvShowsActivity_"></activity>
+        <activity android:name=".favouriteActivity.FavouriteActivity_" />
         <activity android:name=".tvShow.TvShowActivity_" />
         <activity android:name=".searchEngineActivity.SearchEngineActivity_" />
         <activity android:name=".peopleActivity.PeopleActivity_" />
