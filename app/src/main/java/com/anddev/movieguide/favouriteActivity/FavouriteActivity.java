@@ -15,6 +15,7 @@ import com.anddev.movieguide.database.DatabaseHelper;
 import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
+import com.anddev.movieguide.model.TvShows;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
@@ -23,6 +24,7 @@ import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ModelConverter;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
+import com.anddev.movieguide.tvShows.TvShowsFragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -36,11 +38,13 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
 
     FavouriteActivity activity;
     MoviesFragment moviesFragment;
+    TvShowsFragment tvShowFragment;
     PeopleFragment peopleFragment;
     ViewPager viewPager;
     TabsPagerAdapter mAdapter;
 
     Movies movies;
+    TvShows tvShows;
     PopularPeople people;
 
     NavigationDrawerTools navigationDrawer;
@@ -59,9 +63,10 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
         List<Favourite> favourite = null;
         favourite = DatabaseHelper.getFavouriteDataDao(activity).queryForAll();
         movies = ModelConverter.favouritesToMovies(favourite, Favourite.FAVOURITE_MOVIE);
+        tvShows = ModelConverter.favouritesToTvShows(favourite, Favourite.FAVOURITE_TV_SHOWS);
         people = ModelConverter.favouritesToPopularPeople(favourite, Favourite.FAVOURITE_ACTOR);
         actionBarTools.setTextToTabOfActionBar(0, getResources().getString(R.string.movies) + " (" + movies.getResults().size() + ")");
-        actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
+        actionBarTools.setTextToTabOfActionBar(2, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
 
         viewPager = (ViewPager) findViewById(R.id.pager_favourite_activity);
         viewPager.setOffscreenPageLimit(3);
@@ -102,9 +107,16 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
                         moviesFragment.setData(movies);
                     }
                 }
-
-                if (peopleFragment == null && arg0 == 1) {
+                if (tvShowFragment == null && arg0 == 1) {
                     String tag = "android:switcher:" + R.id.pager_favourite_activity + ":" + 1;
+                    tvShowFragment = (TvShowsFragment) getSupportFragmentManager().findFragmentByTag(tag);
+
+                    if (tvShows != null) {
+                        tvShowFragment.setData(tvShows);
+                    }
+                }
+                if (peopleFragment == null && arg0 == 2) {
+                    String tag = "android:switcher:" + R.id.pager_favourite_activity + ":" + 2;
                     peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentByTag(tag);
 
                     if (people != null) {
@@ -180,6 +192,10 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
             if (actualFragment == moviesFragment) {
                 moviesFragment.setViewType(viewType);
                 moviesFragment.initializeRecyclerViewAndSetAdapter();
+            }
+            if (actualFragment == tvShowFragment) {
+                tvShowFragment.setViewType(viewType);
+                tvShowFragment.initializeRecyclerViewAndSetAdapter();
             }
             if (actualFragment == peopleFragment) {
                 peopleFragment.setViewType(viewType);
