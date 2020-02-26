@@ -1,24 +1,41 @@
 package com.anddev.movieguide.tvShow;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.actorActivity.ActorActivity_;
+import com.anddev.movieguide.model.Credits;
+import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.TvShow;
+import com.anddev.movieguide.movieActivity.CreditsAdapter;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
+import com.anddev.movieguide.tools.DateTools;
+import com.anddev.movieguide.tools.DownloadManager;
+import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
+import com.anddev.movieguide.tools.MyApplication;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
+import com.anddev.movieguide.tools.NetworkChangeReceiver;
+import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
+import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -33,14 +50,22 @@ import retrofit2.Response;
 
 
 @EActivity(R.layout.activity_tvshow)
-public class TvShowActivity extends AppCompatActivity {
+public class TvShowActivity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener {
 
+    //region variables
     Activity activity;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
+    NetworkChangeReceiver networkChangeReceiver;
 
     TvShow tvShow;
     Integer tvShowId;
+    Credits credits;
+
+    DownloadManager downloadManager;
+    ConnectionInterface client;
+    AlertDialog internetDialog;
+    FavouriteTools favouriteTools;
 
     @BindView(R.id.poster_tv_show_imageView)
     ImageView poster;
@@ -60,27 +85,72 @@ public class TvShowActivity extends AppCompatActivity {
     @BindView(R.id.release_data_tv_show_textView)
     TextView releaseData;
 
+    @BindView(R.id.genres_tv_show_textView)
+    TextView genres;
+
+    @BindView(R.id.production_countries_tv_show_textView)
+    TextView productionCountries;
+
+    @BindView(R.id.credits_tv_show_recycler_view)
+    RecyclerView creditsRecyclerView;
+
+
+    @BindView(R.id.tv_show_favourite_FloatingActionButton)
+    FloatingActionButton favouriteFloatingActionButton;
+    // endregion
+
+    //region activity
     @AfterViews
     public void onCreate() {
         this.activity = this;
         ButterKnife.bind(this);
-        navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver);
-        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle("TV Show");
+        navigationDrawer = new NavigationDrawerTools(activity, R.id.tv_show_navigation_draver).setNormalColorForAllButtons();
+        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(MyApplication.getStringFromResource(R.string.tv_show));
+        StatusBarAndSoftKey.changeColor(this);
+        networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
         try {
             if (activity.getIntent().getExtras() != null) {
                 tvShowId = activity.getIntent().getExtras().getInt("Id", 0);
-                Toast.makeText(activity, "id" + tvShowId, Toast.LENGTH_SHORT).show();
             } else {
                 tvShowId = RetrofitTools.EXAMPLE_ID_MOVIE;
             }
         } catch (Exception e) {
             tvShowId = RetrofitTools.EXAMPLE_ID_MOVIE;
         }
-        ConnectionInterface client = RetrofitTools.getConnectionInterface();
-        downloadTvShowInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        client = RetrofitTools.getConnectionInterface();
+
+        creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        downloadManager = new DownloadManager();
+        downloadManager.setOnDownloadManagerListener(this);
+        downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+
+        favouriteTools = new FavouriteTools(activity);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkChangeReceiver.registerNetworkChangeReceiver();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkChangeReceiver.unregisterNetworkChangeReceiver(activity);
+        actionBarTools.closeSearchEngineIfOpen();
+
+        if (navigationDrawer != null) {
+            if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+            }
+        }
+    }
+
+    //endregion
+
+    //region download
     @Background
     void downloadTvShowInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
         try {
@@ -94,8 +164,47 @@ public class TvShowActivity extends AppCompatActivity {
 
                     if (response.code() == 200) {
                         tvShow = response.body();
-                        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + tvShow.getPoster_path(), poster, ImageTools.DRAWABLE_FILM);
-                        showDataOfTvShow(tvShow);
+                        ImageTools.getWideImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + tvShow.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
+                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+
+                    }
+                    downloadManager.changeStateDownloadInProgress(false);
+
+                }
+
+                @Override
+                public void onFailure(Call<TvShow> call, Throwable t) {
+
+                    downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    downloadManager.changeStateDownloadInProgress(false);
+
+                }
+            });
+        } catch (Throwable e) {
+
+            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            downloadManager.changeStateDownloadInProgress(false);
+
+        }
+
+    }
+
+    @Background
+    void downloadCreditsInBackground(ConnectionInterface client, Integer id, String apiKey) {
+        try {
+
+
+            Call<Credits> call = client.tvShowCredits(id, apiKey);
+
+            call.enqueue(new Callback<Credits>() {
+
+                @Override
+                public void onResponse(Call<Credits> call, Response<Credits> response) {
+
+                    if (response.code() == 200) {
+
+                        credits = response.body();
+                        showCredits(credits);
 
                     } else {
 
@@ -104,14 +213,11 @@ public class TvShowActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<TvShow> call, Throwable t) {
-
-                    showError("Brak połączenia internetowego!");
+                public void onFailure(Call<Credits> call, Throwable t) {
 
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
         }
 
     }
@@ -122,6 +228,20 @@ public class TvShowActivity extends AppCompatActivity {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
+    //endregion
+
+    public String getPercentageFromDouble(Double d, int scale) {
+        try {
+
+            Double result = d / scale;
+            result = result * 100;
+            String s = "" + result.intValue() + "%";
+            return s;
+
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
     @UiThread
     public void showDataOfTvShow(TvShow tvShow) {
@@ -131,33 +251,53 @@ public class TvShowActivity extends AppCompatActivity {
         overview.setText(tvShow.getOverview());
         voteAverage.setText(Double.toString(tvShow.getVote_average()));
         releaseData.setText(tvShow.getFirst_air_date());
+        genres.setText(tvShow.genresToString());
+        productionCountries.setText(tvShow.productionCompaniesToString());
 
+        try {
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, tvShowId, Favourite.FAVOURITE_MOVIE, tvShow.getName() + " " + DateTools.getOnlyYear(tvShow.getFirst_air_date()), "", Double.toString(tvShow.getVote_average()), tvShow.getPoster_path());
+        } catch (Exception e) {
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, tvShowId, Favourite.FAVOURITE_MOVIE, "id: " + tvShowId, "", "", "");
+        }
+    }
+
+    @UiThread
+    public void showCredits(final Credits credits) {
+        try {
+
+            CreditsAdapter adapter = new CreditsAdapter(this, credits.getCast());
+            creditsRecyclerView.setAdapter(adapter);
+
+            creditsRecyclerView.addOnItemTouchListener(
+                    new RecyclerItemClickListener(activity, creditsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Intent intent = new Intent(activity, ActorActivity_.class);
+                            intent.putExtra("Id", credits.getCast().get(position).getId());
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onLongItemClick(View view, int position) {
+                        }
+
+                    })
+            );
+
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint(getString(R.string.search_hint));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                SearchEngineActivity.searchAndOpenResults(query, activity);
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                return false;
-            }
-        });
+        actionBarTools.addSearchEngine(activity, R.menu.action_bar, R.id.app_bar_search, menu,
+                new ActionBarTools.OnSearchEngineListener() {
+                    @Override
+                    public void onQueryTextSubmit(String query) {
+                        SearchEngineActivity.searchAndOpenResults(query, activity);
+                    }
+                });
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -178,4 +318,80 @@ public class TvShowActivity extends AppCompatActivity {
         return true;
 
     }
+
+    //region back Button
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            if (navigationDrawer != null) {
+                if (navigationDrawer.closeNavigationDrawerIfOpen()) {
+                    return true;
+                }
+
+            }
+
+            return super.onKeyDown(keyCode, event);
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+    //endregion
+
+    //region download manager
+    @Override
+    public void downloadData(DownloadManager downloadManager) {
+
+        downloadManager.changeStateDownloadInProgress(true);
+
+        downloadTvShowInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        downloadCreditsInBackground(client, tvShowId, RetrofitTools.API_KEY);
+    }
+
+    @Override
+    public void showData(DownloadManager downloadManager) {
+        downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+        showDataOfTvShow(tvShow);
+
+    }
+
+    @Override
+    public void showNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_SHOWING);
+
+        if (internetDialog != null) {
+
+            internetDialog.show();
+
+        } else {
+            internetDialog = InternetTools.showNoConnectionDialog(activity);
+
+        }
+    }
+
+    @Override
+    public void hideNoInternetNotification(DownloadManager downloadManager) {
+        downloadManager.changeStateNotificationIsShowing(DownloadManager.NOTIFICATION_IS_NOT_SHOWING);
+
+        if (internetDialog != null) {
+
+            internetDialog.dismiss();
+
+        }
+    }
+    //endregion
+
+    //region checkInternetConnection
+
+    @Override
+    public void userTurnedInternetOn() {
+        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
+    }
+
+    @Override
+    public void userTurnedInternetOff() {
+        downloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
+    }
+
+    //endregion
 }
