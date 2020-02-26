@@ -25,6 +25,7 @@
     <string name="years_old">lat</string>
 
     <string name="movies_navigation_drawer">Filmy</string>
+    <string name="tv_shows_navigation_drawer">Tv</string>
     <string name="people_navigation_drawer">Ludzie</string>
     <string name="favourite_navigation_drawer">Ulubione</string>
     <string name="options_navigation_drawer">Opcje</string>

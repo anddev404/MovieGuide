@@ -25,6 +25,7 @@
     <string name="years_old">years old</string>
 
     <string name="movies_navigation_drawer">Movies</string>
+    <string name="tv_shows_navigation_drawer">Tv Shows</string>
     <string name="people_navigation_drawer">People</string>
     <string name="favourite_navigation_drawer">Favourite</string>
     <string name="options_navigation_drawer">Options</string>
