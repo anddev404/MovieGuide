@@ -10,6 +10,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 public class PreferenceTools {
 
     public static final String SAVE_MOVIES = "movies";
+    public static final String SAVE_TV_SHOWS = "tv_shows";
     public static final String SAVE_PEOPLE = "people";
 
     private static final String PORTRAIN = "_p";
