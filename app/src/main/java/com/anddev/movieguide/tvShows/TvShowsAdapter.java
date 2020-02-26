@@ -1,18 +1,26 @@
 package com.anddev.movieguide.tvShows;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.ResultsMovie;
 import com.anddev.movieguide.model.TvShows;
+import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.moviesActivity.MoviesAdapter;
+import com.anddev.movieguide.tools.DateTools;
+import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tvShow.TvShowActivity_;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsViewHolder> {
@@ -22,9 +30,13 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
 
     private TvShows tvShowsList;
 
+    FavouriteTools favouriteTools;
+
+
     public TvShowsAdapter(Activity activity, TvShows tvShowsList) {
         this.activity = activity;
         this.tvShowsList = tvShowsList;
+        favouriteTools = new FavouriteTools(activity);
     }
 
     @Override
@@ -46,13 +58,31 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
         holder.averageVoteTextView.setText(Double.toString(result.getVote_average()));
         ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_500px + result.getPoster_path(), holder.moviesImageView, ImageTools.DRAWABLE_PERSON);
 
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(activity, TvShowActivity_.class);
+                intent.putExtra("Id", result.getId());
+                activity.startActivity(intent);
+
+            }
+        });
+
+        try {
+            favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_TV_SHOWS, result.getName() + " " + DateTools.getOnlyYear(result.getFirst_air_date()), "", Double.toString(result.getVote_average()), result.getPoster_path());
+        } catch (Exception e) {
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        return tvShowsList.getResults().size();
+        try {
+            return tvShowsList.getResults().size();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
 
@@ -62,6 +92,8 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
         TextView releaseDateTextView;
         TextView averageVoteTextView;
         RoundedImageView moviesImageView;
+        ImageButton starImageButton;
+        LinearLayout layout;
 
 
         public TvShowsViewHolder(View itemView) {
@@ -71,6 +103,8 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
             releaseDateTextView = itemView.findViewById(R.id.row_release_date_movies_list_textView);
             averageVoteTextView = itemView.findViewById(R.id.row_average_vote_date_movies_list_textView);
             moviesImageView = itemView.findViewById(R.id.row_image_movies_list_imageView);
+            starImageButton = itemView.findViewById(R.id.row_favourite_movies_list_imageButton);
+            layout = itemView.findViewById(R.id.row_movies_list_layout);
 
         }
     }
