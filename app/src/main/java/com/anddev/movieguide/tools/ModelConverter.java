@@ -5,6 +5,7 @@ import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.model.Results;
 import com.anddev.movieguide.model.ResultsMovie;
+import com.anddev.movieguide.model.TvShows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,34 @@ public class ModelConverter {
         }
 
         return movies;
+    }
+
+    public static TvShows favouritesToTvShows(List<Favourite> favourites, int type) {
+        TvShows tvShows = new TvShows();
+        List<TvShows.Results> results = new ArrayList<>();
+        tvShows.setResults(results);
+
+        if (favourites != null) {
+            for (Favourite f : favourites) {
+                if (type == f.type) {
+                    TvShows.Results r = new TvShows.Results();
+                    r.setId(f.getFavouriteId());
+                    r.setName(f.getName());
+                    r.setPoster_path(f.getPosterPath());
+
+                    Double doubleString;
+                    try {
+                        doubleString = Double.parseDouble(f.getRating());
+                    } catch (Exception e) {
+                        doubleString = 0d;
+                    }
+                    r.setVote_average(doubleString);
+                    results.add(r);
+                }
+            }
+        }
+
+        return tvShows;
     }
 
     public static PopularPeople favouritesToPopularPeople(List<Favourite> favourites, int type) {
