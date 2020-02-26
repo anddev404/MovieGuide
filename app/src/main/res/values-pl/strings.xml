@@ -9,6 +9,7 @@
     <string name="movie">Film</string>
     <string name="search_results">Wyniki wyszukiwania</string>
     <string name="favourite">Ulubione</string>
+    <string name="tv_show">Tv Show</string>
 
     <string name="popular_movies">Popularne</string>
     <string name="top_rated_movies">najwyżej Oceniane</string>

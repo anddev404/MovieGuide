@@ -9,6 +9,7 @@
     <string name="movie">Movie</string>
     <string name="search_results">Search Results</string>
     <string name="favourite">Favourite</string>
+    <string name="tv_show">Tv Show</string>
 
     <string name="popular_movies">Popular</string>
     <string name="top_rated_movies">Top Rated</string>
