@@ -12,6 +12,7 @@ import com.anddev.movieguide.favouriteActivity.FavouriteActivity_;
 import com.anddev.movieguide.moviesActivity.MoviesActivity_;
 import com.anddev.movieguide.peopleActivity.PeopleActivity_;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity_;
+import com.anddev.movieguide.tvShows.TvShowsActivity_;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -27,6 +28,8 @@ public class NavigationDrawerTools {
     LinearLayout peopleButton;
     @BindView(R.id.movies_navigation_drawer_button)
     LinearLayout moviesButton;
+    @BindView(R.id.tv_shows_navigation_drawer_button)
+    LinearLayout tvShowsButton;
     @BindView(R.id.favourites_navigation_drawer_button)
     LinearLayout favouritesButton;
 
@@ -50,6 +53,13 @@ public class NavigationDrawerTools {
     public void onClickMovies() {
 
         Intent intent = new Intent(activity, MoviesActivity_.class);
+        activity.startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_shows_navigation_drawer_button)
+    public void onClickTvShows() {
+
+        Intent intent = new Intent(activity, TvShowsActivity_.class);
         activity.startActivity(intent);
     }
 
@@ -87,26 +97,23 @@ public class NavigationDrawerTools {
 
     public NavigationDrawerTools setOtherColorForMoviesButton() {
 
+        setNormalColorForAllButtons();
         moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
-        peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-        favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
 
         return this;
     }
 
     public NavigationDrawerTools setOtherColorForPeopleButton() {
 
-        moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        setNormalColorForAllButtons();
         peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
-        favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
 
         return this;
     }
 
     public NavigationDrawerTools setOtherColorForFavouriteButton() {
 
-        moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-        peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        setNormalColorForAllButtons();
         favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
 
         return this;
@@ -115,6 +122,7 @@ public class NavigationDrawerTools {
     public NavigationDrawerTools setNormalColorForAllButtons() {
 
         moviesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        tvShowsButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
         peopleButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
         favouritesButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
 
