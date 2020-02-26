@@ -10,6 +10,7 @@ public class Favourite implements Serializable {
 
     public static final int FAVOURITE_MOVIE = 1;
     public static final int FAVOURITE_ACTOR = 2;
+    public static final int FAVOURITE_TV_SHOWS = 3;
 
     @DatabaseField(generatedId = true)
     public int id;
