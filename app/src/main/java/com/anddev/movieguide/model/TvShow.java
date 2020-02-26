@@ -394,7 +394,7 @@ public class TvShow {
 
     public static class Last_episode_to_air {
         private int vote_count;
-        private int vote_average;
+        private double vote_average;
         private String still_path;
         private int show_id;
         private int season_number;
@@ -413,11 +413,11 @@ public class TvShow {
             this.vote_count = vote_count;
         }
 
-        public int getVote_average() {
+        public double getVote_average() {
             return vote_average;
         }
 
-        public void setVote_average(int vote_average) {
+        public void setVote_average(double vote_average) {
             this.vote_average = vote_average;
         }
 
