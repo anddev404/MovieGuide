@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
+import com.anddev.movieguide.model.TvShow;
 import com.anddev.movieguide.model.TvShows;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.peopleActivity.PeopleFragment;
@@ -32,6 +33,7 @@ import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 import com.anddev.movieguide.tools.UpdateDownloader;
+import com.anddev.movieguide.tvShows.TvShowsFragment;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -48,11 +50,13 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
     SearchEngineActivity activity;
     MoviesFragment moviesFragment;
-    //    TvShowsFragment tvShowsFragment;
+    TvShowsFragment tvShowsFragment;
     PeopleFragment peopleFragment;
     DownloadManager moviesDownloadManager;
+    DownloadManager tvShowsDownloadManager;
     DownloadManager peopleDownloadManager;
     UpdateDownloader moviesUpdateDownloader;
+    UpdateDownloader tvShowsUpdateDownloader;
     UpdateDownloader peopleUpdateDownloader;
 
     NavigationDrawerTools navigationDrawer;
@@ -114,10 +118,14 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
         }
 
         moviesDownloadManager = new DownloadManager();
+        tvShowsDownloadManager = new DownloadManager();
         peopleDownloadManager = new DownloadManager();
 
         moviesDownloadManager.setOnDownloadManagerListener(this);
         moviesDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
+
+        tvShowsDownloadManager.setOnDownloadManagerListener(this);
+        tvShowsDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
         peopleDownloadManager.setOnDownloadManagerListener(this);
         peopleDownloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
@@ -145,20 +153,20 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     moviesUpdateDownloader.setOnUpdateDownloaderListener(activity);
 
                 }
-//                if (tvShowsFragment == null && arg0 == 1) {
-//                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
-//                    tvShowsFragment = (TvShowsFragment) getSupportFragmentManager().findFragmentByTag(tag);
-//
-//                    fragmentDownloadManager.setOnDownloadManagerListener(activity, tvShowsFragment, InternetTools.isNetworkAvailable(activity), FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, FragmentDownloadManager.FRAGMENT_IS_NO_CREATED);
-//                    fragmentDownloadManager.changeStateFragmentIsCreated(FragmentDownloadManager.FRAGMENT_IS_CREATED, tvShowsFragment);
-//                }
-//                if (peopleFragment == null && arg0 == 2) {
-//                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 2;
-//                    peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentByTag(tag);
-//
-//                    fragmentDownloadManager.setOnDownloadManagerListener(activity, peopleFragment, InternetTools.isNetworkAvailable(activity), FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, FragmentDownloadManager.FRAGMENT_IS_NO_CREATED);
-//                    fragmentDownloadManager.changeStateFragmentIsCreated(FragmentDownloadManager.FRAGMENT_IS_CREATED, peopleFragment);
-//                }
+                if (tvShowsFragment == null && arg0 == 1) {
+                    String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 1;
+                    tvShowsFragment = (TvShowsFragment) getSupportFragmentManager().findFragmentByTag(tag);
+
+                    if (tvShows != null) {
+                        tvShowsDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                        tvShowsFragment.setData(tvShows);
+                    }
+
+                    tvShowsUpdateDownloader = new UpdateDownloader(tvShowsFragment.tvShowsListRecyclerView);
+                    tvShowsUpdateDownloader.setOnUpdateDownloaderListener(activity);
+
+                }
+
                 if (peopleFragment == null && arg0 == 2) {
                     String tag = "android:switcher:" + R.id.pager_search_activity + ":" + 2;
                     peopleFragment = (PeopleFragment) getSupportFragmentManager().findFragmentByTag(tag);
@@ -266,48 +274,68 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
 
     }
 
-//    @Background
-//    void downloadTvShowsInBackground(ConnectionInterface client, String apiKey, String language, String query, Integer page) {
-//        try {
-//
-//
-//            Call<TvShows> call = client.searchTvShows(apiKey, language, query, page);
-//
-//            call.enqueue(new Callback<TvShows>() {
-//
-//                @Override
-//                public void onResponse(Call<TvShows> call, Response<TvShows> response) {
-//
-//                    if (response.code() == 200) {
-//
-//                        tvShows = response.body();
-//                        fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_DOWNLOAD, tvShowsFragment);
-//
-//
-//                    } else {
-//
-//                        showError("Nie można pobrać odpowiednich danych");
-//                        fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, tvShowsFragment);
-//
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<TvShows> call, Throwable t) {
-//
-//                    showError("Brak połączenia internetowego!");
-//                    fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, tvShowsFragment);
-//
-//                }
-//            });
-//        } catch (Throwable e) {
-//            showError("Nieoczekiwany błąd!");
-//            fragmentDownloadManager.changeStateDataDownload(FragmentDownloadManager.DATA_IS_NOT_DOWNLOAD, tvShowsFragment);
-//
-//        }
-//
-//    }
+    @Background
+    void downloadTvShowsInBackground(ConnectionInterface client, String apiKey, String language, String query, Integer page) {
+        try {
+
+
+            Call<TvShows> call = client.searchTvShows(apiKey, language, query, page);
+
+            call.enqueue(new Callback<TvShows>() {
+
+                @Override
+                public void onResponse(Call<TvShows> call, Response<TvShows> response) {
+
+                    if (response.code() == 200) {
+
+                        if (page > 1) {
+                            try {
+                                if (response.body().getResults().size() > 0) {
+                                    tvShowsUpdateDownloader.downloadedPage(page);
+                                }
+                                tvShowsFragment.addData(response.body());
+                            } catch (Exception e) {
+                            }
+                        } else {
+                            tvShows = response.body();
+                            tvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
+                        }
+
+                        try {
+                            actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.tv_shows) + " (" + tvShows.getResults().size() + ")");
+
+                        } catch (Exception e) {
+                        }
+
+                    } else {
+
+                        tvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                        tvShowsUpdateDownloader.notDownloadedPage(page);
+
+                    }
+                    tvShowsDownloadManager.changeStateDownloadInProgress(false);
+
+                }
+
+                @Override
+                public void onFailure(Call<TvShows> call, Throwable t) {
+
+                    tvShowsDownloadManager.changeStateDownloadInProgress(false);
+                    tvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                    if (tvShowsUpdateDownloader != null) {
+                        tvShowsUpdateDownloader.notDownloadedPage(page);
+                    }
+
+                }
+            });
+        } catch (Throwable e) {
+            tvShowsDownloadManager.changeStateDownloadInProgress(false);
+            tvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            tvShowsUpdateDownloader.notDownloadedPage(page);
+
+        }
+
+    }
 
     @Background
     void downloadPeopleInBackground(ConnectionInterface client, String apiKey, String language, String query, Integer page) {
@@ -391,6 +419,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                 downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, page);
 
             }
+            if (updateDownloader == tvShowsUpdateDownloader) {
+                downloadTvShowsInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, page);
+
+            }
             if (updateDownloader == peopleUpdateDownloader) {
                 downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, page);
 
@@ -440,6 +472,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
             if (actualFragment == moviesFragment) {
                 moviesFragment.setViewType(viewType);
                 moviesFragment.initializeRecyclerViewAndSetAdapter();
+            }
+            if (actualFragment == tvShowsFragment) {
+                tvShowsFragment.setViewType(viewType);
+                tvShowsFragment.initializeRecyclerViewAndSetAdapter();
             }
             if (actualFragment == peopleFragment) {
                 peopleFragment.setViewType(viewType);
@@ -497,9 +533,12 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
             }
 
         }
-//        if (fragment == tvShowsFragment) {
-//            tvShowsFragment.setData(tvShows);
-//        }
+        if (downloadManager == tvShowsDownloadManager) {
+            if (tvShowsFragment != null) {
+                downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
+                tvShowsFragment.setData(tvShows);
+            }
+        }
         if (downloadManager == peopleDownloadManager) {
             if (peopleFragment != null) {
                 downloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
@@ -515,9 +554,10 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
             moviesDownloadManager.changeStateDownloadInProgress(true);
             downloadMoviesInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
         }
-//        if (fragment == tvShowsFragment) {
-//            downloadTvShowsInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
-//        }
+        if (downloadManager == tvShowsDownloadManager) {
+            tvShowsDownloadManager.changeStateDownloadInProgress(true);
+            downloadTvShowsInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
+        }
         if (downloadManager == peopleDownloadManager) {
             peopleDownloadManager.changeStateDownloadInProgress(true);
             downloadPeopleInBackground(client, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), query, 1);
@@ -570,14 +610,14 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
     @Override
     public void userTurnedInternetOn() {
         moviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
-//        fragmentDownloadManager.changeStateInternetConnection(FragmentDownloadManager.THERE_IS_INTERNET_CONNECTION, tvShowsFragment);
+        tvShowsDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
         peopleDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_INTERNET_CONNECTION);
     }
 
     @Override
     public void userTurnedInternetOff() {
         moviesDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
-//        fragmentDownloadManager.changeStateInternetConnection(fragmentDownloadManager.THERE_IS_NO_INTERNET_CONNECTION, tvShowsFragment);
+        tvShowsDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
         peopleDownloadManager.changeStateInternetConnection(DownloadManager.THERE_IS_NO_INTERNET_CONNECTION);
     }
 
