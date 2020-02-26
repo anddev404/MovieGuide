@@ -32,6 +32,46 @@ public class TvShow {
     private List<Created_by> created_by;
     private String backdrop_path;
 
+    public String genresToString() {
+        try {
+            String genresString = "";
+
+            if (genres != null && genres.size() > 0) {
+                genresString = genres.get(0).getName();
+
+                for (int i = 1; i < genres.size(); i++) {
+                    genresString = genresString + ", " + genres.get(i).getName();
+                }
+            }
+            return genresString;
+
+
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
+
+    public String productionCompaniesToString() {
+        try {
+            String productionCompaniesString = "";
+
+            if (production_companies != null && production_companies.size() > 0) {
+                productionCompaniesString = production_companies.get(0).getName();
+
+                for (int i = 1; i < production_companies.size(); i++) {
+                    productionCompaniesString = productionCompaniesString + ", " + production_companies.get(i).getName();
+                }
+            }
+            return productionCompaniesString;
+
+
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
+
     public int getVote_count() {
         return vote_count;
     }
