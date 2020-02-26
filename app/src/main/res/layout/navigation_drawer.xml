@@ -61,6 +61,37 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/tv_shows_navigation_drawer_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.7"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:padding="@dimen/_4sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_local_movies_black_24dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/_3sdp"
+                android:text="@string/tv_shows_navigation_drawer"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextDark"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/people_navigation_drawer_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
