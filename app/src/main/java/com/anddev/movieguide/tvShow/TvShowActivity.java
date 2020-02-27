@@ -221,13 +221,6 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         }
 
     }
-
-    @UiThread
-    public void showError(String message) {
-
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-
-    }
     //endregion
 
     public String getPercentageFromDouble(Double d, int scale) {

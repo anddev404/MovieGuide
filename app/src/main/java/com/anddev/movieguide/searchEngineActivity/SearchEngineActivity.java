@@ -431,13 +431,6 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
         }
     }
 
-    @UiThread
-    public void showError(String message) {
-
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-
-    }
-
     public static void searchAndOpenResults(String query, Activity activity) {
         Intent intent = new Intent(activity, SearchEngineActivity_.class);
         intent.putExtra("Query", query);

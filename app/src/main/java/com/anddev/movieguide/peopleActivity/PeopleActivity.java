@@ -168,13 +168,6 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
 
     }
 
-    @UiThread
-    public void showError(String message) {
-
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-
-    }
-
     @Override
     public void changeView(int viewType) {
         try {

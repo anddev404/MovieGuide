@@ -165,7 +165,6 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                 @Override
                 public void onFailure(Call<Movies> call, Throwable t) {
 
-                    //showError("Brak połączenia internetowego!");
                     popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     popularMoviesDownloadManager.changeStateDownloadInProgress(false);
                     popularMoviesUpdateDownloader.notDownloadedPage(page);
@@ -173,15 +172,12 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
 
             popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             popularMoviesDownloadManager.changeStateDownloadInProgress(false);
             popularMoviesUpdateDownloader.notDownloadedPage(page);
 
         }
-        // popularMoviesDownloadManager.changeStateInProgress(false);
-
     }
 
     @Background
@@ -231,8 +227,6 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
-
             popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             popularMoviesDownloadManager.changeStateDownloadInProgress(false);
             popularMoviesUpdateDownloader.notDownloadedPage(page);
@@ -288,7 +282,6 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
 
             upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             upcomingMoviesDownloadManager.changeStateDownloadInProgress(false);
@@ -345,7 +338,6 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
 
             nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             nowPlayingMoviesDownloadManager.changeStateDownloadInProgress(false);
@@ -396,13 +388,6 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             });
         } catch (Throwable e) {
         }
-
-    }
-
-    @UiThread
-    public void showError(String message) {
-
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -661,7 +646,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             popularMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
 
         }
-        
+
         if (topRatedMoviesFragment == null && i == 1) {
             String tag = "android:switcher:" + R.id.pager_movies_activity + ":" + 1;
             topRatedMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);
@@ -675,7 +660,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             topRatedMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
 
         }
-        
+
         if (upcomingMoviesFragment == null && i == 2) {
             String tag = "android:switcher:" + R.id.pager_movies_activity + ":" + 2;
             upcomingMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);
@@ -689,7 +674,7 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             upcomingMoviesUpdateDownloader.setOnUpdateDownloaderListener(this);
 
         }
-        
+
         if (nowPlayingMoviesFragment == null && i == 3) {
             String tag = "android:switcher:" + R.id.pager_movies_activity + ":" + 3;
             nowPlayingMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentByTag(tag);

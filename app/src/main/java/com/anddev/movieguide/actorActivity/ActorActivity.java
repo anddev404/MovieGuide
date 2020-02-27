@@ -411,12 +411,6 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
 
     }
 
-    @UiThread
-    public void showError(String message) {
-
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-
-    }
     //endregion
 
     //region actionBar

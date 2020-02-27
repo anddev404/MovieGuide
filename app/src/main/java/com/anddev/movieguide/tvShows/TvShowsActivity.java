@@ -164,7 +164,6 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                 @Override
                 public void onFailure(Call<TvShows> call, Throwable t) {
 
-                    //showError("Brak połączenia internetowego!");
                     popularTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     popularTvShowsDownloadManager.changeStateDownloadInProgress(false);
                     popularTvShowsUpdateDownloader.notDownloadedPage(page);
@@ -172,14 +171,12 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
 
             popularTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             popularTvShowsDownloadManager.changeStateDownloadInProgress(false);
             popularTvShowsUpdateDownloader.notDownloadedPage(page);
 
         }
-        // popularTvShowsDownloadManager.changeStateInProgress(false);
 
     }
 
@@ -230,7 +227,6 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
 
             topRatedTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             topRatedTvShowsDownloadManager.changeStateDownloadInProgress(false);
@@ -287,7 +283,6 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
 
             onTheAirTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             onTheAirTvShowsDownloadManager.changeStateDownloadInProgress(false);
@@ -344,7 +339,6 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwany błąd!");
 
             airingTodayTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             airingTodayTvShowsDownloadManager.changeStateDownloadInProgress(false);
@@ -397,14 +391,6 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 //        }
 //
 //    }
-
-    @UiThread
-    public void showError(String message) {
-
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-
-    }
-
 
     @Override
     public void downloadData(DownloadManager downloadManager) {

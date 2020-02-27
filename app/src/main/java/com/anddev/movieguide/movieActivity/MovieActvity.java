@@ -207,30 +207,16 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
                         showCredits(credits);
 
                     } else {
-
-                        showError("Nie można pobrać odpowiednich danych");
-
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<Credits> call, Throwable t) {
-
-                    showError("Brak połączenia internetowego podczas pobierania aktorów!");
-
                 }
             });
         } catch (Throwable e) {
-            showError("Nieoczekiwan błąd!");
         }
-
-    }
-
-    @UiThread
-    public void showError(String message) {
-
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
     }
     //endregion
