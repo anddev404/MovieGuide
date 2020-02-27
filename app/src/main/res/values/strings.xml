@@ -16,6 +16,11 @@
     <string name="upcoming_movies">Upcoming</string>
     <string name="now_playing_movies">Now Playing</string>
 
+    <string name="popular_tv_shows">Popular</string>
+    <string name="top_rated_tv_shows">Top Rated</string>
+    <string name="on_the_air_tv_shows">On The Air</string>
+    <string name="airing_tv_shows">Airing</string>
+
     <string name="Actor">Actor</string>
     <string name="images">Images:</string>
     <string name="known_for">Known for:</string>

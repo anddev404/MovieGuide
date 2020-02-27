@@ -12,9 +12,14 @@
     <string name="tv_show">Tv Show</string>
 
     <string name="popular_movies">Popularne</string>
-    <string name="top_rated_movies">najwyżej Oceniane</string>
+    <string name="top_rated_movies">Najwyżej Oceniane</string>
     <string name="upcoming_movies">Nadchodzące</string>
     <string name="now_playing_movies">Teraz Grane</string>
+
+    <string name="popular_tv_shows">Popularne</string>
+    <string name="top_rated_tv_shows">Najwyżej Oceniane</string>
+    <string name="on_the_air_tv_shows">On The Air</string>
+    <string name="airing_tv_shows">Airing</string>
 
     <string name="Actor">Aktor</string>
     <string name="images">Zdjęcia:</string>
