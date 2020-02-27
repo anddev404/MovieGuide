@@ -66,6 +66,7 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
         tvShows = ModelConverter.favouritesToTvShows(favourite, Favourite.FAVOURITE_TV_SHOWS);
         people = ModelConverter.favouritesToPopularPeople(favourite, Favourite.FAVOURITE_ACTOR);
         actionBarTools.setTextToTabOfActionBar(0, getResources().getString(R.string.movies) + " (" + movies.getResults().size() + ")");
+        actionBarTools.setTextToTabOfActionBar(1, getResources().getString(R.string.tv_shows) + " (" + tvShows.getResults().size() + ")");
         actionBarTools.setTextToTabOfActionBar(2, getResources().getString(R.string.people) + " (" + people.getResults().size() + ")");
 
         viewPager = (ViewPager) findViewById(R.id.pager_favourite_activity);
