@@ -102,7 +102,13 @@ public class NavigationDrawerTools {
 
         return this;
     }
+    public NavigationDrawerTools setOtherColorForTvShowsButton() {
 
+        setNormalColorForAllButtons();
+        tvShowsButton.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
+
+        return this;
+    }
     public NavigationDrawerTools setOtherColorForPeopleButton() {
 
         setNormalColorForAllButtons();
