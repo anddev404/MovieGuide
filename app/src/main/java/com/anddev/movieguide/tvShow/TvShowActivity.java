@@ -255,9 +255,9 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         productionCountries.setText(tvShow.productionCompaniesToString());
 
         try {
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, tvShowId, Favourite.FAVOURITE_MOVIE, tvShow.getName() + " " + DateTools.getOnlyYear(tvShow.getFirst_air_date()), "", Double.toString(tvShow.getVote_average()), tvShow.getPoster_path());
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, tvShowId, Favourite.FAVOURITE_TV_SHOWS, tvShow.getName() + " " + DateTools.getOnlyYear(tvShow.getFirst_air_date()), "", Double.toString(tvShow.getVote_average()), tvShow.getPoster_path());
         } catch (Exception e) {
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, tvShowId, Favourite.FAVOURITE_MOVIE, "id: " + tvShowId, "", "", "");
+            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, tvShowId, Favourite.FAVOURITE_TV_SHOWS, "id: " + tvShowId, "", "", "");
         }
     }
 
