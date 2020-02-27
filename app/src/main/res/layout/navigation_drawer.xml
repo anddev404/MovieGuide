@@ -76,7 +76,7 @@
                 android:background="@null"
                 android:padding="@dimen/_4sdp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_local_movies_black_24dp" />
+                android:src="@drawable/tv_button" />
 
             <TextView
                 android:layout_width="0dp"
