@@ -44,6 +44,7 @@ import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
+import com.anddev.movieguide.tvShow.TvShowActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -235,7 +236,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         try {
 
 
-            Call<KnownFor> call = client.knownFor(id, apiKey, language);
+            Call<KnownFor> call = client.knownForCombined(id, apiKey, language);
 
             call.enqueue(new Callback<KnownFor>() {
 
@@ -317,9 +318,26 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                 new RecyclerItemClickListener(activity, knownForRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(activity, MovieActvity_.class);
-                        intent.putExtra("Id", knownFor.getCast().get(position).getId());
-                        startActivity(intent);
+
+                        String type = "";
+                        try {
+                            type = knownFor.getCast().get(position).getMedia_type();
+                            
+                            if (type.equalsIgnoreCase("movie")) {
+                                Intent intent = new Intent(activity, MovieActvity_.class);
+                                intent.putExtra("Id", knownFor.getCast().get(position).getId());
+                                startActivity(intent);
+                            } else if (type.equalsIgnoreCase("tv")) {
+                                Intent intent = new Intent(activity, TvShowActivity_.class);
+                                intent.putExtra("Id", knownFor.getCast().get(position).getId());
+                                startActivity(intent);
+                            }
+
+                        } catch (Exception e) {
+
+                        }
+
+
                     }
 
                     @Override

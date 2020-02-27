@@ -27,6 +27,10 @@ public interface ConnectionInterface {
     @GET("3/person/{id}/movie_credits")
     Call<KnownFor> knownFor(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
 
+    //    https://api.themoviedb.org/3/person/{person_id}/combined_credits?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
+    @GET("3/person/{id}/combined_credits")
+    Call<KnownFor> knownForCombined(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
+
     //https://api.themoviedb.org/3/person/976/images?api_key=3a3657f217097dc333bd92af0d39bee4
     @GET("3/person/{id}/images")
     Call<Images> images(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);

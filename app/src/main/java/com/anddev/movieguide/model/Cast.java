@@ -3,6 +3,7 @@ package com.anddev.movieguide.model;
 import java.util.List;
 
 public class Cast {
+    private String media_type;
     private String release_date;
     private String overview;
     private float vote_average;
@@ -19,6 +20,14 @@ public class Cast {
     private String poster_path;
     private String credit_id;
     private String character;
+
+    public String getMedia_type() {
+        return media_type;
+    }
+
+    public void setMedia_type(String media_type) {
+        this.media_type = media_type;
+    }
 
     public String getRelease_date() {
         return release_date;
