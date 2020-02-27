@@ -43,10 +43,6 @@ public interface ConnectionInterface {
     @GET("3/movie/{id}")
     Call<Movie> movie(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language);
 
-    //https://api.themoviedb.org/3/movie/latest?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
-    @GET("3/movie/latest")
-    Call<Movies> latestMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
-
     //https://api.themoviedb.org/3/movie/popular?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
     @GET("3/movie/popular")
     Call<Movies> popularMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
@@ -82,9 +78,13 @@ public interface ConnectionInterface {
     @GET("3/tv/top_rated")
     Call<TvShows> topRatedTvShows(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
 
-    //https://api.themoviedb.org/3/tv/latest?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
-    @GET("3/tv/latest")
-    Call<TvShows> latestTvShows(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+    //https://api.themoviedb.org/3/tv/on_the_air?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
+    @GET("3/tv/on_the_air")
+    Call<TvShows> onTheAirTvShows(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+
+    //https://api.themoviedb.org/3/tv/airing_today?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
+    @GET("3/tv/airing_today")
+    Call<TvShows> airingTodayTvShows(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
 
     //https://api.themoviedb.org/3/tv/1418?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US
     @GET("3/tv/{id}")
