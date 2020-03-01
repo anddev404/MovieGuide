@@ -166,9 +166,9 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
                         movie = response.body();
                         ImageTools.getWideImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
-
+                        downloadManager.changeStateDownloadInProgress(false);
                     }
-                    downloadManager.changeStateDownloadInProgress(false);
+
 
                 }
 

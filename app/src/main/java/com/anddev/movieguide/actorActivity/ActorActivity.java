@@ -205,14 +205,9 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                         actor = response.body();
                         ImageTools.getImageFromInternet(activity, "https://image.tmdb.org/t/p/w500/" + response.body().getProfile_path(), imageViewActor, ImageTools.DRAWABLE_PERSON);
                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
-
-                    } else {
-
-                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+                        downloadManager.changeStateDownloadInProgress(false);
 
                     }
-                    downloadManager.changeStateDownloadInProgress(false);
-
                 }
 
                 @Override
