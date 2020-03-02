@@ -16,6 +16,15 @@ public class PaletteTools {
         }
     }
 
+    public static int getColorFromImageButton(ImageButton imageButton, int defautColor) {
+        try {
+            return createPaletteSync(getBitmapFromImageButton(imageButton)).getDarkVibrantColor(defautColor);
+        } catch (Exception e) {
+
+        }
+        return defautColor;
+    }
+
     private static Palette createPaletteSync(Bitmap bitmap) {
         Palette p = Palette.from(bitmap).generate();
         return p;
@@ -27,7 +36,7 @@ public class PaletteTools {
     }
 
     private static int getMutedColorFromPalette(Palette palette, int defaultColor) {
-        return palette.getMutedColor(defaultColor);
+        return palette.getDarkVibrantColor(defaultColor);
 
     }
 
