@@ -20,6 +20,7 @@
         <activity android:name=".peopleActivity.PeopleActivity_" />
         <activity
             android:name=".movieActivity.MovieActvity_"
+            android:theme="@style/MyAppThemeNoActionBar"
             android:configChanges="orientation|keyboardHidden" />
         <activity android:name=".moviesActivity.MoviesActivity_">
             <intent-filter>

@@ -105,7 +105,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
-        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(MyApplication.getStringFromResource(R.string.movie));
+        actionBarTools = new ActionBarTools(this, toolbar).addMenuButton().setTitle("");
         StatusBarAndSoftKey.changeColor(this);
         networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
