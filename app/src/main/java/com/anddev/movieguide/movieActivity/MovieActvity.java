@@ -3,17 +3,19 @@ package com.anddev.movieguide.movieActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
@@ -29,7 +31,6 @@ import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
-import com.anddev.movieguide.tools.MyApplication;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
@@ -64,6 +65,20 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     ConnectionInterface client;
     AlertDialog internetDialog;
     FavouriteTools favouriteTools;
+
+    Integer color;
+
+    @BindView(R.id.movie_activity_toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.movie_linear_layout_1)
+    LinearLayout linearLayout1;
+
+    @BindView(R.id.movie_linear_layout_2)
+    LinearLayout linearLayout2;
+
+    @BindView(R.id.movie_linear_layout_3)
+    LinearLayout linearLayout3;
 
     @BindView(R.id.poster_movie_imageView)
     ImageView poster;
@@ -118,6 +133,13 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         } catch (Exception e) {
             movieId = RetrofitTools.EXAMPLE_ID_MOVIE;
         }
+        try {
+            if (activity.getIntent().getExtras() != null) {
+                color = activity.getIntent().getExtras().getInt("color", 0);
+            }
+        } catch (Exception e) {
+        }
+
         client = RetrofitTools.getConnectionInterface();
 
         creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -127,6 +149,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
         favouriteTools = new FavouriteTools(activity);
+        changeViewColor();
 
     }
 
@@ -148,7 +171,30 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
             }
         }
     }
+
     //endregion
+    void changeViewColor() {
+        try {
+            if (color != 0) {
+
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+                linearLayout1.setBackgroundColor(color);
+                linearLayout1.getBackground().setAlpha(120);
+
+                linearLayout2.setBackgroundColor(color);
+                linearLayout2.getBackground().setAlpha(180);
+
+                linearLayout3.setBackgroundColor(color);
+                linearLayout3.getBackground().setAlpha(60);
+
+                favouriteFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+
+            }
+        } catch (Exception e) {
+        }
+    }
 
     //region download
     @Background

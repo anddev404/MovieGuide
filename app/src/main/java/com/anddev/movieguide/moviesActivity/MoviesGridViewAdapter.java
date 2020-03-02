@@ -55,6 +55,13 @@ public class MoviesGridViewAdapter extends RecyclerView.Adapter<MoviesGridViewAd
                 public void onClick(View v) {
                     Intent intent = new Intent(context, MovieActvity_.class);
                     intent.putExtra("Id", moviesList.getResults().get(position).getId());
+
+                    try {
+                        intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.poster.getImageButton(), 0));
+
+                    } catch (Exception e) {
+                    }
+
                     context.startActivity(intent);
                 }
             });
