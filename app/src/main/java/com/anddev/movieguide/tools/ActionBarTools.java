@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -40,6 +41,14 @@ public class ActionBarTools {
 
         this.activity = activity;
         actionBarTools = this;
+        actionBar = activity.getSupportActionBar();
+    }
+
+    public ActionBarTools(AppCompatActivity activity, Toolbar toolbar) {
+
+        this.activity = activity;
+        actionBarTools = this;
+        activity.setSupportActionBar(toolbar);
         actionBar = activity.getSupportActionBar();
     }
 
