@@ -57,7 +57,7 @@ public class MoviesGridViewAdapter extends RecyclerView.Adapter<MoviesGridViewAd
                     intent.putExtra("Id", moviesList.getResults().get(position).getId());
 
                     try {
-                        intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.poster.getImageButton(), context.getResources().getColor(R.color.colorPrimaryDark)));
+                        intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.poster.getImageButton(), 0));
 
                     } catch (Exception e) {
                     }

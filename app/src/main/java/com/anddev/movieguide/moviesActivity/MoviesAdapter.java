@@ -94,7 +94,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 intent.putExtra("Id", result.getId());
 
                 try {
-                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView, activity.getResources().getColor(R.color.colorPrimaryDark)));
+                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView,0));
                 } catch (Exception e) {
                 }
 
