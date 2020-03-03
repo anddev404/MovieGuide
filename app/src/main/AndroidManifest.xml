@@ -15,13 +15,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".tvShows.TvShowsActivity_"></activity>
         <activity android:name=".favouriteActivity.FavouriteActivity_" />
-        <activity android:name=".tvShow.TvShowActivity_" />
+        <activity
+            android:name=".tvShow.TvShowActivity_"
+            android:theme="@style/MyAppThemeNoActionBar" />
         <activity android:name=".searchEngineActivity.SearchEngineActivity_" />
         <activity android:name=".peopleActivity.PeopleActivity_" />
         <activity
             android:name=".movieActivity.MovieActvity_"
-            android:theme="@style/MyAppThemeNoActionBar"
-            android:configChanges="orientation|keyboardHidden" />
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/MyAppThemeNoActionBar" />
         <activity android:name=".moviesActivity.MoviesActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

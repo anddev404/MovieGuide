@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,6 +68,9 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     AlertDialog internetDialog;
     FavouriteTools favouriteTools;
 
+    @BindView(R.id.tv_show_activity_toolbar)
+    Toolbar toolbar;
+
     @BindView(R.id.poster_tv_show_imageView)
     ImageView poster;
 
@@ -105,7 +109,7 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         this.activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.tv_show_navigation_draver).setNormalColorForAllButtons();
-        actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(MyApplication.getStringFromResource(R.string.tv_show));
+        actionBarTools = new ActionBarTools(this, toolbar).addMenuButton().setTitle("");
         StatusBarAndSoftKey.changeColor(this);
         networkChangeReceiver = new NetworkChangeReceiver(this).setOnNetworkChangeReceiver(this);
 
