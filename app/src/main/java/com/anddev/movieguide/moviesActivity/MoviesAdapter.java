@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.PaletteTools;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -90,6 +92,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
                 Intent intent = new Intent(activity, MovieActvity_.class);
                 intent.putExtra("Id", result.getId());
+
+                try {
+                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView, activity.getResources().getColor(R.color.colorPrimaryDark)));
+                } catch (Exception e) {
+                }
+
                 activity.startActivity(intent);
 
             }
