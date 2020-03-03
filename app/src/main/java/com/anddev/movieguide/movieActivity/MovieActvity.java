@@ -191,6 +191,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
                 favouriteFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
 
+                StatusBarAndSoftKey.changeColor(activity, color);
             }
         } catch (Exception e) {
         }
