@@ -51,6 +51,11 @@ public class PeopleGridViewAdapter extends RecyclerView.Adapter<PeopleGridViewAd
                     try {
                         Intent intent = new Intent(context, ActorActivity_.class);
                         intent.putExtra("Id", peopleList.get(position).getId());
+                        try {
+                            intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.poster.getImageButton(), 0));
+
+                        } catch (Exception e) {
+                        }
                         context.startActivity(intent);
                     } catch (Exception e) {
 

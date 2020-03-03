@@ -6,6 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +71,20 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
     NetworkChangeReceiver networkChangeReceiver;
+
+    Integer color;
+
+    @BindView(R.id.actor_linear_layout_1)
+    LinearLayout linearLayout1;
+
+    @BindView(R.id.actor_linear_layout_2)
+    LinearLayout linearLayout2;
+
+    @BindView(R.id.actor_linear_layout_3)
+    LinearLayout linearLayout3;
+
+    @BindView(R.id.actor_linear_layout_4)
+    LinearLayout linearLayout4;
 
     @BindView(R.id.nameTextView)
     TextView name;
@@ -128,6 +146,14 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         } catch (Exception e) {
             actorId = 0;
         }
+
+        try {
+            if (activity.getIntent().getExtras() != null) {
+                color = activity.getIntent().getExtras().getInt("color", 0);
+            }
+        } catch (Exception e) {
+        }
+
         knownForRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
         imagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));//dla widoku horyzontalnego
 
@@ -165,6 +191,8 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
         favouriteTools = new FavouriteTools(activity);
+
+        changeViewColor();
     }
 
     @Override
@@ -186,6 +214,37 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     }
 
     //endregion
+
+    void changeViewColor() {
+        try {
+            if (color != 0) {
+
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+                linearLayout1.setBackgroundColor(color);
+                linearLayout1.getBackground().setAlpha(120);
+
+                linearLayout2.setBackgroundColor(color);
+                linearLayout2.getBackground().setAlpha(180);
+
+                linearLayout3.setBackgroundColor(color);
+                linearLayout3.getBackground().setAlpha(180);
+
+                linearLayout4.setBackgroundColor(color);
+                linearLayout4.getBackground().setAlpha(60);
+
+                favouriteFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+
+                StatusBarAndSoftKey.changeColor(activity, color);
+
+                ColorDrawable colorDrawable
+                        = new ColorDrawable(color);
+                getSupportActionBar().setBackgroundDrawable(colorDrawable);
+            }
+        } catch (Exception e) {
+        }
+    }
 
     //region download
     @Background
@@ -317,7 +376,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                         String type = "";
                         try {
                             type = knownFor.getCast().get(position).getMedia_type();
-                            
+
                             if (type.equalsIgnoreCase("movie")) {
                                 Intent intent = new Intent(activity, MovieActvity_.class);
                                 intent.putExtra("Id", knownFor.getCast().get(position).getId());

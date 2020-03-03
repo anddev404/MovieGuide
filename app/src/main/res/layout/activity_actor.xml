@@ -31,10 +31,12 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/actor_linear_layout_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingTop="15dp">
+                        android:paddingTop="15dp"
+                        android:paddingBottom="@dimen/_10sdp">
 
                         <ImageView
                             android:id="@+id/imageViewActor"
@@ -69,9 +71,10 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/actor_linear_layout_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/colorPrimary"
                         android:orientation="horizontal"
                         android:padding="10dp"
 
@@ -95,9 +98,10 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/actor_linear_layout_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:background="@color/colorPrimary"
                         android:orientation="horizontal"
                         android:padding="10dp"
                         android:weightSum="10">
@@ -120,41 +124,51 @@
                             tools:text="@string/example_birthdate" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView4"
+
+                    <LinearLayout
+                        android:id="@+id/actor_linear_layout_4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_3sdp"
-                        android:paddingTop="0dp"
-                        android:text="@string/images"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="@dimen/_12ssp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_10sdp">
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/images_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:scrollbars="vertical" />
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingTop="0dp"
+                            android:text="@string/images"
+                            android:textColor="@color/colorTextLight"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_4sdp"
-                        android:text="@string/known_for"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="@dimen/_12ssp"
-                        android:textStyle="bold" />
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/images_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:scrollbars="vertical" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/known_for_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:scrollbars="vertical" />
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_4sdp"
+                            android:text="@string/known_for"
+                            android:textColor="@color/colorTextLight"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold" />
 
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/known_for_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:scrollbars="vertical" />
+
+
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
 
@@ -170,7 +184,6 @@
                 android:layout_gravity="end|bottom"
                 android:layout_margin="@dimen/_16sdp"
                 android:background="@color/colorPrimaryLight"
-                android:backgroundTint="@color/colorPrimaryDark"
                 android:clickable="true"
                 android:src="@mipmap/star_big_off"
                 app:backgroundTint="@color/colorPrimary"

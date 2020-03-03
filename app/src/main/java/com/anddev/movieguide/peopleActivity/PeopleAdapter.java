@@ -18,6 +18,7 @@ import com.anddev.movieguide.model.Results;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.PaletteTools;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -65,6 +66,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
 
                 Intent intent = new Intent(context, ActorActivity_.class);
                 intent.putExtra("Id", peopleList.get(position).getId());
+                try {
+                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.peopleImageView, 0));
+
+                } catch (Exception e) {
+                }
                 context.startActivity(intent);
 
             }
