@@ -176,6 +176,13 @@
             app:backgroundTint="@color/colorPrimary"
             app:fabSize="mini" />
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tv_show_activity_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     </FrameLayout>
 
     <include layout="@layout/navigation_drawer" />
