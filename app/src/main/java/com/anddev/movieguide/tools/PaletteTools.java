@@ -3,26 +3,42 @@ package com.anddev.movieguide.tools;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.makeramen.roundedimageview.RoundedDrawable;
 
 public class PaletteTools {
 
-    public static void setBackgroundColorToTextViewFromProminentColorOfImageButton(TextView textView, ImageButton imageButton, int defautColor) {
+    public static void setBackgroundColorToTextViewFromProminentColorOfImageButton(TextView textView, ImageView imageView, int defautColor) {
         try {
-            textView.setBackgroundColor(getMutedColorFromPalette(createPaletteSync(getBitmapFromImageButton(imageButton)), defautColor));
+            textView.setBackgroundColor(getMutedColorFromPalette(createPaletteSync(getBitmapFromImageView(imageView)), defautColor));
         } catch (Exception e) {
 
         }
     }
 
-    public static int getColorFromImageButton(ImageButton imageButton, int defautColor) {
+    public static int getColorFromImageButton(ImageView imageView, int defautColor) {
         try {
-            return createPaletteSync(getBitmapFromImageButton(imageButton)).getDarkVibrantColor(defautColor);
+            Bitmap bitmap = getBitmapFromImageView(imageView);
+            Palette palette = createPaletteSync(bitmap);
+            int color = palette.getDarkVibrantColor(defautColor);
+            if (color == defautColor) {
+                color = palette.getDominantColor(defautColor);
+            }
+            return color;
         } catch (Exception e) {
-
         }
         return defautColor;
+    }
+
+    private static Bitmap getBitmapFromImageView(ImageView imageView) {
+
+        try {
+            return ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        } catch (ClassCastException e) {
+            return ((RoundedDrawable) imageView.getDrawable()).getSourceBitmap();
+        }
     }
 
     private static Palette createPaletteSync(Bitmap bitmap) {
@@ -30,13 +46,12 @@ public class PaletteTools {
         return p;
     }
 
-    private static Bitmap getBitmapFromImageButton(ImageButton imageButton) {
-        return ((BitmapDrawable) imageButton.getDrawable()).getBitmap();
-
-    }
-
     private static int getMutedColorFromPalette(Palette palette, int defaultColor) {
-        return palette.getDarkVibrantColor(defaultColor);
+        int color = palette.getDarkVibrantColor(defaultColor);
+        if (color == defaultColor) {
+            color = palette.getDominantColor(defaultColor);
+        }
+        return color;
 
     }
 
