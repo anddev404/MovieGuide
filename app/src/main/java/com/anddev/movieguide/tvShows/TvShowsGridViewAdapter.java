@@ -48,6 +48,11 @@ public class TvShowsGridViewAdapter extends RecyclerView.Adapter<TvShowsGridView
                     try {
                         Intent intent = new Intent(context, TvShowActivity_.class);
                         intent.putExtra("Id", tvShowsList.getResults().get(position).getId());
+                        try {
+                            intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.poster.getImageButton(),0));
+
+                        } catch (Exception e) {
+                        }
                         context.startActivity(intent);
                     } catch (Exception e) {
 

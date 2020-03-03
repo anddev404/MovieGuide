@@ -3,6 +3,7 @@ package com.anddev.movieguide.tvShow;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,8 +70,19 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     AlertDialog internetDialog;
     FavouriteTools favouriteTools;
 
+    Integer color;
+
     @BindView(R.id.tv_show_activity_toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.tv_show_linear_layout_1)
+    LinearLayout linearLayout1;
+
+    @BindView(R.id.tv_show_linear_layout_2)
+    LinearLayout linearLayout2;
+
+    @BindView(R.id.tv_show_linear_layout_3)
+    LinearLayout linearLayout3;
 
     @BindView(R.id.poster_tv_show_imageView)
     ImageView poster;
@@ -122,6 +135,14 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         } catch (Exception e) {
             tvShowId = RetrofitTools.EXAMPLE_ID_MOVIE;
         }
+
+        try {
+            if (activity.getIntent().getExtras() != null) {
+                color = activity.getIntent().getExtras().getInt("color", 0);
+            }
+        } catch (Exception e) {
+        }
+
         client = RetrofitTools.getConnectionInterface();
 
         creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -131,6 +152,8 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         downloadManager.initializeByCheckingInternetState(InternetTools.isNetworkAvailable(activity));
 
         favouriteTools = new FavouriteTools(activity);
+
+        changeViewColor();
     }
 
     @Override
@@ -153,6 +176,30 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     }
 
     //endregion
+
+    void changeViewColor() {
+        try {
+            if (color != 0) {
+
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+                linearLayout1.setBackgroundColor(color);
+                linearLayout1.getBackground().setAlpha(120);
+
+                linearLayout2.setBackgroundColor(color);
+                linearLayout2.getBackground().setAlpha(180);
+
+                linearLayout3.setBackgroundColor(color);
+                linearLayout3.getBackground().setAlpha(60);
+
+                favouriteFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+
+                StatusBarAndSoftKey.changeColor(activity, color);
+            }
+        } catch (Exception e) {
+        }
+    }
 
     //region download
     @Background

@@ -20,6 +20,7 @@ import com.anddev.movieguide.moviesActivity.MoviesAdapter;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.PaletteTools;
 import com.anddev.movieguide.tvShow.TvShowActivity_;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -64,6 +65,11 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
 
                 Intent intent = new Intent(activity, TvShowActivity_.class);
                 intent.putExtra("Id", result.getId());
+                try {
+                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView, 0));
+
+                } catch (Exception e) {
+                }
                 activity.startActivity(intent);
 
             }
