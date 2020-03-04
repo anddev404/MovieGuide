@@ -46,10 +46,10 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginRight="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:gravity="center_horizontal"
                         android:textColor="@color/colorTextDark"
                         android:textSize="@dimen/_20ssp"
                         android:textStyle="bold"
-                        android:gravity="center_horizontal"
                         tools:text="@string/example_translated_title_of_movie" />
                 </LinearLayout>
 
@@ -95,21 +95,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorTextDark"
-                            android:textSize="@dimen/_15ssp"
+                            android:textSize="@dimen/_16ssp"
                             tools:text="@string/example_genres" />
 
                         <TextView
                             android:id="@+id/release_data_movie_textView"
+                            style="@style/NormalDarkText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorTextDark"
                             tools:text="@string/example_release_date" />
 
                         <TextView
                             android:id="@+id/runtime_movie_textView"
+                            style="@style/NormalDarkText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorTextDark"
                             tools:text="@string/example_runtime" />
 
                     </LinearLayout>
@@ -123,11 +123,10 @@
 
                     <TextView
                         android:id="@+id/overview_movie_TextView"
+                        style="@style/NormalDarkText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_12sdp"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="@dimen/_12ssp"
                         tools:text="@string/example_overview" />
 
                     <TextView
@@ -160,10 +159,10 @@
 
                     <TextView
                         android:id="@+id/oryginal_title_movie_textView"
+                        style="@style/NormalDarkText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_12sdp"
-                        android:textColor="@color/colorTextDark"
                         tools:text="@string/example_original_title_of_movie" />
 
                     <TextView
@@ -177,10 +176,10 @@
 
                     <TextView
                         android:id="@+id/production_countries_movie_textView"
+                        style="@style/NormalDarkText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_12sdp"
-                        android:textColor="@color/colorTextDark"
                         tools:text="@string/example_prduction_countries" />
 
                 </LinearLayout>
