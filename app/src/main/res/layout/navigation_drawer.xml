@@ -48,6 +48,7 @@
                 android:src="@drawable/ic_local_movies_black_24dp" />
 
             <TextView
+                style="@style/NormalDarktBoldText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -55,9 +56,7 @@
                 android:gravity="left|center_vertical"
                 android:padding="@dimen/_3sdp"
                 android:text="@string/movies_navigation_drawer"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextDark"
-                android:textStyle="bold" />
+                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,6 +78,7 @@
                 android:src="@drawable/tv_button" />
 
             <TextView
+                style="@style/NormalDarktBoldText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -86,9 +86,7 @@
                 android:gravity="left|center_vertical"
                 android:padding="@dimen/_3sdp"
                 android:text="@string/tv_shows_navigation_drawer"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextDark"
-                android:textStyle="bold" />
+                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,6 +108,7 @@
                 android:src="@drawable/person" />
 
             <TextView
+                style="@style/NormalDarktBoldText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -117,9 +116,7 @@
                 android:gravity="left|center_vertical"
                 android:padding="@dimen/_3sdp"
                 android:text="@string/people_navigation_drawer"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextDark"
-                android:textStyle="bold" />
+                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -141,6 +138,7 @@
                 android:src="@drawable/star_button" />
 
             <TextView
+                style="@style/NormalDarktBoldText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -148,9 +146,7 @@
                 android:gravity="left|center_vertical"
                 android:padding="@dimen/_3sdp"
                 android:text="@string/favourite_navigation_drawer"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextDark"
-                android:textStyle="bold" />
+                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -190,6 +186,7 @@
                 android:src="@drawable/setting_button" />
 
             <TextView
+                style="@style/NormalDarktBoldText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -197,9 +194,7 @@
                 android:gravity="left|center_vertical"
                 android:padding="@dimen/_3sdp"
                 android:text="@string/options_navigation_drawer"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextDark"
-                android:textStyle="bold" />
+                android:textAllCaps="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -222,6 +217,7 @@
                 android:src="@drawable/contact_button" />
 
             <TextView
+                style="@style/NormalDarktBoldText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -229,9 +225,7 @@
                 android:gravity="left|center_vertical"
                 android:padding="@dimen/_3sdp"
                 android:text="@string/contact_developer_navigation_drawer"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextDark"
-                android:textStyle="bold" />
+                android:textAllCaps="false" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
