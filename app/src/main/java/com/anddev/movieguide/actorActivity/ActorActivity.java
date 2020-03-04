@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +57,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -193,6 +195,27 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         favouriteTools = new FavouriteTools(activity);
 
         changeViewColor();
+
+        try {
+            if (imageViewActor != null) {
+
+                imageViewActor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (imagesRecyclerView != null) {
+                            try {
+                                imagesOnFullScreen(0);
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                    }
+                });
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -214,6 +237,26 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
     }
 
     //endregion
+
+    void imagesOnFullScreen(int position) {
+        try {
+            if (actionBarTools != null) {
+                if (images.getProfiles() != null) {
+                    actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+                } else {
+                    actionBarTools.setTitle(actor.getName()).addBackButton();
+
+                }
+            }
+            if (fullScreenImagesRecyclerView != null) {
+                favouriteFloatingActionButton.hide();
+                fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
+                fullScreenImagesRecyclerView.scrollToPosition(position);
+            }
+        } catch (Exception e) {
+
+        }
+    }
 
     void changeViewColor() {
         try {
@@ -415,24 +458,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                 new RecyclerItemClickListener(activity, imagesRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        try {
-                            if (actionBarTools != null) {
-                                if (images.getProfiles() != null) {
-                                    actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
-                                } else {
-                                    actionBarTools.setTitle(actor.getName()).addBackButton();
-
-                                }
-                            }
-                            if (fullScreenImagesRecyclerView != null) {
-                                favouriteFloatingActionButton.hide();
-                                fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
-                                fullScreenImagesRecyclerView.scrollToPosition(position);
-                            }
-                        } catch (Exception e) {
-
-                        }
-
+                        imagesOnFullScreen(0);
                     }
 
                     @Override
@@ -441,7 +467,6 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
 
                 })
         );
-
     }
 
     @UiThread
