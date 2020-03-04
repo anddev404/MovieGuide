@@ -35,7 +35,9 @@
         android:layout_alignBottom="@id/custom_view_imageButton"
         android:gravity="center"
         android:lines="3"
+        android:padding="@dimen/_4sdp"
         android:text="TextView1\nTextView2\nTextView3\nTextView4\n"
-        android:textColor="@color/colorTextLight" />
+        android:textColor="@color/colorTextLight"
+        android:textSize="@dimen/_12ssp" />
 
 </RelativeLayout>
