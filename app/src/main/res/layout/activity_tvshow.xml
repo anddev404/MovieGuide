@@ -98,9 +98,9 @@
 
                         <TextView
                             android:id="@+id/release_data_tv_show_textView"
+                            style="@style/NormalDarkText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorTextDark"
                             tools:text="@string/example_release_date" />
 
 
@@ -151,10 +151,10 @@
 
                     <TextView
                         android:id="@+id/oryginal_title_tv_show_textView"
+                        style="@style/NormalDarkText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_12sdp"
-                        android:textColor="@color/colorTextDark"
                         tools:text="@string/example_original_title_of_movie" />
 
                     <TextView
@@ -168,10 +168,10 @@
 
                     <TextView
                         android:id="@+id/production_countries_tv_show_textView"
+                        style="@style/NormalDarkText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_12sdp"
-                        android:textColor="@color/colorTextDark"
                         tools:text="@string/example_prduction_countries" />
                 </LinearLayout>
             </LinearLayout>
