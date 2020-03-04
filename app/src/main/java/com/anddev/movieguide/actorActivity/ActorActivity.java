@@ -425,6 +425,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                                 }
                             }
                             if (fullScreenImagesRecyclerView != null) {
+                                favouriteFloatingActionButton.hide();
                                 fullScreenImagesRecyclerView.setVisibility(View.VISIBLE);
                                 fullScreenImagesRecyclerView.scrollToPosition(position);
                             }
@@ -493,6 +494,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
 
                     actionBarTools.setTitle(getString(R.string.Actor)).addMenuButton();
                     fullScreenImagesRecyclerView.setVisibility(View.GONE);
+                    favouriteFloatingActionButton.show();
 
                 } else {
 
@@ -526,6 +528,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
             if (fullScreenImagesRecyclerView != null && fullScreenImagesRecyclerView.getVisibility() == View.VISIBLE) {
                 actionBarTools.setTitle(getString(R.string.Actor)).addMenuButton();
                 fullScreenImagesRecyclerView.setVisibility(View.GONE);
+                favouriteFloatingActionButton.show();
                 return true;
             }
             return super.onKeyDown(keyCode, event);
