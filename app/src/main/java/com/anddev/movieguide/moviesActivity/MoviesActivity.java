@@ -640,6 +640,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             if (popularMovies != null) {
                 popularMoviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
                 popularMoviesFragment.setData(popularMovies);
+                if (genres != null) {
+                    popularMoviesFragment.setGenres(genres);
+                }
             }
 
             popularMoviesUpdateDownloader = new UpdateDownloader(popularMoviesFragment.moviesListRecyclerView);
@@ -654,6 +657,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             if (topRatedMovies != null) {
                 topRatedMoviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
                 topRatedMoviesFragment.setData(topRatedMovies);
+                if (genres != null) {
+                    topRatedMoviesFragment.setGenres(genres);
+                }
             }
 
             topRatedMoviesUpdateDownloader = new UpdateDownloader(topRatedMoviesFragment.moviesListRecyclerView);
@@ -668,6 +674,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             if (upcomingMovies != null) {
                 upcomingMoviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
                 upcomingMoviesFragment.setData(upcomingMovies);
+                if (genres != null) {
+                    upcomingMoviesFragment.setGenres(genres);
+                }
             }
 
             upcomingMoviesUpdateDownloader = new UpdateDownloader(upcomingMoviesFragment.moviesListRecyclerView);
@@ -682,6 +691,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
             if (nowPlayingMovies != null) {
                 nowPlayingMoviesDownloadManager.changeStateDataShowing(DownloadManager.DATA_IS_SHOWING);
                 nowPlayingMoviesFragment.setData(nowPlayingMovies);
+                if (genres != null) {
+                    nowPlayingMoviesFragment.setGenres(genres);
+                }
             }
 
             nowPlayingMoviesUpdateDownloader = new UpdateDownloader(nowPlayingMoviesFragment.moviesListRecyclerView);
