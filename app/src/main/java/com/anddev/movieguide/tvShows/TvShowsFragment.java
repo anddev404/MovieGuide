@@ -64,12 +64,12 @@ public class TvShowsFragment extends Fragment {
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
-        PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_TV_SHOWS, activity);
+        PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_MOVIES, activity);
     }
 
     public void initializeRecyclerViewAndSetAdapter() {
         Log.d("TV_SHOWS_FRAGMENT", "initialize view");
-        viewType = PreferenceTools.getTypeOfView(ActionBarTools.NORMAL_VIEW, PreferenceTools.SAVE_TV_SHOWS, activity);
+        viewType = PreferenceTools.getTypeOfView(ActionBarTools.NORMAL_VIEW, PreferenceTools.SAVE_MOVIES, activity);
 
         try {
             if (viewType == ActionBarTools.GRID1_VIEW) {
