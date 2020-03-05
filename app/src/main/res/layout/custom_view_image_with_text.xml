@@ -38,6 +38,6 @@
         android:padding="@dimen/_4sdp"
         android:text="TextView1\nTextView2\nTextView3\nTextView4\n"
         android:textColor="@color/colorTextLight"
-        android:textSize="@dimen/_12ssp" />
+        android:textSize="@dimen/_11ssp" />
 
 </RelativeLayout>
