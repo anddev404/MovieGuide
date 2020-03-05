@@ -89,10 +89,10 @@
                                     android:id="@+id/vote_average_movie_textView"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:layout_marginRight="@dimen/_8sdp"
                                     android:gravity="center"
                                     android:textColor="@color/colorTextDark"
-                                    android:textSize="@dimen/_20ssp"
+                                    android:textSize="@dimen/_18ssp"
                                     tools:text="@string/example_vote" />
 
                             </LinearLayout>
