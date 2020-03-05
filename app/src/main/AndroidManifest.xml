@@ -22,7 +22,7 @@
         <activity android:name=".peopleActivity.PeopleActivity_" />
         <activity
             android:name=".movieActivity.MovieActvity_"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="keyboardHidden"
             android:theme="@style/MyAppThemeNoActionBar" />
         <activity android:name=".moviesActivity.MoviesActivity_">
             <intent-filter>
