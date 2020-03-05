@@ -312,21 +312,21 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
             CreditsAdapter adapter = new CreditsAdapter(this, credits.getCast());
             creditsRecyclerView.setAdapter(adapter);
 
-            creditsRecyclerView.addOnItemTouchListener(
-                    new RecyclerItemClickListener(activity, creditsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Intent intent = new Intent(activity, ActorActivity_.class);
-                            intent.putExtra("Id", credits.getCast().get(position).getId());
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onLongItemClick(View view, int position) {
-                        }
-
-                    })
-            );
+//            creditsRecyclerView.addOnItemTouchListener(
+//                    new RecyclerItemClickListener(activity, creditsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(View view, int position) {
+//                            Intent intent = new Intent(activity, ActorActivity_.class);
+//                            intent.putExtra("Id", credits.getCast().get(position).getId());
+//                            startActivity(intent);
+//                        }
+//
+//                        @Override
+//                        public void onLongItemClick(View view, int position) {
+//                        }
+//
+//                    })
+//            );
 
         } catch (Exception e) {
         }

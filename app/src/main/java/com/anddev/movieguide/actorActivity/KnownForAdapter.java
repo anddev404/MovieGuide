@@ -1,6 +1,7 @@
 package com.anddev.movieguide.actorActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,10 @@ import android.widget.ImageView;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Cast;
+import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.tools.ImageTools;
+import com.anddev.movieguide.tools.PaletteTools;
+import com.anddev.movieguide.tvShow.TvShowActivity_;
 
 import java.util.List;
 
@@ -41,7 +45,38 @@ public class KnownForAdapter extends RecyclerView.Adapter<KnownForAdapter.CastVi
         Cast cast = castList.get(position);
 
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + cast.getPoster_path(), holder.imageView, ImageTools.DRAWABLE_FILM);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String type = "";
+                try {
+                    type = cast.getMedia_type();
 
+                    if (type.equalsIgnoreCase("movie")) {
+                        Intent intent = new Intent(context, MovieActvity_.class);
+                        intent.putExtra("Id", cast.getId());
+                        try {
+                            intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.imageView, 0));
+
+                        } catch (Exception e) {
+                        }
+                        context.startActivity(intent);
+                    } else if (type.equalsIgnoreCase("tv")) {
+                        Intent intent = new Intent(context, TvShowActivity_.class);
+                        intent.putExtra("Id", cast.getId());
+                        try {
+                            intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.imageView, 0));
+
+                        } catch (Exception e) {
+                        }
+                        context.startActivity(intent);
+                    }
+
+                } catch (Exception e) {
+
+                }
+            }
+        });
 
     }
 

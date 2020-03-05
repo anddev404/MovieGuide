@@ -33,6 +33,7 @@ import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
+import com.anddev.movieguide.tools.PaletteTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
@@ -305,21 +306,21 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         CreditsAdapter adapter = new CreditsAdapter(this, credits.getCast());
         creditsRecyclerView.setAdapter(adapter);
 
-        creditsRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(activity, creditsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(activity, ActorActivity_.class);
-                        intent.putExtra("Id", credits.getCast().get(position).getId());
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                    }
-
-                })
-        );
+//        creditsRecyclerView.addOnItemTouchListener(
+//                new RecyclerItemClickListener(activity, creditsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+//                        Intent intent = new Intent(activity, ActorActivity_.class);
+//                        intent.putExtra("Id", credits.getCast().get(position).getId());
+//                        startActivity(intent);
+//                    }
+//
+//                    @Override
+//                    public void onLongItemClick(View view, int position) {
+//                    }
+//
+//                })
+//        );
 
     }
 

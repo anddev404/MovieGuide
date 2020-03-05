@@ -46,6 +46,7 @@ import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.MyApplication;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
+import com.anddev.movieguide.tools.PaletteTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
@@ -411,38 +412,48 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         KnownForAdapter adapter = new KnownForAdapter(this, knownFor.getCast());
         knownForRecyclerView.setAdapter(adapter);
 
-        knownForRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(activity, knownForRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-
-                        String type = "";
-                        try {
-                            type = knownFor.getCast().get(position).getMedia_type();
-
-                            if (type.equalsIgnoreCase("movie")) {
-                                Intent intent = new Intent(activity, MovieActvity_.class);
-                                intent.putExtra("Id", knownFor.getCast().get(position).getId());
-                                startActivity(intent);
-                            } else if (type.equalsIgnoreCase("tv")) {
-                                Intent intent = new Intent(activity, TvShowActivity_.class);
-                                intent.putExtra("Id", knownFor.getCast().get(position).getId());
-                                startActivity(intent);
-                            }
-
-                        } catch (Exception e) {
-
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                    }
-
-                })
-        );
+//        knownForRecyclerView.addOnItemTouchListener(
+//                new RecyclerItemClickListener(activity, knownForRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+//
+//                        String type = "";
+//                        try {
+//                            type = knownFor.getCast().get(position).getMedia_type();
+//
+//                            if (type.equalsIgnoreCase("movie")) {
+//                                Intent intent = new Intent(activity, MovieActvity_.class);
+//                                intent.putExtra("Id", knownFor.getCast().get(position).getId());
+//                                try {
+//                                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView, 0));
+//
+//                                } catch (Exception e) {
+//                                }
+//                                startActivity(intent);
+//                            } else if (type.equalsIgnoreCase("tv")) {
+//                                Intent intent = new Intent(activity, TvShowActivity_.class);
+//                                intent.putExtra("Id", knownFor.getCast().get(position).getId());
+//                                try {
+//                                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView, 0));
+//
+//                                } catch (Exception e) {
+//                                }
+//                                startActivity(intent);
+//                            }
+//
+//                        } catch (Exception e) {
+//
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onLongItemClick(View view, int position) {
+//                    }
+//
+//                })
+//        );
 
     }
 
@@ -458,7 +469,7 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                 new RecyclerItemClickListener(activity, imagesRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        imagesOnFullScreen(0);
+                        imagesOnFullScreen(position);
                     }
 
                     @Override
