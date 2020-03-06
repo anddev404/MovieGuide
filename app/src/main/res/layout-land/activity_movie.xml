@@ -27,6 +27,7 @@
                     android:id="@+id/movie_linear_layout_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
                     android:orientation="horizontal">
 
 
@@ -51,7 +52,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimaryDark"
                         android:orientation="vertical">
 
                         <TextView
@@ -64,7 +64,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:textColor="@color/colorTextDark"
-                            android:textSize="@dimen/_20ssp"
+                            android:textSize="@dimen/_17ssp"
                             android:textStyle="bold"
                             tools:text="@string/example_translated_title_of_movie" />
 

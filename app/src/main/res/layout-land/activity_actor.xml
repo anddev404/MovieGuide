@@ -34,6 +34,7 @@
                         android:id="@+id/actor_linear_layout_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
                         android:orientation="horizontal"
                         android:paddingTop="15dp"
                         android:paddingBottom="@dimen/_10sdp">
@@ -46,7 +47,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/colorPrimaryDark"
                             android:orientation="vertical">
 
                             <TextView
@@ -54,6 +54,8 @@
                                 style="@style/LargeLightText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_20sdp"
+                                android:paddingTop="@dimen/_20sdp"
                                 android:paddingBottom="10dp"
 
                                 tools:text="@string/example_name" />
@@ -64,11 +66,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:paddingLeft="@dimen/_20sdp"
                                 tools:text="@string/example_years_old" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
                                 android:orientation="vertical">
 
 
