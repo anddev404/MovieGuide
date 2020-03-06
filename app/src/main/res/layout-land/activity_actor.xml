@@ -92,7 +92,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
-                                        android:text="@string/place_of_birth" />
+                                        android:text="@string/place_of_birth"
+                                        android:textColor="@color/colorTextLight" />
 
                                     <TextView
                                         android:id="@+id/place_of_birth_textView"
@@ -100,6 +101,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="6"
+                                        android:textColor="@color/colorTextLight"
                                         tools:text="@string/example_place_of_birdth" />
                                 </LinearLayout>
 
@@ -119,7 +121,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
-                                        android:text="@string/birth_date" />
+                                        android:text="@string/birth_date"
+                                        android:textColor="@color/colorTextLight" />
 
                                     <TextView
                                         android:id="@+id/birthdayTextView"
@@ -127,6 +130,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="6"
+                                        android:textColor="@color/colorTextLight"
                                         tools:text="@string/example_birthdate" />
                                 </LinearLayout>
                             </LinearLayout>

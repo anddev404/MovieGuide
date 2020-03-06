@@ -77,7 +77,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginRight="@dimen/_10sdp"
                             android:gravity="center"
-                            android:textColor="@color/colorTextDark"
+                            android:textColor="@color/colorTextLight"
                             android:textSize="@dimen/_20ssp"
                             tools:text="@string/example_vote" />
 
@@ -94,7 +94,7 @@
                             android:id="@+id/genres_movie_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorTextDark"
+                            android:textColor="@color/colorTextLight"
                             android:textSize="@dimen/_16ssp"
                             tools:text="@string/example_genres" />
 
@@ -103,6 +103,7 @@
                             style="@style/NormalDarkText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextLight"
                             tools:text="@string/example_release_date" />
 
                         <TextView
@@ -110,6 +111,7 @@
                             style="@style/NormalDarkText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextLight"
                             tools:text="@string/example_runtime" />
 
                     </LinearLayout>

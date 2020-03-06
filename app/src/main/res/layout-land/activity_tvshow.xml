@@ -26,7 +26,6 @@
                     android:id="@+id/tv_show_linear_layout_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimaryDark"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -91,7 +90,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginRight="@dimen/_10sdp"
                                     android:gravity="center"
-                                    android:textColor="@color/colorTextDark"
+                                    android:textColor="@color/colorTextLight"
                                     android:textSize="@dimen/_20ssp"
                                     tools:text="@string/example_vote" />
 
@@ -108,13 +107,14 @@
                                     android:id="@+id/genres_tv_show_textView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/colorTextDark"
+                                    android:textColor="@color/colorTextLight"
                                     android:textSize="@dimen/_15ssp"
                                     tools:text="@string/example_genres" />
 
                                 <TextView
                                     android:id="@+id/release_data_tv_show_textView"
                                     style="@style/NormalDarkText"
+                                    android:textColor="@color/colorTextLight"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     tools:text="@string/example_release_date" />
