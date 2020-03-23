@@ -1,6 +1,7 @@
 package com.anddev.movieguide.tools;
 
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -38,6 +39,36 @@ public class FavouriteTools {
                         } else {
                             changeStarIconOnButton(starImageButton, false);
 
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+        }
+    }
+
+    public void manageFavouriteFloatingActionButtom(FloatingActionButton starImageButton, int id, int type, String name, String description, String rating, String posterPath) {
+        try {
+            changeMovieStarIconOnButton(starImageButton, id);
+
+            starImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+
+
+                        if (addOrRemoveFromFavourite(id, type, name, description, rating, posterPath)) {
+                            changeStarIconOnButton(starImageButton, true);
+                            starImageButton.hide();
+                            starImageButton.show();
+
+                        } else {
+                            changeStarIconOnButton(starImageButton, false);
+                            starImageButton.hide();
+                            starImageButton.show();
                         }
                     } catch (Exception e) {
 

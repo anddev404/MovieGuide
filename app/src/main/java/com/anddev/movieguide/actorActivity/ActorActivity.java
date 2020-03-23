@@ -604,9 +604,9 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         showDataOfActor(actor);
 
         try {
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, actor.getName(), "", "", actor.getProfile_path());
+            favouriteTools.manageFavouriteFloatingActionButtom(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, actor.getName(), "", "", actor.getProfile_path());
         } catch (Exception e) {
-            favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, "id: " + actorId, "", "", "");
+            favouriteTools.manageFavouriteFloatingActionButtom(favouriteFloatingActionButton, actorId, Favourite.FAVOURITE_ACTOR, "id: " + actorId, "", "", "");
         }
 
     }
