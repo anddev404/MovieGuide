@@ -48,13 +48,15 @@ public class MoviesFragment extends Fragment {
     }
 
     public void setViewType(int viewType) {
-        this.viewType = viewType;
-        PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_MOVIES, activity);
+        if (viewType >= 0) {
+            this.viewType = viewType;
+            PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_MOVIES, activity);
+        }
     }
 
     public void initializeRecyclerViewAndSetAdapter() {
         Log.d("MOVIES_FRAGMENT", "initialize view");
-        viewType=PreferenceTools.getTypeOfView(ActionBarTools.NORMAL_VIEW, PreferenceTools.SAVE_MOVIES, activity);
+        viewType = PreferenceTools.getTypeOfView(ActionBarTools.NORMAL_VIEW, PreferenceTools.SAVE_MOVIES, activity);
 
         try {
             if (viewType == ActionBarTools.GRID1_VIEW) {

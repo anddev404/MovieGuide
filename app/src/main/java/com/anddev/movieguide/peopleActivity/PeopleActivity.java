@@ -2,6 +2,7 @@ package com.anddev.movieguide.peopleActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -108,6 +109,12 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
             }
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        changeView(-1);
     }
 
     @Background

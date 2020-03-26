@@ -2,6 +2,7 @@ package com.anddev.movieguide.tvShows;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.res.Configuration;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -122,6 +123,12 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
         super.onResume();
         networkChangeReceiver.registerNetworkChangeReceiver();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        changeView(-1);
     }
 
     @Background

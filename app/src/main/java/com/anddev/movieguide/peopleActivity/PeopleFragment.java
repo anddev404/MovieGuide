@@ -63,8 +63,10 @@ public class PeopleFragment extends Fragment {
     }
 
     public void setViewType(int viewType) {
-        this.viewType = viewType;
-        PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_PEOPLE, activity);
+        if (viewType >= 0) {
+            this.viewType = viewType;
+            PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_PEOPLE, activity);
+        }
     }
 
     public void initializeRecyclerViewAndSetAdapter() {

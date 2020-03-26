@@ -63,8 +63,10 @@ public class TvShowsFragment extends Fragment {
     }
 
     public void setViewType(int viewType) {
-        this.viewType = viewType;
-        PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_MOVIES, activity);
+        if (viewType >= 0) {
+            this.viewType = viewType;
+            PreferenceTools.saveTypeOfView(viewType, PreferenceTools.SAVE_MOVIES, activity);
+        }
     }
 
     public void initializeRecyclerViewAndSetAdapter() {

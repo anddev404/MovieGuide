@@ -1,5 +1,6 @@
 package com.anddev.movieguide.favouriteActivity;
 
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -143,6 +144,12 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
             }
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        changeView(-1);
     }
 
     //endregion

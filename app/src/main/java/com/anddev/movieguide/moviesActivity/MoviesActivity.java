@@ -2,6 +2,7 @@ package com.anddev.movieguide.moviesActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.res.Configuration;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -123,6 +124,12 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
         super.onResume();
         networkChangeReceiver.registerNetworkChangeReceiver();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        changeView(-1);
     }
 
     @Background
