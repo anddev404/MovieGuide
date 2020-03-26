@@ -148,8 +148,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     popularTvShowsFragment.addData(response.body());
-                                    popularTvShowsUpdateDownloader.downloadedPage(page);
-
+                                    if (popularTvShowsUpdateDownloader != null) {
+                                        popularTvShowsUpdateDownloader.downloadedPage(page);
+                                    }
                                 }
                             } catch (Exception e) {
                             }
@@ -160,7 +161,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 
                     } else {
 
-                        popularTvShowsUpdateDownloader.notDownloadedPage(page);
+                        if (popularTvShowsUpdateDownloader != null) {
+                            popularTvShowsUpdateDownloader.notDownloadedPage(page);
+                        }
                         popularTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -173,15 +176,18 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 
                     popularTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     popularTvShowsDownloadManager.changeStateDownloadInProgress(false);
-                    popularTvShowsUpdateDownloader.notDownloadedPage(page);
-
+                    if (popularTvShowsUpdateDownloader != null) {
+                        popularTvShowsUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
 
             popularTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             popularTvShowsDownloadManager.changeStateDownloadInProgress(false);
-            popularTvShowsUpdateDownloader.notDownloadedPage(page);
+            if (popularTvShowsUpdateDownloader != null) {
+                popularTvShowsUpdateDownloader.notDownloadedPage(page);
+            }
 
         }
 
@@ -204,7 +210,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     topRatedTvShowsFragment.addData(response.body());
-                                    topRatedTvShowsUpdateDownloader.downloadedPage(page);
+                                    if (topRatedTvShowsUpdateDownloader != null) {
+                                        topRatedTvShowsUpdateDownloader.downloadedPage(page);
+                                    }
 
                                 }
                             } catch (Exception e) {
@@ -215,8 +223,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                         }
 
                     } else {
-
-                        topRatedTvShowsUpdateDownloader.notDownloadedPage(page);
+                        if (topRatedTvShowsUpdateDownloader != null) {
+                            topRatedTvShowsUpdateDownloader.notDownloadedPage(page);
+                        }
                         topRatedTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -229,16 +238,18 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 
                     topRatedTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     topRatedTvShowsDownloadManager.changeStateDownloadInProgress(false);
-                    topRatedTvShowsUpdateDownloader.notDownloadedPage(page);
-
+                    if (topRatedTvShowsUpdateDownloader != null) {
+                        topRatedTvShowsUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
 
             topRatedTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             topRatedTvShowsDownloadManager.changeStateDownloadInProgress(false);
-            topRatedTvShowsUpdateDownloader.notDownloadedPage(page);
-
+            if (topRatedTvShowsUpdateDownloader != null) {
+                topRatedTvShowsUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }
@@ -260,7 +271,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     onTheAirTvShowsFragment.addData(response.body());
-                                    onTheAirTvShowsUpdateDownloader.downloadedPage(page);
+                                    if (onTheAirTvShowsUpdateDownloader != null) {
+                                        onTheAirTvShowsUpdateDownloader.downloadedPage(page);
+                                    }
 
                                 }
                             } catch (Exception e) {
@@ -272,7 +285,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 
                     } else {
 
-                        onTheAirTvShowsUpdateDownloader.notDownloadedPage(page);
+                        if (onTheAirTvShowsUpdateDownloader != null) {
+                            onTheAirTvShowsUpdateDownloader.notDownloadedPage(page);
+                        }
                         onTheAirTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -285,16 +300,18 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 
                     onTheAirTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     onTheAirTvShowsDownloadManager.changeStateDownloadInProgress(false);
-                    onTheAirTvShowsUpdateDownloader.notDownloadedPage(page);
-
+                    if (onTheAirTvShowsUpdateDownloader != null) {
+                        onTheAirTvShowsUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
 
             onTheAirTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             onTheAirTvShowsDownloadManager.changeStateDownloadInProgress(false);
-            onTheAirTvShowsUpdateDownloader.notDownloadedPage(page);
-
+            if (onTheAirTvShowsUpdateDownloader != null) {
+                onTheAirTvShowsUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }
@@ -316,8 +333,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     airingTodayTvShowsFragment.addData(response.body());
-                                    airingTodayTvShowsUpdateDownloader.downloadedPage(page);
-
+                                    if (airingTodayTvShowsUpdateDownloader != null) {
+                                        airingTodayTvShowsUpdateDownloader.downloadedPage(page);
+                                    }
                                 }
                             } catch (Exception e) {
                             }
@@ -328,7 +346,9 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 
                     } else {
 
-                        airingTodayTvShowsUpdateDownloader.notDownloadedPage(page);
+                        if (airingTodayTvShowsUpdateDownloader != null) {
+                            airingTodayTvShowsUpdateDownloader.notDownloadedPage(page);
+                        }
                         airingTodayTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -341,16 +361,18 @@ public class TvShowsActivity extends AppCompatActivity implements DownloadManage
 
                     airingTodayTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     airingTodayTvShowsDownloadManager.changeStateDownloadInProgress(false);
-                    airingTodayTvShowsUpdateDownloader.notDownloadedPage(page);
-
+                    if (airingTodayTvShowsUpdateDownloader != null) {
+                        airingTodayTvShowsUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
 
             airingTodayTvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             airingTodayTvShowsDownloadManager.changeStateDownloadInProgress(false);
-            airingTodayTvShowsUpdateDownloader.notDownloadedPage(page);
-
+            if (airingTodayTvShowsUpdateDownloader != null) {
+                airingTodayTvShowsUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }

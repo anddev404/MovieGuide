@@ -136,7 +136,9 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     peopleFragment.addData(response.body());
-                                    updateDownloader.downloadedPage(page);
+                                    if (updateDownloader != null) {
+                                        updateDownloader.downloadedPage(page);
+                                    }
                                 }
                             } catch (Exception e) {
                             }
@@ -147,21 +149,26 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
                         }
                     } else {
 
-                        updateDownloader.notDownloadedPage(page);
-
+                        if (updateDownloader != null) {
+                            updateDownloader.notDownloadedPage(page);
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PopularPeople> call, Throwable t) {
 
-                    updateDownloader.notDownloadedPage(page);
+                    if (updateDownloader != null) {
+                        updateDownloader.notDownloadedPage(page);
+                    }
                     downloadAndShowPeopleOnScreen();
 
                 }
             });
         } catch (Throwable e) {
-            updateDownloader.notDownloadedPage(page);
+            if (updateDownloader != null) {
+                updateDownloader.notDownloadedPage(page);
+            }
             downloadAndShowPeopleOnScreen();
 
         }

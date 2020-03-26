@@ -228,7 +228,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         if (page > 1) {
                             try {
                                 if (response.body().getResults().size() > 0) {
-                                    moviesUpdateDownloader.downloadedPage(page);
+                                    if (moviesUpdateDownloader != null) {
+                                        moviesUpdateDownloader.downloadedPage(page);
+                                    }
                                 }
                                 moviesFragment.addData(response.body());
                             } catch (Exception e) {
@@ -247,8 +249,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     } else {
 
                         moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                        moviesUpdateDownloader.notDownloadedPage(page);
-
+                        if (moviesUpdateDownloader != null) {
+                            moviesUpdateDownloader.notDownloadedPage(page);
+                        }
                     }
                     moviesDownloadManager.changeStateDownloadInProgress(false);
 
@@ -268,8 +271,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
         } catch (Throwable e) {
             moviesDownloadManager.changeStateDownloadInProgress(false);
             moviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-            moviesUpdateDownloader.notDownloadedPage(page);
-
+            if (moviesUpdateDownloader != null) {
+                moviesUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }
@@ -291,7 +295,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         if (page > 1) {
                             try {
                                 if (response.body().getResults().size() > 0) {
-                                    tvShowsUpdateDownloader.downloadedPage(page);
+                                    if (tvShowsUpdateDownloader != null) {
+                                        tvShowsUpdateDownloader.downloadedPage(page);
+                                    }
                                 }
                                 tvShowsFragment.addData(response.body());
                             } catch (Exception e) {
@@ -310,8 +316,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     } else {
 
                         tvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                        tvShowsUpdateDownloader.notDownloadedPage(page);
-
+                        if (tvShowsUpdateDownloader != null) {
+                            tvShowsUpdateDownloader.notDownloadedPage(page);
+                        }
                     }
                     tvShowsDownloadManager.changeStateDownloadInProgress(false);
 
@@ -331,8 +338,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
         } catch (Throwable e) {
             tvShowsDownloadManager.changeStateDownloadInProgress(false);
             tvShowsDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-            tvShowsUpdateDownloader.notDownloadedPage(page);
-
+            if (tvShowsUpdateDownloader != null) {
+                tvShowsUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }
@@ -354,7 +362,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                         if (page > 1) {
                             try {
                                 if (response.body().getResults().size() > 0) {
-                                    peopleUpdateDownloader.downloadedPage(page);
+                                    if (peopleUpdateDownloader != null) {
+                                        peopleUpdateDownloader.downloadedPage(page);
+                                    }
                                     peopleFragment.addData(response.body());
                                 }
 
@@ -376,8 +386,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                     } else {
 
                         peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                        peopleUpdateDownloader.notDownloadedPage(page);
-
+                        if (peopleUpdateDownloader != null) {
+                            peopleUpdateDownloader.notDownloadedPage(page);
+                        }
                     }
                     peopleDownloadManager.changeStateDownloadInProgress(false);
 
@@ -402,7 +413,9 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
                 if (peopleDownloadManager != null) {
                     peopleDownloadManager.changeStateDownloadInProgress(false);
                     peopleDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                    peopleUpdateDownloader.notDownloadedPage(page);
+                    if (peopleUpdateDownloader != null) {
+                        peopleUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             } catch (Throwable t) {
             }

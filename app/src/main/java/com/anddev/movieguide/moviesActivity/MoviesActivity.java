@@ -149,7 +149,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     popularMoviesFragment.addData(response.body());
-                                    popularMoviesUpdateDownloader.downloadedPage(page);
+                                    if (popularMoviesUpdateDownloader != null) {
+                                        popularMoviesUpdateDownloader.downloadedPage(page);
+                                    }
 
                                 }
                             } catch (Exception e) {
@@ -160,8 +162,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                         }
 
                     } else {
-
-                        popularMoviesUpdateDownloader.notDownloadedPage(page);
+                        if (popularMoviesUpdateDownloader != null) {
+                            popularMoviesUpdateDownloader.notDownloadedPage(page);
+                        }
                         popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -174,21 +177,25 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     popularMoviesDownloadManager.changeStateDownloadInProgress(false);
-                    popularMoviesUpdateDownloader.notDownloadedPage(page);
-
+                    if (popularMoviesUpdateDownloader != null) {
+                        popularMoviesUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
 
             popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             popularMoviesDownloadManager.changeStateDownloadInProgress(false);
-            popularMoviesUpdateDownloader.notDownloadedPage(page);
-
+            if (popularMoviesUpdateDownloader != null) {
+                popularMoviesUpdateDownloader.notDownloadedPage(page);
+            }
         }
+
     }
 
     @Background
-    void downloadTopRatedMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
+    void downloadTopRatedMoviesInBackground(ConnectionInterface client, String apiKey, String
+            language, Integer page) {
 
         try {
 
@@ -216,7 +223,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     } else {
 
-                        topRatedMoviesUpdateDownloader.notDownloadedPage(page);
+                        if (topRatedMoviesUpdateDownloader != null) {
+                            topRatedMoviesUpdateDownloader.notDownloadedPage(page);
+                        }
                         topRatedMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -229,21 +238,24 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     topRatedMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     topRatedMoviesDownloadManager.changeStateDownloadInProgress(false);
-                    topRatedMoviesUpdateDownloader.notDownloadedPage(page);
-
+                    if (topRatedMoviesUpdateDownloader != null) {
+                        topRatedMoviesUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
-            popularMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-            popularMoviesDownloadManager.changeStateDownloadInProgress(false);
-            popularMoviesUpdateDownloader.notDownloadedPage(page);
-
+            topRatedMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
+            topRatedMoviesDownloadManager.changeStateDownloadInProgress(false);
+            if (topRatedMoviesUpdateDownloader != null) {
+                topRatedMoviesUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }
 
     @Background
-    void downloadUpcomingMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
+    void downloadUpcomingMoviesInBackground(ConnectionInterface client, String apiKey, String
+            language, Integer page) {
 
         try {
 
@@ -259,7 +271,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     upcomingMoviesFragment.addData(response.body());
-                                    upcomingMoviesUpdateDownloader.downloadedPage(page);
+                                    if (upcomingMoviesUpdateDownloader != null) {
+                                        upcomingMoviesUpdateDownloader.downloadedPage(page);
+                                    }
 
                                 }
                             } catch (Exception e) {
@@ -271,7 +285,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     } else {
 
-                        upcomingMoviesUpdateDownloader.notDownloadedPage(page);
+                        if (upcomingMoviesUpdateDownloader != null) {
+                            upcomingMoviesUpdateDownloader.notDownloadedPage(page);
+                        }
                         upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -284,22 +300,25 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     upcomingMoviesDownloadManager.changeStateDownloadInProgress(false);
-                    upcomingMoviesUpdateDownloader.notDownloadedPage(page);
-
+                    if (upcomingMoviesUpdateDownloader != null) {
+                        upcomingMoviesUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
 
             upcomingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             upcomingMoviesDownloadManager.changeStateDownloadInProgress(false);
-            upcomingMoviesUpdateDownloader.notDownloadedPage(page);
-
+            if (upcomingMoviesUpdateDownloader != null) {
+                upcomingMoviesUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }
 
     @Background
-    void downloadNowPlayingMoviesInBackground(ConnectionInterface client, String apiKey, String language, Integer page) {
+    void downloadNowPlayingMoviesInBackground(ConnectionInterface client, String apiKey, String
+            language, Integer page) {
 
         try {
 
@@ -315,7 +334,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
                             try {
                                 if (response.body().getResults().size() > 0) {
                                     nowPlayingMoviesFragment.addData(response.body());
-                                    nowPlayingMoviesUpdateDownloader.downloadedPage(page);
+                                    if (nowPlayingMoviesUpdateDownloader != null) {
+                                        nowPlayingMoviesUpdateDownloader.downloadedPage(page);
+                                    }
 
                                 }
                             } catch (Exception e) {
@@ -327,7 +348,9 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     } else {
 
-                        nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
+                        if (nowPlayingMoviesUpdateDownloader != null) {
+                            nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
+                        }
                         nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
 
                     }
@@ -340,16 +363,18 @@ public class MoviesActivity extends AppCompatActivity implements DownloadManager
 
                     nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
                     nowPlayingMoviesDownloadManager.changeStateDownloadInProgress(false);
-                    nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
-
+                    if (nowPlayingMoviesUpdateDownloader != null) {
+                        nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
+                    }
                 }
             });
         } catch (Throwable e) {
 
             nowPlayingMoviesDownloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
             nowPlayingMoviesDownloadManager.changeStateDownloadInProgress(false);
-            nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
-
+            if (nowPlayingMoviesUpdateDownloader != null) {
+                nowPlayingMoviesUpdateDownloader.notDownloadedPage(page);
+            }
         }
 
     }
