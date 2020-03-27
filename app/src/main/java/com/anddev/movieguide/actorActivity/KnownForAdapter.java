@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Cast;
@@ -43,7 +44,10 @@ public class KnownForAdapter extends RecyclerView.Adapter<KnownForAdapter.CastVi
     public void onBindViewHolder(CastViewHolder holder, int position) {
 
         Cast cast = castList.get(position);
-
+        
+        if (cast.getTitle() != null) {
+            holder.description.setText("" + cast.getTitle());
+        }
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + cast.getPoster_path(), holder.imageView, ImageTools.DRAWABLE_FILM);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,11 +94,13 @@ public class KnownForAdapter extends RecyclerView.Adapter<KnownForAdapter.CastVi
     class CastViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
+        TextView description;
 
         public CastViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.row_known_for_imageView);
+            description = itemView.findViewById(R.id.row_known_for_description);
 
         }
     }

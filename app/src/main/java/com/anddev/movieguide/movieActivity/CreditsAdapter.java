@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
@@ -42,6 +43,9 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsV
 
         Credits.Cast credits = creditstList.get(position);
 
+        if (credits.getCharacter() != null) {
+            holder.description.setText("" + credits.getCharacter());
+        }
         ImageTools.getImageFromInternet(context, ImageTools.IMAGE_PATH_500px + credits.getProfile_path(), holder.imageView, ImageTools.DRAWABLE_PERSON);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,11 +74,13 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsV
     class CreditsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
+        TextView description;
 
         public CreditsViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.row_known_for_imageView);
+            description = itemView.findViewById(R.id.row_known_for_description);
 
         }
     }
