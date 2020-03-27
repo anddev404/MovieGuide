@@ -116,7 +116,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @BindView(R.id.credits_movie_recycler_view)
     RecyclerView creditsRecyclerView;
 
-    @BindView(R.id.similar_movies__movie_recycler_view)
+    @BindView(R.id.similar_movies_movie_recycler_view)
     RecyclerView similarRecyclerView;
 
     @BindView(R.id.movie_favourite_FloatingActionButton)

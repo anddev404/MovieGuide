@@ -170,7 +170,6 @@
                         tools:listitem="@layout/row_known_for" />
 
                     <TextView
-                        android:id="@+id/similar_movies_movie_TextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_4sdp"
@@ -180,7 +179,7 @@
                         android:textStyle="bold" />
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/similar_movies__movie_recycler_view"
+                        android:id="@+id/similar_movies_movie_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
