@@ -102,6 +102,10 @@ public interface ConnectionInterface {
     @GET("3/tv/{id}/credits")
     Call<Credits> tvShowCredits(@Path("id") Integer id, @Query("api_key") String apiKey);
 
+    //https://api.themoviedb.org/3/tv/{tv_id}/similar?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&page=1
+    @GET("3/tv/{id}/similar")
+    Call<TvShows> similarTvShows(@Path("id") Integer id, @Query("api_key") String apiKey, @Query("language") String language, @Query("page") Integer page);
+
     //SEARCH
 
     //https://api.themoviedb.org/3/search/movie?api_key=3a3657f217097dc333bd92af0d39bee4&language=en-US&query=terminator&page=1&include_adult=false

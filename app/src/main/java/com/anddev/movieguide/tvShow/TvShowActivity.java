@@ -20,9 +20,11 @@ import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
+import com.anddev.movieguide.actorActivity.KnownForAdapter;
 import com.anddev.movieguide.model.Credits;
 import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.TvShow;
+import com.anddev.movieguide.model.TvShows;
 import com.anddev.movieguide.movieActivity.CreditsAdapter;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
@@ -33,6 +35,7 @@ import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
+import com.anddev.movieguide.tools.ModelConverter;
 import com.anddev.movieguide.tools.MyApplication;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
@@ -64,6 +67,7 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     TvShow tvShow;
     Integer tvShowId;
     Credits credits;
+    TvShows similarTvShows;
 
     DownloadManager downloadManager;
     ConnectionInterface client;
@@ -111,6 +115,8 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     @BindView(R.id.credits_tv_show_recycler_view)
     RecyclerView creditsRecyclerView;
 
+    @BindView(R.id.similar_tv_show_recycler_view)
+    RecyclerView similarTvShowsRecyclerView;
 
     @BindView(R.id.tv_show_favourite_FloatingActionButton)
     FloatingActionButton favouriteFloatingActionButton;
@@ -146,6 +152,7 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         client = RetrofitTools.getConnectionInterface();
 
         creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        similarTvShowsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         downloadManager = new DownloadManager();
         downloadManager.setOnDownloadManagerListener(this);
@@ -272,6 +279,38 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         }
 
     }
+
+    @Background
+    void downloadSimilarInBackground(ConnectionInterface client, Integer id, String apiKey, String language, Integer page) {
+        try {
+
+            Call<TvShows> call = client.similarTvShows(id, apiKey, language, page);
+
+            call.enqueue(new Callback<TvShows>() {
+
+                @Override
+                public void onResponse(Call<TvShows> call, Response<TvShows> response) {
+
+                    if (response.code() == 200) {
+
+                        similarTvShows = response.body();
+                        showSimilar(similarTvShows);
+
+                    } else {
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<TvShows> call, Throwable t) {
+
+                }
+            });
+        } catch (Throwable e) {
+        }
+
+    }
     //endregion
 
     public String getPercentageFromDouble(Double d, int scale) {
@@ -327,6 +366,17 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
 //
 //                    })
 //            );
+
+        } catch (Exception e) {
+        }
+    }
+
+    @UiThread
+    public void showSimilar(final TvShows tvShows) {
+        try {
+
+            KnownForAdapter adapter = new KnownForAdapter(this, ModelConverter.tvShowsToListOfCast(tvShows));
+            similarTvShowsRecyclerView.setAdapter(adapter);
 
         } catch (Exception e) {
         }
@@ -390,6 +440,8 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
 
         downloadTvShowInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
         downloadCreditsInBackground(client, tvShowId, RetrofitTools.API_KEY);
+        downloadSimilarInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+
     }
 
     @Override

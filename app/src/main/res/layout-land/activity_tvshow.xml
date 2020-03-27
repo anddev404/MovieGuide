@@ -114,9 +114,9 @@
                                 <TextView
                                     android:id="@+id/release_data_tv_show_textView"
                                     style="@style/NormalDarkText"
-                                    android:textColor="@color/colorTextLight"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:textColor="@color/colorTextLight"
                                     tools:text="@string/example_release_date" />
 
 
@@ -152,6 +152,24 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/credits_tv_show_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        tools:listitem="@layout/row_known_for" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_4sdp"
+                        android:text="@string/similar"
+                        android:textColor="@color/colorTextLight"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/similar_tv_show_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"

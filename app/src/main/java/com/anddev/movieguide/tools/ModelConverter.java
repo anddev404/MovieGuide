@@ -111,4 +111,25 @@ public class ModelConverter {
         return results;
     }
 
+    public static List<Cast> tvShowsToListOfCast(TvShows tvShows) {
+
+        List<Cast> results = new ArrayList<>();
+
+        try {
+            if (tvShows != null && tvShows.getResults() != null) {
+                for (TvShows.Results r : tvShows.getResults()) {
+
+                    Cast cast = new Cast();
+                    cast.setId(r.getId());
+                    cast.setTitle(r.getName());
+                    cast.setPoster_path(r.getPoster_path());
+                    cast.setMedia_type("tv");
+                    results.add(cast);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        return results;
+    }
 }
