@@ -1,5 +1,6 @@
 package com.anddev.movieguide.tools;
 
+import com.anddev.movieguide.model.Cast;
 import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
@@ -87,4 +88,27 @@ public class ModelConverter {
 
         return people;
     }
+
+    public static List<Cast> moviesToListOfCast(Movies movies) {
+
+        List<Cast> results = new ArrayList<>();
+
+        try {
+            if (movies != null && movies.getResults() != null) {
+                for (ResultsMovie r : movies.getResults()) {
+
+                    Cast cast = new Cast();
+                    cast.setId(r.getId());
+                    cast.setTitle(r.getTitle());
+                    cast.setPoster_path(r.getPoster_path());
+                    cast.setMedia_type("movie");
+                    results.add(cast);
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        return results;
+    }
+
 }

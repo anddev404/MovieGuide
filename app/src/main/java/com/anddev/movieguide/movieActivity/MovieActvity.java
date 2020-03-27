@@ -19,9 +19,12 @@ import android.widget.TextView;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
+import com.anddev.movieguide.actorActivity.KnownForAdapter;
 import com.anddev.movieguide.model.Credits;
 import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movie;
+import com.anddev.movieguide.model.Movies;
+import com.anddev.movieguide.moviesActivity.MoviesAdapter;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
@@ -31,6 +34,7 @@ import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
+import com.anddev.movieguide.tools.ModelConverter;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.PaletteTools;
@@ -61,6 +65,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     Movie movie;
     Integer movieId;
     Credits credits;
+    Movies similarMovies;
 
     DownloadManager downloadManager;
     ConnectionInterface client;
@@ -111,6 +116,9 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @BindView(R.id.credits_movie_recycler_view)
     RecyclerView creditsRecyclerView;
 
+    @BindView(R.id.similar_movies__movie_recycler_view)
+    RecyclerView similarRecyclerView;
+
     @BindView(R.id.movie_favourite_FloatingActionButton)
     FloatingActionButton favouriteFloatingActionButton;
     // endregion
@@ -144,6 +152,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         client = RetrofitTools.getConnectionInterface();
 
         creditsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        similarRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         downloadManager = new DownloadManager();
         downloadManager.setOnDownloadManagerListener(this);
@@ -267,6 +276,37 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         }
 
     }
+
+    @Background
+    void downloadSimilarInBackground(ConnectionInterface client, Integer id, String apiKey, String language, Integer page) {
+        try {
+
+
+            Call<Movies> call = client.similarMovies(id, apiKey, language, page);
+
+            call.enqueue(new Callback<Movies>() {
+
+                @Override
+                public void onResponse(Call<Movies> call, Response<Movies> response) {
+
+                    if (response.code() == 200) {
+
+                        similarMovies = response.body();
+                        showSimilar(similarMovies);
+
+                    } else {
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Movies> call, Throwable t) {
+                }
+            });
+        } catch (Throwable e) {
+        }
+
+    }
     //endregion
 
     public String getPercentageFromDouble(Double d, int scale) {
@@ -321,6 +361,14 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 //
 //                })
 //        );
+
+    }
+
+    @UiThread
+    public void showSimilar(final Movies movies) {
+
+        KnownForAdapter adapter = new KnownForAdapter(this, ModelConverter.moviesToListOfCast(movies));
+        similarRecyclerView.setAdapter(adapter);
 
     }
 
@@ -382,6 +430,8 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
         downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
         downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
+        downloadSimilarInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+
     }
 
     @Override
