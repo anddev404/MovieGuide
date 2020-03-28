@@ -20,6 +20,7 @@ public class Cast {
     private String poster_path;
     private String credit_id;
     private String character;
+    private String name;
 
     public String getMedia_type() {
         return media_type;
@@ -155,5 +156,13 @@ public class Cast {
 
     public void setCharacter(String character) {
         this.character = character;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

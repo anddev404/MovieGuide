@@ -44,9 +44,14 @@ public class KnownForAdapter extends RecyclerView.Adapter<KnownForAdapter.CastVi
     public void onBindViewHolder(CastViewHolder holder, int position) {
 
         Cast cast = castList.get(position);
-        
-        if (cast.getTitle() != null) {
-            holder.description.setText("" + cast.getTitle());
+        try {
+            if (cast.getMedia_type().equalsIgnoreCase("tv") && cast.getName() != null) {
+                holder.description.setText("" + cast.getName());
+            } else if (cast.getTitle() != null) {
+                holder.description.setText("" + cast.getTitle());
+            }
+        } catch (Exception e) {
+
         }
         ImageTools.getImageFromInternet(context, "https://image.tmdb.org/t/p/w500/" + cast.getPoster_path(), holder.imageView, ImageTools.DRAWABLE_FILM);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
