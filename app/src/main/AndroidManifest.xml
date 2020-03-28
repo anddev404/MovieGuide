@@ -15,24 +15,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".tvShows.TvShowsActivity_"
-            android:configChanges="orientation|screenSize"></activity>
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"></activity>
         <activity
             android:name=".favouriteActivity.FavouriteActivity_"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
         <activity
             android:name=".tvShow.TvShowActivity_"
             android:theme="@style/MyAppThemeNoActionBar" />
         <activity android:name=".searchEngineActivity.SearchEngineActivity_" />
         <activity
             android:name=".peopleActivity.PeopleActivity_"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
         <activity
             android:name=".movieActivity.MovieActvity_"
             android:configChanges="keyboardHidden"
             android:theme="@style/MyAppThemeNoActionBar" />
         <activity
             android:name=".moviesActivity.MoviesActivity_"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
