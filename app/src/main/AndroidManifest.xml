@@ -21,6 +21,7 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
         <activity
             android:name=".tvShow.TvShowActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:theme="@style/MyAppThemeNoActionBar" />
         <activity android:name=".searchEngineActivity.SearchEngineActivity_" />
         <activity
