@@ -26,87 +26,106 @@
                     android:id="@+id/tv_show_linear_layout_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/poster_tv_show_imageView"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:background="@null"
-                        android:scaleType="fitXY"
-                        tools:src="@tools:sample/backgrounds/scenic[]" />
-
-                    <TextView
-                        android:id="@+id/title_tv_show_textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_marginRight="@dimen/_15sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:textColor="@color/colorTextDark"
-                        android:textSize="@dimen/_20ssp"
-                        android:textStyle="bold"
-                        tools:text="@string/example_translated_title_of_movie" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tv_show_linear_layout_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-
-                    android:weightSum="10">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2">
-
-                        <TextView
-                            android:id="@+id/vote_average_tv_show_textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:gravity="center"
-                            android:textColor="@color/colorTextLight"
-                            android:textSize="@dimen/_20ssp"
-                            tools:text="@string/example_vote" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="8"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
-
-                        <TextView
-                            android:id="@+id/genres_tv_show_textView"
+                        <ImageView
+                            android:id="@+id/poster_tv_show_imageView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorTextLight"
-                            android:textSize="@dimen/_15ssp"
-                            tools:text="@string/example_genres" />
+                            android:adjustViewBounds="true"
+                            android:background="@null"
+                            android:scaleType="fitXY"
+                            tools:src="@tools:sample/backgrounds/scenic[]" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/release_data_tv_show_textView"
-                            style="@style/NormalDarkText"
+                            android:id="@+id/title_tv_show_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorTextLight"
-                            tools:text="@string/example_release_date" />
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/colorTextDark"
+                            android:textSize="@dimen/_20ssp"
+                            android:textStyle="bold"
+                            tools:text="@string/example_translated_title_of_movie" />
+
+                        <LinearLayout
+                            android:id="@+id/tv_show_linear_layout_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="@color/colorPrimary"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+
+                            android:weightSum="10">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2">
+
+                                <TextView
+                                    android:id="@+id/vote_average_tv_show_textView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:gravity="center"
+                                    android:textColor="@color/colorTextLight"
+                                    android:textSize="@dimen/_20ssp"
+                                    tools:text="@string/example_vote" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="8"
+                                android:orientation="vertical">
 
 
+                                <TextView
+                                    android:id="@+id/genres_tv_show_textView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorTextLight"
+                                    android:textSize="@dimen/_15ssp"
+                                    tools:text="@string/example_genres" />
+
+                                <TextView
+                                    android:id="@+id/release_data_tv_show_textView"
+                                    style="@style/NormalDarkText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorTextLight"
+                                    tools:text="@string/example_release_date" />
+
+
+                            </LinearLayout>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/tv_show_linear_layout_3"
