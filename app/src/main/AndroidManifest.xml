@@ -28,7 +28,7 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
         <activity
             android:name=".movieActivity.MovieActvity_"
-            android:configChanges="keyboardHidden"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:theme="@style/MyAppThemeNoActionBar" />
         <activity
             android:name=".moviesActivity.MoviesActivity_"
