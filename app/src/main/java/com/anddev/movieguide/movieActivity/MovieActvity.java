@@ -2,8 +2,8 @@ package com.anddev.movieguide.movieActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,19 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anddev.movieguide.R;
-import com.anddev.movieguide.actorActivity.ActorActivity_;
 import com.anddev.movieguide.actorActivity.KnownForAdapter;
 import com.anddev.movieguide.model.Credits;
 import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.model.Movies;
-import com.anddev.movieguide.moviesActivity.MoviesAdapter;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
@@ -37,8 +34,6 @@ import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.ModelConverter;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
-import com.anddev.movieguide.tools.PaletteTools;
-import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 
@@ -160,7 +155,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
         favouriteTools = new FavouriteTools(activity);
         changeViewColor();
-
+        rotateLinearLayoutBaseOnTheOrientation();
     }
 
     @Override
@@ -179,6 +174,23 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         if (navigationDrawer != null) {
             if (navigationDrawer.closeNavigationDrawerIfOpen()) {
             }
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        rotateLinearLayoutBaseOnTheOrientation();
+    }
+
+    public void rotateLinearLayoutBaseOnTheOrientation() {
+        int orientation = activity.getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
+        } else {
+            linearLayout1.setOrientation(LinearLayout.VERTICAL);
         }
     }
 
