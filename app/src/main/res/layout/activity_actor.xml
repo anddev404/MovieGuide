@@ -34,98 +34,125 @@
                         android:id="@+id/actor_linear_layout_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="@dimen/_10sdp">
+                        android:background="@color/colorPrimaryDark"
+                        android:orientation="vertical"
+                        android:paddingTop="15dp">
 
-                        <ImageView
-                            android:id="@+id/imageViewActor"
-                            style="@style/ImageActor"
-                            tools:srcCompat="@drawable/person" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/_10sdp">
+
+                            <ImageView
+                                android:id="@+id/imageViewActor"
+                                style="@style/ImageActor"
+                                tools:srcCompat="@drawable/person" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:id="@+id/nameTextView"
+                                        style="@style/LargeLightText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:paddingBottom="10dp"
+
+                                        tools:text="@string/example_name" />
+
+                                    <TextView
+                                        android:id="@+id/age"
+                                        style="@style/NormalDarkText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        tools:text="@string/example_years_old" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:padding="10dp">
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/nameTextView"
-                                style="@style/LargeLightText"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingBottom="10dp"
+                                android:background="@color/colorPrimary"
+                                android:orientation="vertical">
 
-                                tools:text="@string/example_name" />
 
-                            <TextView
-                                android:id="@+id/age"
-                                style="@style/NormalDarkText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                tools:text="@string/example_years_old" />
+                                <LinearLayout
+                                    android:id="@+id/actor_linear_layout_2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimary"
+                                    android:orientation="horizontal"
+                                    android:padding="10dp"
+
+                                    android:weightSum="10">
+
+                                    <TextView
+                                        android:id="@+id/textView"
+                                        style="@style/NormalLightText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="@string/place_of_birth"
+                                        android:textColor="@color/colorTextLight" />
+
+                                    <TextView
+                                        android:id="@+id/place_of_birth_textView"
+                                        style="@style/NormalDarkText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:textColor="@color/colorTextLight"
+                                        tools:text="@string/example_place_of_birdth" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/actor_linear_layout_3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimary"
+                                    android:orientation="horizontal"
+                                    android:padding="10dp"
+                                    android:weightSum="10">
+
+
+                                    <TextView
+                                        android:id="@+id/textView2"
+                                        style="@style/NormalLightText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="@string/birth_date"
+                                        android:textColor="@color/colorTextLight" />
+
+                                    <TextView
+                                        android:id="@+id/birthdayTextView"
+                                        style="@style/NormalDarkText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:textColor="@color/colorTextLight"
+                                        tools:text="@string/example_birthdate" />
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/actor_linear_layout_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-
-                        android:weightSum="10">
-
-                        <TextView
-                            android:id="@+id/textView"
-                            style="@style/NormalLightText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:text="@string/place_of_birth"
-                            android:textColor="@color/colorTextLight" />
-
-                        <TextView
-                            android:id="@+id/place_of_birth_textView"
-                            style="@style/NormalDarkText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:textColor="@color/colorTextLight"
-                            tools:text="@string/example_place_of_birdth" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/actor_linear_layout_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:weightSum="10">
-
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            style="@style/NormalLightText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:text="@string/birth_date"
-                            android:textColor="@color/colorTextLight" />
-
-                        <TextView
-                            android:id="@+id/birthdayTextView"
-                            style="@style/NormalDarkText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:textColor="@color/colorTextLight"
-                            tools:text="@string/example_birthdate" />
-                    </LinearLayout>
-
 
                     <LinearLayout
                         android:id="@+id/actor_linear_layout_4"

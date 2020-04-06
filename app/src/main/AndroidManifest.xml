@@ -40,7 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".actorActivity.ActorActivity_" />
+        <activity android:name=".actorActivity.ActorActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"/>
         <activity android:name=".MainActivity" />
     </application>
 
