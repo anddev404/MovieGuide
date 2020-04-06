@@ -7,7 +7,6 @@ public class KnownFor {
 
 
     private int id;
-    private List<Crew> crew;
     private List<Cast> cast;
 
     public int getId() {
@@ -17,15 +16,7 @@ public class KnownFor {
     public void setId(int id) {
         this.id = id;
     }
-
-    public List<Crew> getCrew() {
-        return crew;
-    }
-
-    public void setCrew(List<Crew> crew) {
-        this.crew = crew;
-    }
-
+    
     public List<Cast> getCast() {
         return cast;
     }

@@ -3,20 +3,10 @@ package com.anddev.movieguide.model;
 import java.util.List;
 
 public class Results {
-    private boolean adult;
     private List<KnownForPopular> known_for;
     private String name;
     private String profile_path;
     private int id;
-    private double popularity;
-
-    public boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(boolean adult) {
-        this.adult = adult;
-    }
 
     public List<KnownForPopular> getKnownForPopular() {
         return known_for;
@@ -50,11 +40,4 @@ public class Results {
         this.id = id;
     }
 
-    public double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(double popularity) {
-        this.popularity = popularity;
-    }
 }

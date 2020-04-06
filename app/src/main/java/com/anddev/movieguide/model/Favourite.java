@@ -3,8 +3,6 @@ package com.anddev.movieguide.model;
 import com.j256.ormlite.field.DatabaseField;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Favourite implements Serializable {
 

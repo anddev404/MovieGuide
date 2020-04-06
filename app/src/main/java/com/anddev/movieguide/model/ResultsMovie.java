@@ -4,19 +4,12 @@ import java.util.List;
 
 public class ResultsMovie {
     private String release_date;
-    private String overview;
     private double vote_average;
     private String title;
     private List<Integer> genre_ids;
     private String original_title;
-    private String original_language;
-    private String backdrop_path;
-    private boolean adult;
     private int id;
     private String poster_path;
-    private boolean video;
-    private int vote_count;
-    private double popularity;
 
     public String getRelease_date() {
         return release_date;
@@ -24,14 +17,6 @@ public class ResultsMovie {
 
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
     }
 
     public double getVote_average() {
@@ -66,30 +51,6 @@ public class ResultsMovie {
         this.original_title = original_title;
     }
 
-    public String getOriginal_language() {
-        return original_language;
-    }
-
-    public void setOriginal_language(String original_language) {
-        this.original_language = original_language;
-    }
-
-    public String getBackdrop_path() {
-        return backdrop_path;
-    }
-
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
-    }
-
-    public boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(boolean adult) {
-        this.adult = adult;
-    }
-
     public int getId() {
         return id;
     }
@@ -106,27 +67,4 @@ public class ResultsMovie {
         this.poster_path = poster_path;
     }
 
-    public boolean getVideo() {
-        return video;
-    }
-
-    public void setVideo(boolean video) {
-        this.video = video;
-    }
-
-    public int getVote_count() {
-        return vote_count;
-    }
-
-    public void setVote_count(int vote_count) {
-        this.vote_count = vote_count;
-    }
-
-    public double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(double popularity) {
-        this.popularity = popularity;
-    }
 }
