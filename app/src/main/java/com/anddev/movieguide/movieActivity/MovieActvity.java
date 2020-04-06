@@ -441,8 +441,13 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         downloadManager.changeStateDownloadInProgress(true);
 
         downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
-        downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
-        downloadSimilarInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+
+        if (credits == null) {
+            downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
+        }
+        if (similarMovies == null) {
+            downloadSimilarInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+        }
 
     }
 
