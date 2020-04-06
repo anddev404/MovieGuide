@@ -2,22 +2,14 @@ package com.anddev.movieguide.actorActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +17,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Actor;
@@ -33,7 +24,6 @@ import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Images;
 import com.anddev.movieguide.model.KnownFor;
 import com.anddev.movieguide.model.Profiles;
-import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
 import com.anddev.movieguide.tools.ConnectionInterface;
@@ -46,11 +36,9 @@ import com.anddev.movieguide.tools.LanguageTools;
 import com.anddev.movieguide.tools.MyApplication;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
-import com.anddev.movieguide.tools.PaletteTools;
 import com.anddev.movieguide.tools.RecyclerItemClickListener;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
-import com.anddev.movieguide.tvShow.TvShowActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -58,7 +46,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -175,7 +162,11 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     View centerView = snapHelper.findSnapView(layoutManager);
                     int pos = layoutManager.getPosition(centerView);
-                    actionBarTools.setTitle((pos + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+                    if (actor != null) {
+                        actionBarTools.setTitle((pos + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+                    } else {
+                        actionBarTools.setTitle((pos + 1) + "/" + images.getProfiles().size()).addBackButton();
+                    }
 
                 }
             }
@@ -243,7 +234,11 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         try {
             if (actionBarTools != null) {
                 if (images.getProfiles() != null) {
-                    actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+                    if (actor != null) {
+                        actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size() + "  " + actor.getName()).addBackButton();
+                    } else {
+                        actionBarTools.setTitle((position + 1) + "/" + images.getProfiles().size()).addBackButton();
+                    }
                 } else {
                     actionBarTools.setTitle(actor.getName()).addBackButton();
 
@@ -594,8 +589,12 @@ public class ActorActivity extends AppCompatActivity implements DownloadManager.
         downloadManager.changeStateDownloadInProgress(true);
 
         downloadActorInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
-        downloadKnownForInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
-        downloadImagesOfActorInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        if (knownFor == null) {
+            downloadKnownForInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        }
+        if (images == null) {
+            downloadImagesOfActorInBackground(client, actorId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        }
     }
 
     @Override
