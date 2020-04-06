@@ -184,7 +184,7 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
 
         rotateLinearLayoutBaseOnTheOrientation();
     }
-    
+
     public void rotateLinearLayoutBaseOnTheOrientation() {
         int orientation = activity.getResources().getConfiguration().orientation;
 
@@ -451,8 +451,13 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
         downloadManager.changeStateDownloadInProgress(true);
 
         downloadTvShowInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
-        downloadCreditsInBackground(client, tvShowId, RetrofitTools.API_KEY);
-        downloadSimilarInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+
+        if (credits == null) {
+            downloadCreditsInBackground(client, tvShowId, RetrofitTools.API_KEY);
+        }
+        if (similarTvShows == null) {
+            downloadSimilarInBackground(client, tvShowId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+        }
 
     }
 
