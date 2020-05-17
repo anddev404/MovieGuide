@@ -42,6 +42,8 @@
     <string name="original_title">Oryginalny Tytuł:</string>
     <string name="production_country">Kraje:</string>
     <string name="production_companies">Wytwórnie Filmowe:</string>
+    <string name="trailers">Zwiastuny filmu:</string>
+    <string name="show_trailers">Pokaż</string>
 
     <string name="turn_on_the_internet">Włącz Internet</string>
     <string name="no_internet_connection">Brak połączenia z internetem</string>
