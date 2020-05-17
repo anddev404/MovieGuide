@@ -221,6 +221,24 @@
                         android:padding="@dimen/_12sdp"
                         tools:text="@string/example_prduction_countries" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_4sdp"
+                        android:text="@string/trailers"
+                        android:textColor="@color/colorTextLight"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/trainers_movie_activity_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="@dimen/_12sdp"
+                        android:text="@string/show_trailers"
+                        android:textColor="@color/colorTextDark" />
+
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
