@@ -2,6 +2,7 @@ package com.anddev.movieguide.movieActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.NetworkChangeReceiver;
 import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
+import com.anddev.movieguide.trailersActivity.TrailersActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -44,6 +47,7 @@ import org.androidannotations.annotations.UiThread;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -116,6 +120,10 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     @BindView(R.id.movie_favourite_FloatingActionButton)
     FloatingActionButton favouriteFloatingActionButton;
+
+    @BindView(R.id.trainers_movie_activity_button)
+    Button trainersButton;
+
     // endregion
 
     //region activity
@@ -192,6 +200,13 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         } else {
             linearLayout1.setOrientation(LinearLayout.VERTICAL);
         }
+    }
+
+    @OnClick(R.id.trainers_movie_activity_button)
+    public void onTrainersClick() {
+
+        Intent intent = new Intent(activity, TrailersActivity.class);
+        startActivity(intent);
     }
 
     //endregion
