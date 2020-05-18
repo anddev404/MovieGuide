@@ -44,6 +44,7 @@
     <string name="production_companies">Wytwórnie Filmowe:</string>
     <string name="trailers">Zwiastuny filmu:</string>
     <string name="show_trailers">Pokaż</string>
+    <string name="no_results">Brak wyników</string>
 
     <string name="turn_on_the_internet">Włącz Internet</string>
     <string name="no_internet_connection">Brak połączenia z internetem</string>
