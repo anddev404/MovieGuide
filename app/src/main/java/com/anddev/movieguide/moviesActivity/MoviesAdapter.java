@@ -23,6 +23,7 @@ import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.PaletteTools;
+import com.anddev.movieguide.trailersActivity.TrailersActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -94,7 +95,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 intent.putExtra("Id", result.getId());
 
                 try {
-                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView,0));
+                    intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.moviesImageView, 0));
                 } catch (Exception e) {
                 }
 
@@ -103,10 +104,33 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             }
         });
 
+        holder.youtubeTrailerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+
+                    TrailersActivity.goToActivity(activity, result.getTitle() + " " + DateTools.getOnlyYear(result.getRelease_date()));
+
+                } catch (Exception e) {
+                    try {
+
+                        TrailersActivity.goToActivity(activity, result.getTitle());
+
+                    } catch (Exception ee) {
+
+                        Toast.makeText(activity, activity.getString(R.string.no_results), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         try {
             favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_MOVIE, result.getTitle() + " " + DateTools.getOnlyYear(result.getRelease_date()), "", Double.toString(result.getVote_average()), result.getPoster_path());
         } catch (Exception e) {
         }
+
+
     }
 
 
@@ -127,6 +151,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         TextView averageVoteTextView;
         RoundedImageView moviesImageView;
         ImageButton starImageButton;
+        ImageButton youtubeTrailerButton;
         LinearLayout layout;
 
         public MoviesViewHolder(View itemView) {
@@ -137,6 +162,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             averageVoteTextView = itemView.findViewById(R.id.row_average_vote_date_movies_list_textView);
             moviesImageView = itemView.findViewById(R.id.row_image_movies_list_imageView);
             starImageButton = itemView.findViewById(R.id.row_favourite_movies_list_imageButton);
+            youtubeTrailerButton = itemView.findViewById(R.id.youtube_trailer_list);
             layout = itemView.findViewById(R.id.row_movies_list_layout);
         }
     }
