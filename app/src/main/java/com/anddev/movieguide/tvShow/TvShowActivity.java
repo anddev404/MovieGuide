@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.KnownForAdapter;
@@ -206,8 +207,21 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     @OnClick(R.id.trainers_tv_show_activity_button)
     public void onTrainersClick() {
 
-        Intent intent = new Intent(activity, TrailersActivity.class);
-        startActivity(intent);
+        try {
+
+            TrailersActivity.goToActivity(this, tvShow.getName() + " " + DateTools.getOnlyYear(tvShow.getFirst_air_date()));
+
+        } catch (Exception e) {
+            try {
+
+                TrailersActivity.goToActivity(this, tvShow.getName());
+
+            } catch (Exception ee) {
+
+                Toast.makeText(this, getString(R.string.no_results), Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     //endregion
