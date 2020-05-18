@@ -2,6 +2,7 @@ package com.anddev.movieguide.trailersActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,8 @@ public class TrailersActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         getSupportActionBar().hide();
+
+       webView.setBackgroundColor(Color.TRANSPARENT);
 
         try {
             if (getIntent().getExtras() != null) {
