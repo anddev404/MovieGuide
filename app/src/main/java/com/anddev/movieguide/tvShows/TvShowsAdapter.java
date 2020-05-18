@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Favourite;
@@ -21,6 +22,7 @@ import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.PaletteTools;
+import com.anddev.movieguide.trailersActivity.TrailersActivity;
 import com.anddev.movieguide.tvShow.TvShowActivity_;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -75,6 +77,27 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
             }
         });
 
+        holder.youtubeTrailerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+
+                    TrailersActivity.goToActivity(activity, result.getName() + " " + DateTools.getOnlyYear(result.getFirst_air_date()));
+
+                } catch (Exception e) {
+                    try {
+
+                        TrailersActivity.goToActivity(activity, result.getName());
+
+                    } catch (Exception ee) {
+
+                        Toast.makeText(activity, activity.getString(R.string.no_results), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         try {
             favouriteTools.manageFavouriteButton(holder.starImageButton, result.getId(), Favourite.FAVOURITE_TV_SHOWS, result.getName() + " " + DateTools.getOnlyYear(result.getFirst_air_date()), "", Double.toString(result.getVote_average()), result.getPoster_path());
         } catch (Exception e) {
@@ -99,6 +122,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
         TextView averageVoteTextView;
         RoundedImageView moviesImageView;
         ImageButton starImageButton;
+        ImageButton youtubeTrailerButton;
         LinearLayout layout;
 
 
@@ -110,6 +134,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
             averageVoteTextView = itemView.findViewById(R.id.row_average_vote_date_movies_list_textView);
             moviesImageView = itemView.findViewById(R.id.row_image_movies_list_imageView);
             starImageButton = itemView.findViewById(R.id.row_favourite_movies_list_imageButton);
+            youtubeTrailerButton = itemView.findViewById(R.id.youtube_trailer_list);
             layout = itemView.findViewById(R.id.row_movies_list_layout);
 
         }
