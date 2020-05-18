@@ -125,6 +125,8 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @BindView(R.id.trainers_movie_activity_button)
     Button trainersButton;
 
+    @BindView(R.id.youtube_movie)
+    ImageView youtubeTrainersButton;
     // endregion
 
     //region activity
@@ -205,6 +207,25 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     @OnClick(R.id.trainers_movie_activity_button)
     public void onTrainersClick() {
+
+        try {
+
+            TrailersActivity.goToActivity(this, movie.getTitle() + " " + DateTools.getOnlyYear(movie.getRelease_date()));
+
+        } catch (Exception e) {
+            try {
+
+                TrailersActivity.goToActivity(this, movie.getTitle());
+
+            } catch (Exception ee) {
+
+                Toast.makeText(this, getString(R.string.no_results), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @OnClick(R.id.youtube_movie)
+    public void onYoutubeTrainersClick() {
 
         try {
 
