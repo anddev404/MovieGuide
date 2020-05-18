@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/icon_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".trailersActivity.TrailersActivity"></activity>
+        <activity
+            android:name=".trailersActivity.TrailersActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
         <activity
             android:name=".tvShows.TvShowsActivity_"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
