@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.KnownForAdapter;
@@ -205,8 +206,20 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @OnClick(R.id.trainers_movie_activity_button)
     public void onTrainersClick() {
 
-        Intent intent = new Intent(activity, TrailersActivity.class);
-        startActivity(intent);
+        try {
+
+            TrailersActivity.goToActivity(this, movie.getTitle() + " " + DateTools.getOnlyYear(movie.getRelease_date()));
+
+        } catch (Exception e) {
+            try {
+
+                TrailersActivity.goToActivity(this, movie.getTitle());
+
+            } catch (Exception ee) {
+
+                Toast.makeText(this, getString(R.string.no_results), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     //endregion
