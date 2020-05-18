@@ -124,6 +124,8 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     @BindView(R.id.trainers_tv_show_activity_button)
     Button trainersButton;
 
+    @BindView(R.id.youtube_tv_show)
+    ImageView youtubeTrainersButton;
     // endregion
 
     //region activity
@@ -224,6 +226,25 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
 
     }
 
+    @OnClick(R.id.youtube_tv_show)
+    public void onYouTubeTrainersClick() {
+
+        try {
+
+            TrailersActivity.goToActivity(this, tvShow.getName() + " " + DateTools.getOnlyYear(tvShow.getFirst_air_date()));
+
+        } catch (Exception e) {
+            try {
+
+                TrailersActivity.goToActivity(this, tvShow.getName());
+
+            } catch (Exception ee) {
+
+                Toast.makeText(this, getString(R.string.no_results), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
     //endregion
 
     void changeViewColor() {
