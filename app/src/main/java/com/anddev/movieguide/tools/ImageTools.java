@@ -15,6 +15,8 @@ public class ImageTools {
     public static final int DRAWABLE_FILM = R.drawable.ic_local_movies_black_24dp;
     public static final int DRAWABLE_FILM_WIDTH = R.drawable.ic_local_movies_black_48dp;
 
+    public static final int DRAWABLE_TV_SHOW = R.drawable.tv_button;
+
     public static final int DRAWABLE_PERSON = R.drawable.person;
 
     public static void getImageFromInternet(Activity activity, String url, ImageView imageView, int drawableError) {

@@ -59,7 +59,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowsV
         holder.titleTextView.setText(result.getName());
         holder.releaseDateTextView.setText(result.getFirst_air_date());
         holder.averageVoteTextView.setText(Double.toString(result.getVote_average()));
-        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_500px + result.getPoster_path(), holder.moviesImageView, ImageTools.DRAWABLE_PERSON);
+        ImageTools.getImageFromInternet(activity, ImageTools.IMAGE_PATH_500px + result.getPoster_path(), holder.moviesImageView, ImageTools.DRAWABLE_TV_SHOW);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
