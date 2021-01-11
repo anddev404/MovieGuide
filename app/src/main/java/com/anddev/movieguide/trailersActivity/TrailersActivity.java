@@ -21,7 +21,8 @@ import butterknife.ButterKnife;
 
 public class TrailersActivity extends AppCompatActivity {
 
-    public static final String YOUTUBE_SEARCH_LINK = "https://www.youtube.com/embed?listType=search&list=";
+    //public static final String YOUTUBE_SEARCH_LINK = "https://www.youtube.com/embed?listType=search&list=";
+    public static final String YOUTUBE_SEARCH_LINK = "https://www.youtube.com/results?search_query=";
     public static final String TRAILER_KEY = "trailers";
 
     public static void goToActivity(Activity actualActivity, String query) {
@@ -45,7 +46,7 @@ public class TrailersActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-       webView.setBackgroundColor(Color.TRANSPARENT);
+        webView.setBackgroundColor(Color.TRANSPARENT);
 
         try {
             if (getIntent().getExtras() != null) {
