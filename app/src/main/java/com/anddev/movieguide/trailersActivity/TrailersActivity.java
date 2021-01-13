@@ -21,7 +21,8 @@ import butterknife.ButterKnife;
 
 public class TrailersActivity extends AppCompatActivity {
 
-    public static final String YOUTUBE_SEARCH_LINK = "https://www.youtube.com/embed?listType=search&list=";
+    //public static final String YOUTUBE_SEARCH_LINK = "https://www.youtube.com/embed?listType=search&list=";
+    public static final String YOUTUBE_SEARCH_LINK = "https://www.youtube.com/results?search_query=";
     public static final String TRAILER_KEY = "trailers";
 
     public static void goToActivity(Activity actualActivity, String query) {
