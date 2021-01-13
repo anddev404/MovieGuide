@@ -18,7 +18,7 @@ import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.ResultsMovie;
-import com.anddev.movieguide.movieActivity.MovieActvity_;
+import com.anddev.movieguide.movieActivity.MovieActvity;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;
@@ -91,7 +91,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(activity, MovieActvity_.class);
+                Intent intent = new Intent(activity, MovieActvity.class);
                 intent.putExtra("Id", result.getId());
 
                 try {

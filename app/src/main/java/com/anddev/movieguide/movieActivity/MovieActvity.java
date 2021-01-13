@@ -5,6 +5,10 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,11 +45,6 @@ import com.anddev.movieguide.tools.RetrofitTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
 import com.anddev.movieguide.trailersActivity.TrailersActivity;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,7 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@EActivity(R.layout.activity_movie)
+
 public class MovieActvity extends AppCompatActivity implements DownloadManager.OnDownloadManagerListener, NetworkChangeReceiver.onSubmitListener {
 
     //region variables
@@ -130,8 +129,13 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     // endregion
 
     //region activity
-    @AfterViews
-    public void onCreate() {
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_movie);
+
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
@@ -268,108 +272,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         }
     }
 
-    //region download
-    @Background
-    void downloadMovieInBackground(ConnectionInterface client, Integer id, String apiKey, String language) {
-        try {
-
-            Call<Movie> call = client.movie(id, apiKey, language);
-
-            call.enqueue(new Callback<Movie>() {
-
-                @Override
-                public void onResponse(Call<Movie> call, Response<Movie> response) {
-
-                    if (response.code() == 200) {
-                        movie = response.body();
-                        ImageTools.getWideImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH);
-                        downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD);
-                        downloadManager.changeStateDownloadInProgress(false);
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(Call<Movie> call, Throwable t) {
-
-                    downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-                    downloadManager.changeStateDownloadInProgress(false);
-
-                }
-            });
-        } catch (Throwable e) {
-
-            downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_NOT_DOWNLOAD);
-            downloadManager.changeStateDownloadInProgress(false);
-
-        }
-
-    }
-
-    @Background
-    void downloadCreditsInBackground(ConnectionInterface client, Integer id, String apiKey) {
-        try {
-
-
-            Call<Credits> call = client.credits(id, apiKey);
-
-            call.enqueue(new Callback<Credits>() {
-
-                @Override
-                public void onResponse(Call<Credits> call, Response<Credits> response) {
-
-                    if (response.code() == 200) {
-
-                        credits = response.body();
-                        showCredits(credits);
-
-                    } else {
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<Credits> call, Throwable t) {
-                }
-            });
-        } catch (Throwable e) {
-        }
-
-    }
-
-    @Background
-    void downloadSimilarInBackground(ConnectionInterface client, Integer id, String apiKey, String language, Integer page) {
-        try {
-
-
-            Call<Movies> call = client.similarMovies(id, apiKey, language, page);
-
-            call.enqueue(new Callback<Movies>() {
-
-                @Override
-                public void onResponse(Call<Movies> call, Response<Movies> response) {
-
-                    if (response.code() == 200) {
-
-                        similarMovies = response.body();
-                        showSimilar(similarMovies);
-
-                    } else {
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<Movies> call, Throwable t) {
-                }
-            });
-        } catch (Throwable e) {
-        }
-
-    }
-    //endregion
-
     public String getPercentageFromDouble(Double d, int scale) {
         try {
 
@@ -383,7 +285,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         }
     }
 
-    @UiThread
     public void showDataOfMovie(Movie movie) {
         title.setText(movie.getTitle());
         oryginalTitle.setText(movie.getOriginal_title());
@@ -401,7 +302,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         }
     }
 
-    @UiThread
     public void showCredits(final Credits credits) {
 
         CreditsAdapter adapter = new CreditsAdapter(this, credits.getCast());
@@ -425,7 +325,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     }
 
-    @UiThread
     public void showSimilar(final Movies movies) {
 
         KnownForAdapter adapter = new KnownForAdapter(this, ModelConverter.moviesToListOfCast(movies));
@@ -489,13 +388,13 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
         downloadManager.changeStateDownloadInProgress(true);
 
-        downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this));
+        com.anddev.movieguide.movieActivity.Background.Companion.downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), downloadManager, this, poster);
 
         if (credits == null) {
-            downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY);
+            com.anddev.movieguide.movieActivity.Background.Companion.downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY, this);
         }
         if (similarMovies == null) {
-            downloadSimilarInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1);
+            com.anddev.movieguide.movieActivity.Background.Companion.downloadSimilarInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), 1, this);
         }
 
     }

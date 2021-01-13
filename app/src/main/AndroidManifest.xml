@@ -31,7 +31,7 @@
             android:name=".peopleActivity.PeopleActivity_"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
         <activity
-            android:name=".movieActivity.MovieActvity_"
+            android:name=".movieActivity.MovieActvity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:theme="@style/MyAppThemeNoActionBar" />
         <activity

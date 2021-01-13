@@ -13,11 +13,7 @@ import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Favourite;
-import com.anddev.movieguide.model.Movies;
-import com.anddev.movieguide.model.ResultsMovie;
 import com.anddev.movieguide.model.TvShows;
-import com.anddev.movieguide.movieActivity.MovieActvity_;
-import com.anddev.movieguide.moviesActivity.MoviesAdapter;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.FavouriteTools;
 import com.anddev.movieguide.tools.ImageTools;

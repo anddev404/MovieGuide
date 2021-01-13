@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Cast;
-import com.anddev.movieguide.movieActivity.MovieActvity_;
+import com.anddev.movieguide.movieActivity.MovieActvity;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.PaletteTools;
 import com.anddev.movieguide.tvShow.TvShowActivity_;
@@ -62,7 +62,7 @@ public class KnownForAdapter extends RecyclerView.Adapter<KnownForAdapter.CastVi
                     type = cast.getMedia_type();
 
                     if (type.equalsIgnoreCase("movie")) {
-                        Intent intent = new Intent(context, MovieActvity_.class);
+                        Intent intent = new Intent(context, MovieActvity.class);
                         intent.putExtra("Id", cast.getId());
                         try {
                             intent.putExtra("color", PaletteTools.getColorFromImageButton(holder.imageView, 0));

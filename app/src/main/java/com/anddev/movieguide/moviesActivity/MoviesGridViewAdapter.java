@@ -1,25 +1,16 @@
 package com.anddev.movieguide.moviesActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
-import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
-import com.anddev.movieguide.movieActivity.MovieActvity_;
+import com.anddev.movieguide.movieActivity.MovieActvity;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.PaletteTools;
 import com.squareup.picasso.Picasso;
@@ -53,7 +44,7 @@ public class MoviesGridViewAdapter extends RecyclerView.Adapter<MoviesGridViewAd
             holder.poster.getImageButton().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, MovieActvity_.class);
+                    Intent intent = new Intent(context, MovieActvity.class);
                     intent.putExtra("Id", moviesList.getResults().get(position).getId());
 
                     try {
