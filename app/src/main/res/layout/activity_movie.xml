@@ -81,6 +81,7 @@
                                     android:layout_marginBottom="@dimen/_10sdp"
                                     android:layout_weight="1"
                                     android:gravity="center"
+                                    android:text="@{movie.title}"
                                     android:textColor="@color/colorTextDark"
                                     android:textSize="@dimen/_20ssp"
                                     android:textStyle="bold"
@@ -125,6 +126,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginRight="@dimen/_8sdp"
                                         android:gravity="center"
+                                        android:text="@{movie.voteAverage}"
                                         android:textColor="@color/colorTextLight"
                                         android:textSize="@dimen/_18ssp"
                                         tools:text="@string/example_vote" />
@@ -142,6 +144,7 @@
                                         android:id="@+id/genres_movie_textView"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:text="@{movie.genres}"
                                         android:textColor="@color/colorTextLight"
                                         android:textSize="@dimen/_16ssp"
                                         tools:text="@string/example_genres" />
@@ -151,6 +154,7 @@
                                         style="@style/NormalDarkText"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:text="@{movie.releaseDate}"
                                         android:textColor="@color/colorTextLight"
                                         tools:text="@string/example_release_date" />
 
@@ -159,6 +163,7 @@
                                         style="@style/NormalDarkText"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:text="@{movie.runtime}"
                                         android:textColor="@color/colorTextLight"
                                         tools:text="@string/example_runtime" />
 
@@ -179,6 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_12sdp"
+                            android:text="@{movie.overview}"
                             tools:text="@string/example_overview" />
 
                         <TextView
@@ -233,6 +239,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_12sdp"
+                            android:text="@{movie.originalTitle}"
                             tools:text="@string/example_original_title_of_movie" />
 
                         <TextView
@@ -250,6 +257,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_12sdp"
+                            android:text="@{movie.productionCountries}"
                             tools:text="@string/example_prduction_countries" />
 
                         <TextView
