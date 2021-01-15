@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.KnownForAdapter;
+import com.anddev.movieguide.databinding.ActivityMovieBinding;
 import com.anddev.movieguide.model.Credits;
 import com.anddev.movieguide.model.Favourite;
 import com.anddev.movieguide.model.Movie;
@@ -57,6 +58,8 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
     //region variables
     Activity activity;
+    MovieViewModel viewModel;
+    ActivityMovieBinding binding;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
     NetworkChangeReceiver networkChangeReceiver;
@@ -88,30 +91,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @BindView(R.id.poster_movie_imageView)
     ImageView poster;
 
-    @BindView(R.id.title_movie_textView)
-    TextView title;
-
-    @BindView(R.id.oryginal_title_movie_textView)
-    TextView oryginalTitle;
-
-    @BindView(R.id.overview_movie_TextView)
-    TextView overview;
-
-    @BindView(R.id.vote_average_movie_textView)
-    TextView voteAverage;
-
-    @BindView(R.id.release_data_movie_textView)
-    TextView releaseData;
-
-    @BindView(R.id.genres_movie_textView)
-    TextView genres;
-
-    @BindView(R.id.runtime_movie_textView)
-    TextView runtime;
-
-    @BindView(R.id.production_countries_movie_textView)
-    TextView productionCountries;
-
     @BindView(R.id.credits_movie_recycler_view)
     RecyclerView creditsRecyclerView;
 
@@ -134,7 +113,11 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie);
+        //setContentView(R.layout.activity_movie);
+
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie);
+        viewModel = new MovieViewModel();
 
         activity = this;
         ButterKnife.bind(this);
@@ -286,14 +269,17 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     }
 
     public void showDataOfMovie(Movie movie) {
-        title.setText(movie.getTitle());
-        oryginalTitle.setText(movie.getOriginal_title());
-        overview.setText(movie.getOverview());
-        voteAverage.setText(getPercentageFromDouble(movie.getVote_average(), 10));
-        releaseData.setText(movie.getRelease_date());
-        genres.setText(movie.genresToString());
-        runtime.setText(movie.getRuntime() + " min.");
-        productionCountries.setText(movie.productionCountriesToString());
+
+        viewModel.setTitle(movie.getTitle());
+        viewModel.setOriginalTitle(movie.getOriginal_title());
+        viewModel.setOverview(movie.getOverview());
+        viewModel.setVoteAverage(getPercentageFromDouble(movie.getVote_average(), 10));
+        viewModel.setReleaseDate(movie.getRelease_date());
+        viewModel.setGenres(movie.genresToString());
+        viewModel.setRuntime(movie.getRuntime() + " min.");
+        viewModel.setProductionCountries(movie.productionCountriesToString());
+
+        binding.setMovie(viewModel);
 
         try {
             favouriteTools.manageFavouriteButton(favouriteFloatingActionButton, movieId, Favourite.FAVOURITE_MOVIE, movie.getTitle() + " " + DateTools.getOnlyYear(movie.getRelease_date()), "", Double.toString(movie.getVote_average()), movie.getPoster_path());
