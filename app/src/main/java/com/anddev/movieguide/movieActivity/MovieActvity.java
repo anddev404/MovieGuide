@@ -100,11 +100,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @BindView(R.id.movie_favourite_FloatingActionButton)
     FloatingActionButton favouriteFloatingActionButton;
 
-    @BindView(R.id.trainers_movie_activity_button)
-    Button trainersButton;
-
-    @BindView(R.id.youtube_movie)
-    ImageView youtubeTrainersButton;
     // endregion
 
     //region activity
