@@ -10,6 +10,7 @@ class MovieViewModel {
     var runtime: String = ""
     var productionCountries: String = ""
     var posterUrl: String = ""
+    var orienation = -1
 
 //    voteAverage.setText(getPercentageFromDouble(movie.getVote_average(), 10));
 //    runtime.setText(movie.getRuntime() + " min.");
