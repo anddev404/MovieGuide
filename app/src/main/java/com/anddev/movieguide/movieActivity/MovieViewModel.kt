@@ -1,5 +1,7 @@
 package com.anddev.movieguide.movieActivity
 
+import android.widget.LinearLayout
+
 class MovieViewModel {
     var title: String = ""
     var originalTitle: String = ""
@@ -10,7 +12,12 @@ class MovieViewModel {
     var runtime: String = ""
     var productionCountries: String = ""
     var posterUrl: String = ""
-    var orienation = -1
+    var orienation = LinearLayout.VERTICAL
+    var backgroundColor = -1
+    var backgroundAlpha1 = 255
+    var backgroundAlpha2 = 255
+    var backgroundAlpha3 = 255
+
 
 //    voteAverage.setText(getPercentageFromDouble(movie.getVote_average(), 10));
 //    runtime.setText(movie.getRuntime() + " min.");

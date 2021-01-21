@@ -81,15 +81,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @BindView(R.id.movie_activity_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.movie_linear_layout_1)
-    LinearLayout linearLayout1;
-
-    @BindView(R.id.movie_linear_layout_2)
-    LinearLayout linearLayout2;
-
-    @BindView(R.id.movie_linear_layout_3)
-    LinearLayout linearLayout3;
-
     @BindView(R.id.credits_movie_recycler_view)
     RecyclerView creditsRecyclerView;
 
@@ -181,9 +172,12 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         int orientation = activity.getResources().getConfiguration().orientation;
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
+            viewModel.setOrienation(LinearLayout.HORIZONTAL);
+            binding.setMovie(viewModel);
         } else {
-            linearLayout1.setOrientation(LinearLayout.VERTICAL);
+            viewModel.setOrienation(LinearLayout.VERTICAL);
+            binding.setMovie(viewModel);
+
         }
     }
 
@@ -195,14 +189,12 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
                 getSupportActionBar().setDisplayShowTitleEnabled(true);
 
-                linearLayout1.setBackgroundColor(color);
-                linearLayout1.getBackground().setAlpha(120);
+                viewModel.setBackgroundColor(color);
+                viewModel.setBackgroundAlpha1(120);
+                viewModel.setBackgroundAlpha2(180);
+                viewModel.setBackgroundAlpha3(60);
 
-                linearLayout2.setBackgroundColor(color);
-                linearLayout2.getBackground().setAlpha(180);
-
-                linearLayout3.setBackgroundColor(color);
-                linearLayout3.getBackground().setAlpha(60);
+                binding.setMovie(viewModel);
 
                 favouriteFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
 

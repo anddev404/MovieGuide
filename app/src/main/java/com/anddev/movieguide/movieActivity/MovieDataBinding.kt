@@ -2,6 +2,7 @@ package com.anddev.movieguide.movieActivity
 
 import android.databinding.BindingAdapter
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.anddev.movieguide.R
 import com.anddev.movieguide.tools.ImageTools
 import com.squareup.picasso.Picasso
@@ -21,6 +22,13 @@ class MovieDataBinding {
             }
 
         }
+
+        @BindingAdapter("color", "backgroundAlpha")
+        @JvmStatic
+        open fun setBackgroundColor(view: LinearLayout, color: Int, alpha: Int) {
+            view.setBackgroundColor(color)
+            view.getBackground().setAlpha(alpha)
+
         }
 
     }

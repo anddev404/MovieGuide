@@ -41,7 +41,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimaryDark"
-                        android:orientation="vertical">
+                        android:orientation="@{movie.orienation}"
+                        app:backgroundAlpha="@{movie.backgroundAlpha1}"
+                        app:color="@{movie.backgroundColor}">
 
 
                         <LinearLayout
@@ -119,7 +121,9 @@
                                 android:paddingTop="@dimen/_5sdp"
                                 android:paddingRight="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_5sdp"
-                                android:weightSum="10">
+                                android:weightSum="10"
+                                app:backgroundAlpha="@{movie.backgroundAlpha2}"
+                                app:color="@{movie.backgroundColor}">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -182,7 +186,9 @@
                         android:id="@+id/movie_linear_layout_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        app:backgroundAlpha="@{movie.backgroundAlpha3}"
+                        app:color="@{movie.backgroundColor}">
 
                         <TextView
                             android:id="@+id/overview_movie_TextView"
