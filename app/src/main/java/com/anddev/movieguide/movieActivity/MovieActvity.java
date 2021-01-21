@@ -90,9 +90,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @BindView(R.id.movie_linear_layout_3)
     LinearLayout linearLayout3;
 
-    @BindView(R.id.poster_movie_imageView)
-    ImageView poster;
-
     @BindView(R.id.credits_movie_recycler_view)
     RecyclerView creditsRecyclerView;
 
@@ -238,6 +235,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
         viewModel.setGenres(movie.genresToString());
         viewModel.setRuntime(movie.getRuntime() + " min.");
         viewModel.setProductionCountries(movie.productionCountriesToString());
+        viewModel.setPosterUrl(ImageTools.IMAGE_PATH_ORYGINAL + movie.getBackdrop_path());
 
         binding.setMovie(viewModel);
 
@@ -334,7 +332,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
         downloadManager.changeStateDownloadInProgress(true);
 
-        com.anddev.movieguide.movieActivity.Background.Companion.downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), downloadManager, this, poster);
+        com.anddev.movieguide.movieActivity.Background.Companion.downloadMovieInBackground(client, movieId, RetrofitTools.API_KEY, LanguageTools.getLanguage(this), downloadManager, this);
 
         if (credits == null) {
             com.anddev.movieguide.movieActivity.Background.Companion.downloadCreditsInBackground(client, movieId, RetrofitTools.API_KEY, this);

@@ -18,7 +18,7 @@ import retrofit2.Response
 
 open class Background() {
     companion object {
-        fun downloadMovieInBackground(client: ConnectionInterface, id: Int, apiKey: String, language: String, downloadManager: DownloadManager, activity: MovieActvity, poster: ImageView) {
+        fun downloadMovieInBackground(client: ConnectionInterface, id: Int, apiKey: String, language: String, downloadManager: DownloadManager, activity: MovieActvity) {
             runBlocking {
                 joinAll(
                         async {
@@ -31,7 +31,6 @@ open class Background() {
                                                 override fun onResponse(call: Call<Movie?>, response: Response<Movie?>) {
                                                     if (response.code() == 200) {
                                                         activity.movie = response.body()
-                                                        ImageTools.getWideImageFromInternet(activity, ImageTools.IMAGE_PATH_ORYGINAL + activity.movie.getBackdrop_path(), poster, ImageTools.DRAWABLE_FILM_WIDTH)
                                                         downloadManager.changeStateDataDownload(DownloadManager.DATA_IS_DOWNLOAD)
                                                         downloadManager.changeStateDownloadInProgress(false)
                                                     }

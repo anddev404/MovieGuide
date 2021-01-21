@@ -58,6 +58,7 @@
                                 android:adjustViewBounds="true"
                                 android:background="@null"
                                 android:scaleType="fitXY"
+                                app:imageUrl="@{movie.posterUrl}"
                                 tools:src="@tools:sample/backgrounds/scenic[]" />
 
                         </LinearLayout>
