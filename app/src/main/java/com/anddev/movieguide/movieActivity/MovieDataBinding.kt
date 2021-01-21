@@ -11,12 +11,16 @@ class MovieDataBinding {
     companion object {
         @BindingAdapter("imageUrl")
         @JvmStatic
-        open fun loadImage(view: ImageView, imageUrl: String?) {
-            Picasso.with(view.getContext())
-                    .load(imageUrl)
-                    .placeholder(view.getContext().getResources().getDrawable(R.drawable.ic_file_download_black_48dp))
-                    .error(view.getContext().getResources().getDrawable(ImageTools.DRAWABLE_FILM_WIDTH))
-                    .into(view)
+        open fun loadImage(view: ImageView, imageUrl: String) {
+            if (imageUrl.isNotEmpty()) {
+                Picasso.with(view.getContext())
+                        .load(imageUrl)
+                        .placeholder(view.getContext().getResources().getDrawable(R.drawable.ic_file_download_black_48dp))
+                        .error(view.getContext().getResources().getDrawable(ImageTools.DRAWABLE_FILM_WIDTH))
+                        .into(view)
+            }
+
+        }
         }
 
     }
