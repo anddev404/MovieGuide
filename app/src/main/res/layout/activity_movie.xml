@@ -8,6 +8,10 @@
         <variable
             name="movie"
             type="com.anddev.movieguide.movieActivity.MovieViewModel" />
+
+        <variable
+            name="handler"
+            type="com.anddev.movieguide.movieActivity.MovieActivityHandler" />
     </data>
 
     <android.support.v4.widget.DrawerLayout
@@ -94,11 +98,12 @@
                                     android:layout_gravity="center_vertical"
                                     android:adjustViewBounds="true"
                                     android:background="@null"
+                                    android:onClick="@{()->handler.youtubeOnClick()}"
                                     android:scaleType="fitXY"
                                     android:src="@mipmap/youtube_icon">
 
                                 </ImageView>
-
+                                <!--                                    android:onClick="@{()->movie.onClickYoutube()}"-->
                             </LinearLayout>
 
 
@@ -274,6 +279,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
+                            android:onClick="@{()->handler.youtubeOnClick()}"
                             android:padding="@dimen/_12sdp"
                             android:text="@string/show_trailers"
                             android:textColor="@color/colorTextDark" />

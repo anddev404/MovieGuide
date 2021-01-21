@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -59,6 +60,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     //region variables
     Activity activity;
     MovieViewModel viewModel;
+    MovieActivityHandler handler;
     ActivityMovieBinding binding;
     NavigationDrawerTools navigationDrawer;
     ActionBarTools actionBarTools;
@@ -112,8 +114,9 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie);
+        handler = new MovieActivityHandler(this);
         viewModel = new MovieViewModel();
-
+        binding.setHandler(handler);
         activity = this;
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
@@ -184,44 +187,6 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
             linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
         } else {
             linearLayout1.setOrientation(LinearLayout.VERTICAL);
-        }
-    }
-
-    @OnClick(R.id.trainers_movie_activity_button)
-    public void onTrainersClick() {
-
-        try {
-
-            TrailersActivity.goToActivity(this, movie.getTitle() + " " + DateTools.getOnlyYear(movie.getRelease_date()));
-
-        } catch (Exception e) {
-            try {
-
-                TrailersActivity.goToActivity(this, movie.getTitle());
-
-            } catch (Exception ee) {
-
-                Toast.makeText(this, getString(R.string.no_results), Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @OnClick(R.id.youtube_movie)
-    public void onYoutubeTrainersClick() {
-
-        try {
-
-            TrailersActivity.goToActivity(this, movie.getTitle() + " " + DateTools.getOnlyYear(movie.getRelease_date()));
-
-        } catch (Exception e) {
-            try {
-
-                TrailersActivity.goToActivity(this, movie.getTitle());
-
-            } catch (Exception ee) {
-
-                Toast.makeText(this, getString(R.string.no_results), Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
