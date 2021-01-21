@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'
 
 android {
     gradle.projectsEvaluated {
@@ -59,7 +59,7 @@ dependencies {
 
 dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
 }
 
 dependencies {
@@ -73,7 +73,7 @@ dependencies {
 }
 def AAVersion = '4.6.0'
 dependencies {
-    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
+    kapt "org.androidannotations:androidannotations:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
 //    kapt 'org.androidannotations:androidannotations:4.3.1'
 //    implementation 'org.androidannotations:androidannotations-api:4.3.1'
