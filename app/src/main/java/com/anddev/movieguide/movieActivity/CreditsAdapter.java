@@ -44,7 +44,15 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsV
         Credits.Cast credits = creditstList.get(position);
 
         if (credits.getCharacter() != null) {
-            holder.description.setText("" + credits.getCharacter());
+            if (credits.getName() != null) {
+                holder.description.setText("" + credits.getName() + "\n(" + credits.getCharacter() + ")");
+            } else {
+                holder.description.setText("(" + credits.getCharacter() + ")");
+            }
+        } else {
+            if (credits.getName() != null) {
+                holder.description.setText("" + credits.getName());
+            }
         }
         ImageTools.getImageFromInternet(context, ImageTools.IMAGE_PATH_500px + credits.getProfile_path(), holder.imageView, ImageTools.DRAWABLE_PERSON);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
