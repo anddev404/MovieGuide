@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.databinding.FragmentMoviesBinding;
 import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.tools.ActionBarTools;
@@ -22,6 +23,26 @@ import butterknife.ButterKnife;
 
 public class MoviesFragment extends Fragment {
 
+    FragmentMoviesBinding binding;
+    FragmentViewModel viewmodel;
+    //rootView = inflater.inflate(R.layout.fragment_movies, container, false);
+//    binding =FragmentMoviesBinding.inflate(inflater,container,false);
+//    rootView =binding.getRoot();
+
+
+    //    W onBindViewHolder
+//    holder.binduj(listViewModel.get(position));
+//    w holderze – odbieramy klasę bindująca a nie view
+////view pobieramy metadą getRoot jeśli potrzeba utworzyć jakiś widok
+//  public CreditsViewHolder(RowKnownForBinding itemView) {
+//        super(itemView.getRoot());// get root zwroci view
+//        //zamiast javowego "super' w kotlinie takie coś ": RecyclerView.ViewHolder(binding.root) {"
+//
+//        imageView = itemView.findViewById(R.id.row_known_for_imageView);//niepotrzebne juz
+//        void binduj(CastItemViewModel ccc) {
+//            binding.setItem(ccc);//generowana metoda z xmla
+//            binding.executePendingBindings();//
+//... koniec view holdera
     View rootView;
     Activity activity;
     Movies movies;
@@ -37,7 +58,13 @@ public class MoviesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_movies, container, false);
+        //rootView = inflater.inflate(R.layout.fragment_movies, container, false);
+        binding = FragmentMoviesBinding.inflate(inflater, container, false);
+        rootView = binding.getRoot();
+        viewmodel = new FragmentViewModel("Hejjjj");
+        binding.setFragment(viewmodel);
+
+
         activity = getActivity();
         ButterKnife.bind(this, rootView);
         PreferenceTools.initializePreferenceLibrary(activity);
