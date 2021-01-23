@@ -11,31 +11,46 @@ import android.widget.TextView;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.actorActivity.ActorActivity_;
+import com.anddev.movieguide.databinding.RowKnownForBinding;
 import com.anddev.movieguide.model.Cast;
 import com.anddev.movieguide.model.Credits;
 import com.anddev.movieguide.tools.ImageTools;
 import com.anddev.movieguide.tools.PaletteTools;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsViewHolder> {
 
     private Activity context;
+    private List<CreditItemViewModel> listViewModel;
 
     private List<Credits.Cast> creditstList;
 
     public CreditsAdapter(Activity context, List<Credits.Cast> creditstList) {
         this.context = context;
         this.creditstList = creditstList;
+
+
+        listViewModel = new ArrayList<>();
+        for (Credits.Cast c : creditstList) {
+            listViewModel.add(new CreditItemViewModel(c.getName() + " - " + c.getId()));
+
+        }
+
+
     }
+
+    RowKnownForBinding binding;
 
     @Override
     public CreditsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.row_known_for, parent, false);
-
-        return new CreditsViewHolder(view);
+        // View view = inflater.inflate(R.layout.row_known_for, parent, false);
+        binding = RowKnownForBinding.inflate(inflater);// RowKnownForBinding to generowana klasa na podstawie nazwy layoutu
+//    return new CreditsViewHolder(binding);//przesłanie dla holdera wygenerowanej klasy bindującej a nie view-a
+        return new CreditsViewHolder(binding);
     }
 
     @Override
@@ -43,17 +58,8 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsV
 
         Credits.Cast credits = creditstList.get(position);
 
-        if (credits.getCharacter() != null) {
-            if (credits.getName() != null) {
-                holder.description.setText("" + credits.getName() + "\n(" + credits.getCharacter() + ")");
-            } else {
-                holder.description.setText("(" + credits.getCharacter() + ")");
-            }
-        } else {
-            if (credits.getName() != null) {
-                holder.description.setText("" + credits.getName());
-            }
-        }
+        holder.binduj(listViewModel.get(position));
+
         ImageTools.getImageFromInternet(context, ImageTools.IMAGE_PATH_500px + credits.getProfile_path(), holder.imageView, ImageTools.DRAWABLE_PERSON);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,14 +88,17 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsV
     class CreditsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView description;
 
-        public CreditsViewHolder(View itemView) {
-            super(itemView);
+        public CreditsViewHolder(RowKnownForBinding itemView) {
+            super(itemView.getRoot());
 
-            imageView = itemView.findViewById(R.id.row_known_for_imageView);
-            description = itemView.findViewById(R.id.row_known_for_description);
+            imageView = itemView.getRoot().findViewById(R.id.row_known_for_imageView);
 
+        }
+
+        void binduj(CreditItemViewModel ccc) {
+            binding.setItem(ccc);//generowana metoda z xmla
+            binding.executePendingBindings();//
         }
     }
 }
