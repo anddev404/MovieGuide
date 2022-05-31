@@ -64,7 +64,12 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsV
                 context.startActivity(intent);
             }
         });
-
+        holder.description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.imageView.performClick();
+            }
+        });
     }
 
 

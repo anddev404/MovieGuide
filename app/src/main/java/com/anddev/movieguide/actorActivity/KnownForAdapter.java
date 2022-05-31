@@ -86,7 +86,12 @@ public class KnownForAdapter extends RecyclerView.Adapter<KnownForAdapter.CastVi
                 }
             }
         });
-
+        holder.description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.imageView.performClick();
+            }
+        });
     }
 
 
