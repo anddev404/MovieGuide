@@ -46,6 +46,9 @@ public class CreditsAdapter extends RecyclerView.Adapter<CreditsAdapter.CreditsV
         if (credits.getCharacter() != null) {
             holder.description.setText("" + credits.getCharacter());
         }
+        if (credits.getName() != null) {
+            holder.description.setText(holder.description.getText() + "\n(" + credits.getName() + ")");
+        }
         ImageTools.getImageFromInternet(context, ImageTools.IMAGE_PATH_500px + credits.getProfile_path(), holder.imageView, ImageTools.DRAWABLE_PERSON);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
