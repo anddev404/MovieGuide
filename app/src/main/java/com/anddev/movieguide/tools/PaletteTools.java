@@ -2,7 +2,7 @@ package com.anddev.movieguide.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.graphics.Palette;
+import androidx.palette.graphics.Palette;
 import android.widget.ImageView;
 import android.widget.TextView;
 

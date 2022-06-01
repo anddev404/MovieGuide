@@ -2,22 +2,14 @@ package com.anddev.movieguide.moviesActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
-import com.anddev.movieguide.model.Genre;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.movieActivity.MovieActvity_;
 import com.anddev.movieguide.tools.ImageTools;

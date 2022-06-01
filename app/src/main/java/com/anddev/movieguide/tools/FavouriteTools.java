@@ -1,7 +1,7 @@
 package com.anddev.movieguide.tools;
 
 import android.app.Activity;
-import android.support.design.widget.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;

@@ -3,12 +3,11 @@ package com.anddev.movieguide.tvShows;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.res.Configuration;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Genre;
@@ -29,7 +28,6 @@ import com.anddev.movieguide.tools.UpdateDownloader;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
 
 import retrofit2.Call;
 import retrofit2.Callback;

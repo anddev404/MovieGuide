@@ -3,22 +3,19 @@ package com.anddev.movieguide.searchEngineActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.model.PopularPeople;
-import com.anddev.movieguide.model.TvShow;
 import com.anddev.movieguide.model.TvShows;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.peopleActivity.PeopleFragment;
@@ -38,7 +35,6 @@ import com.anddev.movieguide.tvShows.TvShowsFragment;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
 
 import butterknife.ButterKnife;
 import retrofit2.Call;

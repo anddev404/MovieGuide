@@ -1,11 +1,7 @@
 package com.anddev.movieguide;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.anddev.movieguide.actorActivity.ActorActivity_;
-import com.anddev.movieguide.model.Actor;
 
 public class MainActivity extends AppCompatActivity {
 

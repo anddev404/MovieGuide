@@ -3,7 +3,7 @@ package com.anddev.movieguide.tools;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 import android.view.Window;
 import android.view.WindowManager;
 

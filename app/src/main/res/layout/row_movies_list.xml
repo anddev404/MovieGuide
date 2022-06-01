@@ -74,7 +74,7 @@
                 android:textSize="@dimen/_11ssp"
                 tools:text="@string/example_release_date" />
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -130,7 +130,7 @@
                     app:layout_constraintTop_toTopOf="@id/row_average_vote_date_movies_list_textView"
                     app:srcCompat="@mipmap/star_big_off" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

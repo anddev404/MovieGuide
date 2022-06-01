@@ -2,7 +2,7 @@ package com.anddev.movieguide.tools;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -11,11 +11,9 @@ import com.anddev.movieguide.R;
 import com.anddev.movieguide.favouriteActivity.FavouriteActivity_;
 import com.anddev.movieguide.moviesActivity.MoviesActivity_;
 import com.anddev.movieguide.peopleActivity.PeopleActivity_;
-import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity_;
 import com.anddev.movieguide.tvShows.TvShowsActivity_;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
