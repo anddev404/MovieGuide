@@ -46,7 +46,6 @@
         <activity
             android:name=".actorActivity.ActorActivity_"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
