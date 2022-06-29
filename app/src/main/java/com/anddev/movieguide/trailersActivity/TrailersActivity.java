@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.anddev.movieguide.R;
+import com.anddev.movieguide.tools.BackStackManager;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -41,6 +42,7 @@ public class TrailersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trailers);
 
         ButterKnife.bind(this);
+        BackStackManager.getInstance().addActivity(this);
 
         getSupportActionBar().hide();
 

@@ -22,6 +22,7 @@ import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.searchEngineActivity.TabsPagerAdapter;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.BackStackManager;
 import com.anddev.movieguide.tools.ModelConverter;
 import com.anddev.movieguide.tools.NavigationDrawerTools;
 import com.anddev.movieguide.tools.StatusBarAndSoftKey;
@@ -57,6 +58,7 @@ public class FavouriteActivity extends AppCompatActivity implements ActionBar.Ta
     @AfterViews
     public void onCreate() {
         activity = this;
+        BackStackManager.getInstance().addActivity(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.favourite_navigation_draver).setOtherColorForFavouriteButton();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(getString(R.string.favourite)).addTabsToView(TabsPagerAdapter.getTabs(), this);
         StatusBarAndSoftKey.changeColor(this);

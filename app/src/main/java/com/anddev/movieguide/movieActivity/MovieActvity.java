@@ -26,6 +26,7 @@ import com.anddev.movieguide.model.Movie;
 import com.anddev.movieguide.model.Movies;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.BackStackManager;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.DownloadManager;
@@ -132,6 +133,7 @@ public class MovieActvity extends AppCompatActivity implements DownloadManager.O
     @AfterViews
     public void onCreate() {
         activity = this;
+        BackStackManager.getInstance().addActivity(this);
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.movie_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this, toolbar).addMenuButton().setTitle("");

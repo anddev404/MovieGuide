@@ -20,6 +20,7 @@ import com.anddev.movieguide.model.TvShows;
 import com.anddev.movieguide.moviesActivity.MoviesFragment;
 import com.anddev.movieguide.peopleActivity.PeopleFragment;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.BackStackManager;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DownloadManager;
 import com.anddev.movieguide.tools.InternetTools;
@@ -73,6 +74,7 @@ public class SearchEngineActivity extends AppCompatActivity implements DownloadM
     @AfterViews
     public void onCreate() {
         activity = this;
+        BackStackManager.getInstance().addActivity(this);
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.search_engine_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this).addMenuButton().setTitle(MyApplication.getStringFromResource(R.string.search_results)).addTabsToView(TabsPagerAdapter.getTabs(), this);

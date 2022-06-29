@@ -12,6 +12,7 @@ import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.PopularPeople;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.BackStackManager;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.InternetTools;
 import com.anddev.movieguide.tools.LanguageTools;
@@ -51,6 +52,7 @@ public class PeopleActivity extends AppCompatActivity implements NetworkChangeRe
     public void onCreate() {
 
         activity = this;
+        BackStackManager.getInstance().addActivity(this);
         ButterKnife.bind(this);
 
         navigationDrawer = new NavigationDrawerTools(activity, R.id.people_navigation_draver).setOtherColorForPeopleButton();

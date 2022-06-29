@@ -27,6 +27,7 @@ import com.anddev.movieguide.model.TvShows;
 import com.anddev.movieguide.movieActivity.CreditsAdapter;
 import com.anddev.movieguide.searchEngineActivity.SearchEngineActivity;
 import com.anddev.movieguide.tools.ActionBarTools;
+import com.anddev.movieguide.tools.BackStackManager;
 import com.anddev.movieguide.tools.ConnectionInterface;
 import com.anddev.movieguide.tools.DateTools;
 import com.anddev.movieguide.tools.DownloadManager;
@@ -131,6 +132,7 @@ public class TvShowActivity extends AppCompatActivity implements DownloadManager
     @AfterViews
     public void onCreate() {
         this.activity = this;
+        BackStackManager.getInstance().addActivity(this);
         ButterKnife.bind(this);
         navigationDrawer = new NavigationDrawerTools(activity, R.id.tv_show_navigation_draver).setNormalColorForAllButtons();
         actionBarTools = new ActionBarTools(this, toolbar).addMenuButton().setTitle("");
