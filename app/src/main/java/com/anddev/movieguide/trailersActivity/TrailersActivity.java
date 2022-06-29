@@ -3,12 +3,13 @@ package com.anddev.movieguide.trailersActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.tools.BackStackManager;

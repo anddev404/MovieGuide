@@ -3,11 +3,12 @@ package com.anddev.movieguide.tvShows;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.res.Configuration;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.Genre;

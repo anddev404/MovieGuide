@@ -3,10 +3,11 @@ package com.anddev.movieguide.peopleActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.res.Configuration;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.anddev.movieguide.R;
 import com.anddev.movieguide.model.PopularPeople;
