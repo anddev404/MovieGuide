@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Movie Guide</string>
+    <string name="search_hint">Szukaj: filmy, aktorzy...</string>
+
+    <string name="movies">Filmy</string>
+    <string name="people">Ludzie</string>
+    <string name="tv_shows">Tv</string>
+    <string name="actor">Aktor</string>
+    <string name="movie">Film</string>
+    <string name="search_results">Wyniki wyszukiwania</string>
+    <string name="favourite">Ulubione</string>
+    <string name="tv_show">Tv Show</string>
+
+    <string name="popular_movies">Popularne</string>
+    <string name="top_rated_movies">Najwyżej Oceniane</string>
+    <string name="upcoming_movies">Nadchodzące</string>
+    <string name="now_playing_movies">Teraz Grane</string>
+
+    <string name="popular_tv_shows">Popularne</string>
+    <string name="top_rated_tv_shows">Najwyżej Oceniane</string>
+    <string name="on_the_air_tv_shows">On The Air</string>
+    <string name="airing_tv_shows">Airing</string>
+
+    <string name="Actor">Aktor</string>
+    <string name="images">Zdjęcia:</string>
+    <string name="known_for">Znany z:</string>
+
+    <string name="place_of_birth">Miejsce Urodzenia:</string>
+    <string name="birth_date">Data Urodzenia:</string>
+    <string name="years_old">lat</string>
+
+    <string name="movies_navigation_drawer">Filmy</string>
+    <string name="tv_shows_navigation_drawer">Tv</string>
+    <string name="people_navigation_drawer">Ludzie</string>
+    <string name="favourite_navigation_drawer">Ulubione</string>
+    <string name="options_navigation_drawer">Opcje</string>
+    <string name="privacy_policy_navigation_drawer">Polityka Prywatności</string>
+    <string name="contact_developer_navigation_drawer">Kontakt</string>
+    <string name="available_soon_navigation_drawer">Opcja dostępna wkrótce</string>
+
+    <string name="cast">Obsada:</string>
+    <string name="similar">Podobne:</string>
+    <string name="original_title">Oryginalny Tytuł:</string>
+    <string name="production_country">Kraje:</string>
+    <string name="production_companies">Wytwórnie Filmowe:</string>
+    <string name="trailers">Zwiastuny filmu:</string>
+    <string name="show_trailers">Pokaż</string>
+    <string name="no_results">Brak wyników</string>
+
+    <string name="turn_on_the_internet">Włącz Internet</string>
+    <string name="no_internet_connection">Brak połączenia z internetem</string>
+    <string name="settings">Ustawienia</string>
+    <string name="cancel">Anuluj</string>
+
+    <string name="normal_view">widok normalny</string>
+    <string name="grid1_view">jedna kolumna</string>
+    <string name="grid2_view">dwie kolumny</string>
+    <string name="grid3_view">trzy kolumny</string>
+    <string name="grid4_view">cztery kolumny</string>
+
+</resources>

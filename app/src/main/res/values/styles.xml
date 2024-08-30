@@ -1,0 +1,65 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarTabTextStyle">@style/actionBarTabText</item>
+    </style>
+
+    <style name="actionBarTabText" parent="@android:style/Widget.Holo.Light.ActionBar.TabText">
+        <item name="android:textSize">@dimen/_9ssp</item>
+    </style>
+
+    <style name="MyAppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="NormalDarkText">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/colorTextDark</item>
+    </style>
+
+    <style name="NormalLightText">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+    </style>
+
+    <style name="NormalLightBoldText">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NormalDarktBoldText">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColor">@color/colorTextDark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LargeDarkText">
+        <item name="android:textSize">@dimen/_16ssp</item>
+        <item name="android:textColor">@color/colorTextDark</item>
+    </style>
+
+    <style name="LargeLightText">
+        <item name="android:textSize">@dimen/_16ssp</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="ImageActor">
+        <item name="android:layout_width">@dimen/_150sdp</item>
+        <item name="android:layout_height">@dimen/_190sdp</item>
+    </style>
+
+    <style name="ImageRecyclerView">
+        <item name="android:layout_width">@dimen/_150sdp</item>
+        <item name="android:layout_height">@dimen/_190sdp</item>
+    </style>
+
+</resources>

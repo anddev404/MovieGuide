@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/choose_view_button"
+        android:icon="@drawable/choose_view_button"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/row_action_bar"
+                android:icon="@drawable/normal_view_button"
+                android:title="@string/normal_view"
+                app:showAsAction="never|withText" />
+
+            <item
+                android:id="@+id/grid_view_1_action_bar"
+                android:icon="@drawable/grid1_view_button"
+                android:title="@string/grid1_view"
+                app:showAsAction="never|withText" />
+
+            <item
+                android:id="@+id/grid_view_2_action_bar"
+                android:icon="@drawable/grid2_view_button"
+                android:title="@string/grid2_view"
+                app:showAsAction="never|withText" />
+
+            <item
+                android:id="@+id/grid_view_3_action_bar"
+                android:icon="@drawable/grid3_view_button"
+                android:title="@string/grid3_view"
+                app:showAsAction="never|withText" />
+
+            <item
+                android:id="@+id/grid_view_4_action_bar"
+                android:icon="@drawable/grid4_view_button"
+                android:title="@string/grid4_view"
+                app:showAsAction="never|withText" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/ic_search_button"
+        android:title="Search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+
+</menu>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/people_navigation_draver"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".peopleActivity.PeopleActivity">
+
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <fragment
+                android:id="@+id/fragment_people"
+                android:name="com.anddev.movieguide.peopleActivity.PeopleFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></fragment>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <include layout="@layout/navigation_drawer" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageButton
+        android:id="@+id/custom_view_imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        tools:ignore="MissingConstraints"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/custom_view_text_view"
+        android:layout_alignBottom="@id/custom_view_imageButton"
+        android:background="#aaffffff"
+        android:backgroundTint="@color/colorPrimaryDark">
+
+    </View>
+
+    <TextView
+        android:id="@+id/custom_view_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/custom_view_imageButton"
+        android:gravity="center"
+        android:lines="3"
+        android:padding="@dimen/_4sdp"
+        android:text="TextView1\nTextView2\nTextView3\nTextView4\n"
+        android:textColor="@color/colorTextLight"
+        android:textSize="@dimen/_11ssp" />
+
+</RelativeLayout>

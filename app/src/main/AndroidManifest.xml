@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.anddev.movieguide">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".tools.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon_new"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/icon_new_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".trailersActivity.TrailersActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
+        <activity
+            android:name=".tvShows.TvShowsActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
+        <activity
+            android:name=".favouriteActivity.FavouriteActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
+        <activity
+            android:name=".tvShow.TvShowActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:theme="@style/MyAppThemeNoActionBar" />
+        <activity android:name=".searchEngineActivity.SearchEngineActivity_" />
+        <activity
+            android:name=".peopleActivity.PeopleActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
+        <activity
+            android:name=".movieActivity.MovieActvity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:theme="@style/MyAppThemeNoActionBar" />
+        <activity
+            android:name=".moviesActivity.MoviesActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".actorActivity.ActorActivity_"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout" />
+    </application>
+
+</manifest>

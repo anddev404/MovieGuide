@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actor_navigation_draver"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".actorActivity.ActorActivity">
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/actor_linear_layout_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
+                        android:orientation="vertical"
+                        android:paddingTop="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/_10sdp">
+
+                            <ImageView
+                                android:id="@+id/imageViewActor"
+                                style="@style/ImageActor"
+                                tools:srcCompat="@drawable/person" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:id="@+id/nameTextView"
+                                        style="@style/LargeLightText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:paddingBottom="10dp"
+
+                                        tools:text="@string/example_name" />
+
+                                    <TextView
+                                        android:id="@+id/age"
+                                        style="@style/NormalDarkText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        tools:text="@string/example_years_old" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                android:orientation="vertical">
+
+
+                                <LinearLayout
+                                    android:id="@+id/actor_linear_layout_2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimary"
+                                    android:orientation="horizontal"
+                                    android:padding="10dp"
+
+                                    android:weightSum="10">
+
+                                    <TextView
+                                        android:id="@+id/textView"
+                                        style="@style/NormalLightText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="@string/place_of_birth"
+                                        android:textColor="@color/colorTextLight" />
+
+                                    <TextView
+                                        android:id="@+id/place_of_birth_textView"
+                                        style="@style/NormalDarkText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:textColor="@color/colorTextLight"
+                                        tools:text="@string/example_place_of_birdth" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/actor_linear_layout_3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimary"
+                                    android:orientation="horizontal"
+                                    android:padding="10dp"
+                                    android:weightSum="10">
+
+
+                                    <TextView
+                                        android:id="@+id/textView2"
+                                        style="@style/NormalLightText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="@string/birth_date"
+                                        android:textColor="@color/colorTextLight" />
+
+                                    <TextView
+                                        android:id="@+id/birthdayTextView"
+                                        style="@style/NormalDarkText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:textColor="@color/colorTextLight"
+                                        tools:text="@string/example_birthdate" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/actor_linear_layout_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_10sdp">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            style="@style/NormalLightBoldText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingTop="0dp"
+                            android:text="@string/images" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/images_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:scrollbars="vertical" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            style="@style/NormalLightBoldText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_4sdp"
+                            android:text="@string/known_for" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/known_for_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:scrollbars="vertical" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/full_screen_images_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/actor_favourite_FloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/_16sdp"
+                android:background="@color/colorPrimaryLight"
+                android:clickable="true"
+                android:src="@mipmap/star_big_off"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabSize="mini" />
+
+        </FrameLayout>
+    </FrameLayout>
+
+    <include layout="@layout/navigation_drawer" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

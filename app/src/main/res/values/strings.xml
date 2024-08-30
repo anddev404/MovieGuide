@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Movie Guide</string>
+    <string name="search_hint">Search: film, actor...</string>
+
+    <string name="movies">Movies</string>
+    <string name="people">People</string>
+    <string name="tv_shows">Tv Shows</string>
+    <string name="actor">Actor</string>
+    <string name="movie">Movie</string>
+    <string name="search_results">Search Results</string>
+    <string name="favourite">Favourite</string>
+    <string name="tv_show">Tv Show</string>
+
+    <string name="popular_movies">Popular</string>
+    <string name="top_rated_movies">Top Rated</string>
+    <string name="upcoming_movies">Upcoming</string>
+    <string name="now_playing_movies">Now Playing</string>
+
+    <string name="popular_tv_shows">Popular</string>
+    <string name="top_rated_tv_shows">Top Rated</string>
+    <string name="on_the_air_tv_shows">On The Air</string>
+    <string name="airing_tv_shows">Airing</string>
+
+    <string name="Actor">Actor</string>
+    <string name="images">Images:</string>
+    <string name="known_for">Known for:</string>
+
+    <string name="place_of_birth">Place of birth:</string>
+    <string name="birth_date">Birthdate:</string>
+    <string name="years_old">years old</string>
+
+    <string name="movies_navigation_drawer">Movies</string>
+    <string name="tv_shows_navigation_drawer">Tv Shows</string>
+    <string name="people_navigation_drawer">People</string>
+    <string name="favourite_navigation_drawer">Favourite</string>
+    <string name="options_navigation_drawer">Options</string>
+    <string name="privacy_policy_navigation_drawer">Privacy Policy</string>
+    <string name="contact_developer_navigation_drawer">Contact Developer</string>
+    <string name="available_soon_navigation_drawer">Available Soon</string>
+
+    <string name="cast">Cast:</string>
+    <string name="similar">Similar:</string>
+    <string name="original_title">Original Title:</string>
+    <string name="production_country">Production Countries:</string>
+    <string name="production_companies">Production Companies:</string>
+    <string name="trailers">Trailers:</string>
+    <string name="show_trailers">Show</string>
+    <string name="no_results">No results</string>
+
+    <string name="turn_on_the_internet">Turn On the Internet Connection</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="settings">Settings</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="normal_view">normal view</string>
+    <string name="grid1_view">one column</string>
+    <string name="grid2_view">two columns</string>
+    <string name="grid3_view">three columns</string>
+    <string name="grid4_view">four columns</string>
+
+</resources>

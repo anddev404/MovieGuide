@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="example_name">Vanesa Romero</string>
+    <string name="example_place_of_birdth">Aliciante, Spain</string>
+    <string name="example_birthdate">1978-06-04</string>
+    <string name="example_years_old">41 years old</string>
+
+    <string name="example_movies">9 meses</string>
+
+    <string name="example_original_title_of_movie">Terminator: Dark Fate</string>
+    <string name="example_translated_title_of_movie">Terminator: Mroczne przeznaczenie</string>
+    <string name="example_overview">    Decades after Sarah Connor prevented Judgment Day, a lethal new Terminator is sent to eliminate the future leader of the resistance. In a fight to save mankind, battle-hardened Sarah Connor teams up with an unexpected ally and an enhanced super soldier to stop the deadliest Terminator yet.</string>
+    <string name="example_release_date">2019-10-02</string>
+    <string name="example_vote">8.3</string>
+    <string name="example_genres">Action, Comedy</string>
+    <string name="example_runtime">91 min.</string>
+    <string name="example_prduction_countries">France, Poland</string>
+
+</resources>
